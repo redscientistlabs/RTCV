@@ -275,11 +275,7 @@ This message only appears once.";
             if (layouts.Length == 0)
             {
                 Point locate = e.GetMouseLocation(sender);
-
-                ContextMenuStrip openCustomLayoutMenu = new ContextMenuStrip();
-                var item = openCustomLayoutMenu.Items.Add($"No Custom Layouts loaded", null, new EventHandler((ob, ev) => CanvasGrid.LoadCustomLayout("")));
-                item.Enabled = false;
-                openCustomLayoutMenu.Show(this, locate);
+                new ContextMenuBuilder().AddText("No Custom Layouts Loaded", false).Build().Show(this, locate);
             }
             else if (layouts.Length == 1)
             {
@@ -289,11 +285,11 @@ This message only appears once.";
             {
                 Point locate = e.GetMouseLocation(sender);
 
-                ContextMenuStrip openCustomLayoutMenu = new ContextMenuStrip();
+                var builder = new ContextMenuBuilder();
                 foreach (var layout in layouts)
-                    openCustomLayoutMenu.Items.Add($"Load {layout.Name.Replace(layout.Extension, "")}", null, new EventHandler((ob, ev) => CanvasGrid.LoadCustomLayout(layout.FullName)));
+                    builder.AddItem($"Load {layout.Name.Replace(layout.Extension, "")}", (ob, ev) => CanvasGrid.LoadCustomLayout(layout.FullName));
 
-                openCustomLayoutMenu.Show(this, locate);
+                builder.Build().Show(this, locate);
             }
         }
 
@@ -301,7 +297,7 @@ This message only appears once.";
         {
             if (pnLockSidebar == null || !pnSideBar.Controls.Contains(pnLockSidebar))
             {
-                pnLockSidebar = new Panel()
+                pnLockSidebar = new Panel
                 {
                     Size = pnSideBar.Size,
                     Location = new Point(0, 0),
@@ -435,25 +431,27 @@ This message only appears once.";
 
             Point locate = e.GetMouseLocation(sender);
 
-            ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
-            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) =>
-            {
-                if ((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+            new ContextMenuBuilder()
+                .AddItem("Switch to Simple Mode", (ob, ev) =>
                 {
-                    MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
-                    return;
-                }
-
-                DefaultGrids.simpleMode.LoadToMain();
-                SimpleModeForm smForm = S.GET<SimpleModeForm>();
-
-                smForm.EnteringSimpleMode();
-            }))).Enabled = !simpleModeVisible;
-            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
-            easyButtonMenu.Items.Add(new ToolStripSeparator());
-            easyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("http://rtctutorialvideo.r5x.cc/"))).Enabled = true;
-            easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
-            easyButtonMenu.Show(this, locate);
+                    if ((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+                    {
+                        MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
+                        return;
+                    }
+                    
+                    DefaultGrids.simpleMode.LoadToMain();
+                    SimpleModeForm smForm = S.GET<SimpleModeForm>();
+                    smForm.EnteringSimpleMode();
+                }, !simpleModeVisible)
+                .AddItem("Start Auto-Corrupt With Recommended Settings for Loaded Game", (ob, ev)
+                    => StartEasyMode(true),
+                    (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] && !simpleModeVisible)
+                .AddSeparator()
+                .AddItem("Watch a Tutorial Video", (ob, ev) => Process.Start("http://rtctutorialvideo.r5x.cc/"))
+                .AddItem("Open the Online Wiki", (ob, ev) => Process.Start("https://corrupt.wiki/"))
+                .Build()
+                .Show(this, locate);
         }
 
         private void OpenStockpilePlayer(object sender, EventArgs e)
@@ -481,17 +479,11 @@ This message only appears once.";
                 settingsRightClickTimer++;
 
                 Point locate = e.GetMouseLocation(sender);
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
-                if (Params.IsParamSet("DEBUG_FETCHMODE") || settingsRightClickTimer > 2)
-                {
-                    columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
-                    {
-                        ForceCloudDebug();
-                    }));
-                }
-
-                columnsMenu.Show(this, locate);
+                
+                new ContextMenuBuilder()
+                    .If(Params.IsParamSet("DEBUG_FETCHMODE") || settingsRightClickTimer > 2)
+                    .AddItem("Open Debug Window", (ob, ev) => ForceCloudDebug())
+                    .EndIf().Build().Show(this, locate);
             }
             else if (e.Button == MouseButtons.Left)
             {
@@ -694,21 +686,14 @@ This message only appears once.";
 
         public void btnManualBlast_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e == null)
-                e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
-
-            if (e.Button == MouseButtons.Right)
-            {
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
-                Point locate = e.GetMouseLocation(sender);
-                columnsMenu.Items.Add("Blast + Send RAW To Stash (Glitch Harvester)", null, new EventHandler((ob, ev) =>
-                {
-                    BlastRawStash();
-                }));
-
-                columnsMenu.Show(this, locate);
-            }
+            e ??= new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+            if (e.Button != MouseButtons.Right) return;
+            
+            Point locate = e.GetMouseLocation(sender);
+            
+            new ContextMenuBuilder()
+                .AddItem("Blast + Send RAW to Stash (Glitch Harvester)", (ob, ev) => BlastRawStash())
+                .Build().Show(this, locate);
         }
 
         public static void ForceCloudDebug()
@@ -754,23 +739,15 @@ This message only appears once.";
 
         private void OnGlitchHarvesterMouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
-                Point locate = e.GetMouseLocation(sender);
-                columnsMenu.Items.Add("Open Blast Editor", null, (ob, ev) =>
-                {
-                    BlastEditorForm.OpenBlastEditor();
-                });
-
-                var ghmain = columnsMenu.Items.Add("Open the Glitch Harvester to Main Window", null, 
-                    (ob, ev) => Params.ToggleParam("GH_OPEN_MAIN")) as ToolStripMenuItem;
-
-                ghmain.Checked = Params.IsParamSet("GH_OPEN_MAIN");
-
-                columnsMenu.Show(this, locate);
-            }
+            if (e.Button != MouseButtons.Right) return;
+            
+            Point locate = e.GetMouseLocation(sender);
+            
+            new ContextMenuBuilder()
+                .AddItem("Open Blast Editor", (ob, ev) => BlastEditorForm.OpenBlastEditor())
+                .AddItem("Open the Glitch Harvester to Main Window", (ob, ev) => Params.ToggleParam("GH_OPEN_MAIN"),
+                    isChecked: Params.IsParamSet("GH_OPEN_MAIN"))
+                .Build().Show(this, locate);
         }
 
         private void pnCrashProtection_MouseEnter(object sender, EventArgs e) => pnCrashProtection_MouseHover(sender, e);

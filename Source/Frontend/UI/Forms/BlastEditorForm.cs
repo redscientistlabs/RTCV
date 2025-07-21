@@ -38,12 +38,13 @@ Applies for Store & should be editable
 Applies for Value & should be editable
  * byte[] Value */
 
+using System.Diagnostics;
+
 namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Data;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -64,12 +65,13 @@ namespace RTCV.UI
         private const int comboBoxFillWeight = 40;
         private const int textBoxFillWeight = 30;
         private const int numericUpDownFillWeight = 35;
+        private static List<BlastUnit> Clipboard;
 
         private Dictionary<string, MemoryInterface> _domainToMiDico;
 
         private Dictionary<string, MemoryInterface> DomainToMiDico
         {
-            get => _domainToMiDico ?? (_domainToMiDico = new Dictionary<string, MemoryInterface>());
+            get => _domainToMiDico ??= new Dictionary<string, MemoryInterface>();
             set => _domainToMiDico = value;
         }
 
@@ -81,7 +83,6 @@ namespace RTCV.UI
         private ContextMenuStrip cms;
         private Dictionary<string, Control> property2ControlDico;
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private List<BlastUnit> Clipboard = null;
 
         private enum BuProperty
         {
@@ -115,6 +116,7 @@ namespace RTCV.UI
             {
                 InitializeComponent();
 
+                dgvBlastEditor.CellFormatting += OnCellFormatting;
                 dgvBlastEditor.AutoGenerateColumns = false;
 
                 registerValueStringScrollEvents();
@@ -163,37 +165,39 @@ namespace RTCV.UI
             }
 
             //S.GET<BlastEditorForm>().Close();
-            var BEF = new BlastEditorForm();
+            var bef = new BlastEditorForm();
 
-            S.SET(BEF);
+            S.SET(bef);
 
             if (sk == null)
             {
                 sk = new StashKey();
             }
 
-            //If the blastlayer is big, prompt them before opening it. Let's go with 5k for now.
+            //If the blastlayer is big, prompt them before opening it.
 
             //TODO
-            if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
+            if (sk.BlastLayer.Layer.Count > 40000)
             {
-                BEF.LoadStashkey(sk, silent);
-                return true;
+                var result = MessageBox.Show(
+                    $"You're trying to open a blastlayer of size {sk.BlastLayer.Layer.Count}." +
+                    "This could take a while. Are you sure you want to continue?",
+                    "Opening a large BlastLayer",
+                    MessageBoxButtons.YesNo);
+                
+                if (result == DialogResult.No)
+                {
+                    return false;
+                }
             }
-            else if (sk.BlastLayer.Layer.Count <= 5000)
-            {
-                BEF.LoadStashkey(sk, silent);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            bef.LoadStashkey(sk, silent);
+            return true;
         }
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+            _domains = MemoryDomains.MemoryInterfaces?.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
             dgvBlastEditor.AllowUserToOrderColumns = true;
             SetDisplayOrder();
@@ -204,8 +208,8 @@ namespace RTCV.UI
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             //Clean up
-            bs = null;
-            _bs = null;
+            _mainSource = null;
+            _filteredSource = null;
             currentSK = null;
             originalSK = null;
             DomainToMiDico = null;
@@ -290,6 +294,79 @@ namespace RTCV.UI
             Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
         }
 
+
+
+        private void OnBlastEditorKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!e.Control)
+            {
+                return;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.C:
+                    if (dgvBlastEditor.SelectedRows.Count == 0)
+                        return;
+
+                    Clipboard = this.dgvBlastEditor.SelectedRows
+                        .Cast<DataGridViewRow>()
+                        .Select(x => (BlastUnit)x.DataBoundItem)
+                        .ToList();
+                    break;
+
+                case Keys.X:
+                    if (dgvBlastEditor.SelectedRows.Count == 0)
+                        return;
+
+                    Clipboard = this.dgvBlastEditor.SelectedRows
+                        .Cast<DataGridViewRow>()
+                        .Select(x => (BlastUnit)x.DataBoundItem)
+                        .ToList();
+
+                    RemoveSelected(null, null);
+                    break;
+
+                case Keys.V:
+                    if (Clipboard is null)
+                        break;
+
+                    int position = dgvBlastEditor.Rows.Count - 1;
+                    if (dgvBlastEditor.SelectedRows.Count > 0)
+                    {
+                        position = dgvBlastEditor.CurrentCell.RowIndex + 1;
+                    }
+
+                    this.InsertClipboardAt(position);
+
+                    break;
+
+                case Keys.A:
+                    dgvBlastEditor.ClearSelection();
+                    foreach (DataGridViewRow row in dgvBlastEditor.Rows)
+                    {
+                        row.Selected = true;
+                    }
+                    break;
+            }
+        }
+
+        private void InsertClipboardAt(int position)
+        {
+            foreach (BlastUnit unit in Clipboard)
+            {
+                _mainSource.Insert(position, unit.Clone());
+            }
+
+            dgvBlastEditor.ClearSelection();
+            int oldCell = dgvBlastEditor.CurrentCellAddress.X;
+            dgvBlastEditor.CurrentCell = dgvBlastEditor.Rows[position].Cells[oldCell];
+            for (int i = 0; i < Clipboard.Count; i++)
+            {
+                dgvBlastEditor.Rows[position + i].Selected = true;
+            }
+        }
+
         private void OnBlastEditorMouseClick(object sender, MouseEventArgs e)
         {
             //Exit edit mode if you click away from a cell
@@ -330,19 +407,17 @@ namespace RTCV.UI
                     dgvBlastEditor.EndEdit();
                 }
 
-                cms = new ContextMenuStrip();
-
+                var builder = new ContextMenuBuilder();
                 if (e.RowIndex != -1 && e.ColumnIndex != -1)
                 {
-                    PopulateGenericContextMenu();
+                    PopulateGenericContextMenu(builder);
                     //Can't use a switch statement because dynamic
                     if (dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.Address.ToString()] ||
                         dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
                     {
-                        cms.Items.Add(new ToolStripSeparator());
-                        PopulateAddressContextMenu(dgvBlastEditor[e.ColumnIndex, e.RowIndex]);
+                        PopulateAddressContextMenu(dgvBlastEditor[e.ColumnIndex, e.RowIndex], builder);
                     }
-                    cms.Show(dgvBlastEditor, dgvBlastEditor.PointToClient(Cursor.Position));
+                    builder.Build().Show(dgvBlastEditor, dgvBlastEditor.PointToClient(Cursor.Position));
                 }
             }
         }
@@ -355,61 +430,57 @@ namespace RTCV.UI
             }
         }
 
-        private void PopulateGenericContextMenu()
+        private void PopulateGenericContextMenu(ContextMenuBuilder builder)
         {
-            ((ToolStripMenuItem)cms.Items.Add("Re-roll Selected Row(s)", null, new EventHandler((ob, ev) =>
-            {
-
-                //generate temporary blastlayer for batch processing
-                List<BlastUnit> layer = new List<BlastUnit>();
-                foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            bool selectionExists = dgvBlastEditor.SelectedRows.Count > 0;
+            builder
+                .AddItem("Re-roll Selected Row(s)", (ob, ev) =>
                 {
-                    var bu = (BlastUnit)row.DataBoundItem;
-                    layer.Add(bu);
-                }
-                var tempBl = new BlastLayer(layer);
-
-                //Ensure reroll is tone on the Vanguard CorruptCore
-                var rerolledBl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.RerollBlastLayer, tempBl, true);
-
-                //update BlastUnit with new data
-                for (int i =0;i< rerolledBl.Layer.Count;i++)
+                    //generate temporary blastlayer for batch processing
+                    List<BlastUnit> layer = new List<BlastUnit>();
+                    foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+                    {
+                        var bu = (BlastUnit)row.DataBoundItem;
+                        layer.Add(bu);
+                    }
+                    var tempBl = new BlastLayer(layer);
+    
+                    //Ensure reroll is tone on the Vanguard CorruptCore
+                    var rerolledBl = LocalNetCoreRouter.QueryRoute<BlastLayer>(Endpoints.CorruptCore, NetCore.Commands.Remote.RerollBlastLayer, tempBl);
+    
+                    //update BlastUnit with new data
+                    for (int i = 0; i < rerolledBl.Layer.Count; i++)
+                    {
+                        var bu = tempBl.Layer[i];
+                        var newBu = rerolledBl.Layer[i];
+    
+                        bu.Domain = newBu.Domain;
+                        bu.Address = newBu.Address;
+                        bu.Value = newBu.Value;
+                        bu.SourceAddress = newBu.SourceAddress;
+                        bu.SourceDomain = newBu.SourceDomain;
+                    }
+    
+                    dgvBlastEditor.Refresh();
+                    UpdateBottom();
+                }, selectionExists)
+                .AddItem("Break Down Selected Unit(s)", (ob, ev) =>
                 {
-                    var bu = tempBl.Layer[i];
-                    var newBu = rerolledBl.Layer[i];
-
-                    bu.Domain = newBu.Domain;
-                    bu.Address = newBu.Address;
-                    bu.Value = newBu.Value;
-                    bu.SourceAddress = newBu.SourceAddress;
-                    bu.SourceDomain = newBu.SourceDomain;
-                }
-
-                dgvBlastEditor.Refresh();
-                UpdateBottom();
-            }))).Enabled = true;
-
-            ((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
-            {
-                BreakDownUnits(true);
-            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
-
-            ((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
-            {
-                BakeBlastUnitsToValue(true);
-            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
-            
-            cms.Items.Add(new ToolStripSeparator());
-            
-            ((ToolStripMenuItem)cms.Items.Add("Insert Clipboard Above", null, new EventHandler((ob, ev) =>
-            {
-                InsertClipboardAt(this.dgvBlastEditor.CurrentRow.Index);
-            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
-            
-            ((ToolStripMenuItem)cms.Items.Add("Insert Clipboard Below", null, new EventHandler((ob, ev) =>
-            {
-                InsertClipboardAt(this.dgvBlastEditor.CurrentRow.Index + 1);
-            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+                    BreakDownUnits(true);
+                }, selectionExists)
+                .AddItem("Bake Selected Unit(s) to VALUE", (ob, ev) =>
+                {
+                    BakeBlastUnitsToValue(true);
+                }, selectionExists)
+                .AddSeparator()
+                .AddItem("Insert Clipboard Above", (ob, ev) =>
+                {
+                    InsertClipboardAt(this.dgvBlastEditor.CurrentRow!.Index);
+                }, selectionExists)
+                .AddItem("Insert Clipboard Below", (ob, ev) =>
+                {
+                    InsertClipboardAt(this.dgvBlastEditor.CurrentRow!.Index + 1);
+                }, selectionExists);
         }
 
         public void BreakDownUnits(bool breakSelected = false)
@@ -442,37 +513,42 @@ namespace RTCV.UI
 
                 foreach (BlastUnit unit in brokenUnits)
                 {
-                    bs.Add(unit);
+                    _mainSource.Add(unit);
                 }
             }
 
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            _mainSource = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
             batchOperation = false;
-            dgvBlastEditor.DataSource = bs;
+            dgvBlastEditor.DataSource = _mainSource;
             updateMaximum(this, dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
             dgvBlastEditor.Refresh();
             UpdateBottom();
         }
 
-        private void PopulateAddressContextMenu(DataGridViewCell cell)
+        private void PopulateAddressContextMenu(DataGridViewCell cell, ContextMenuBuilder builder)
         {
-            ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
-            {
-                if (!(dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem is BlastUnit bu))
+            builder
+                .AddSeparator()
+                .AddItem("Open Selected Address in Hex Editor", (ob, ev) =>
                 {
-                    return;
-                }
+                    if (!(dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem is BlastUnit bu))
+                    {
+                        return;
+                    }
 
-                if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
-                {
-                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.Domain, bu.Address });
-                }
+                    if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
+                    {
+                        LocalNetCoreRouter.Route(Endpoints.CorruptCore,
+                            NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.Domain, bu.Address });
+                    }
 
-                if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
-                {
-                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.SourceDomain, bu.SourceAddress });
-                }
-            }))).Enabled = true;
+                    if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
+                    {
+                        LocalNetCoreRouter.Route(Endpoints.CorruptCore,
+                            NetCore.Commands.Emulator.OpenHexEditorAddress,
+                            new object[] { bu.SourceDomain, bu.SourceAddress });
+                    }
+                });
         }
 
         private void OnBlastEditorCellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -774,12 +850,11 @@ namespace RTCV.UI
         {
             if (e.Button == MouseButtons.Right)
             {
-                headerStrip = new ContextMenuStrip();
-                headerStrip.Items.Add("Select columns to show", null, new EventHandler((ob, ev) =>
+                headerStrip = new ContextMenuBuilder().AddItem("Select Columns To Show", (ob, ev) =>
                 {
                     var cs = new ColumnSelector();
                     cs.LoadColumnSelector(dgvBlastEditor.Columns);
-                }));
+                }).Build();
 
                 headerStrip.Show(MousePosition);
             }
@@ -897,8 +972,8 @@ namespace RTCV.UI
         {
             if (tbFilter.Text.Length == 0)
             {
-                dgvBlastEditor.DataSource = bs;
-                _bs = null;
+                dgvBlastEditor.DataSource = _mainSource;
+                _filteredSource = null;
                 RefreshAllNoteIcons();
                 return;
             }
@@ -909,21 +984,22 @@ namespace RTCV.UI
                 return;
             }
 
-            _bs = new BindingSource();
+            _filteredSource = new BindingSource();
             switch (((ComboBoxItem<string>)cbFilterColumn.SelectedItem).Value)
             {
                 //If it's an address or a source address we want hexadecimal
                 case "Address":
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                    _filteredSource.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
                 case "SourceAddress":
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                    _filteredSource.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
                 default: //Otherwise just use reflection and dig it out
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType().GetProperty(value)?.GetValue(x) != null && x.GetType().GetProperty(value)?.GetValue(x).ToString().IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                    _filteredSource.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType().GetProperty(value)?.GetValue(x) != null && x.GetType().GetProperty(value)?.GetValue(x).ToString().IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
             }
-            dgvBlastEditor.DataSource = _bs;
+            dgvBlastEditor.DataSource = _filteredSource;
+            RegisterDataSourceEvents(false);
             RefreshAllNoteIcons();
         }
 
@@ -1242,8 +1318,9 @@ namespace RTCV.UI
             }
         }
 
-        private BindingSource bs = null;
-        private BindingSource _bs = null;
+        private BindingSource _mainSource;
+        private BindingSource _filteredSource;
+        private Dictionary<BlastUnit, DataGridViewButtonCell> _noteButtonsCache = new Dictionary<BlastUnit, DataGridViewButtonCell>();
 
         internal void LoadStashkey(StashKey sk, bool silent = false)
         {
@@ -1282,9 +1359,9 @@ namespace RTCV.UI
             originalSK = sk;
             currentSK = sk.Clone() as StashKey;
 
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            _mainSource = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
 
-            bs.CurrentChanged += (o, e) =>
+            _mainSource.CurrentChanged += (o, e) =>
             {
                 if (batchOperation)
                 {
@@ -1294,9 +1371,10 @@ namespace RTCV.UI
                     }
                 }
             };
-
-
-            dgvBlastEditor.DataSource = bs;
+            
+            RegisterDataSourceEvents(true);
+            dgvBlastEditor.DataSource = _mainSource;
+            
             InitializeDGV();
             InitializeBottom();
 
@@ -1390,10 +1468,10 @@ namespace RTCV.UI
 
             foreach (BlastUnit bu in buToRemove)
             {
-                bs.Remove(bu);
-                if (_bs != null && _bs.Contains(bu))
+                _mainSource.Remove(bu);
+                if (_filteredSource != null && _filteredSource.Contains(bu))
                 {
-                    _bs.Remove(bu);
+                    _filteredSource.Remove(bu);
                 }
             }
             batchOperation = false;
@@ -1431,11 +1509,11 @@ namespace RTCV.UI
                 if ((row.DataBoundItem as BlastUnit).IsLocked == false)
                 {
                     var bu = row.DataBoundItem as BlastUnit;
-                    bs.Remove(bu);
+                    _mainSource.Remove(bu);
                     //Todo replace how this works
-                    if (_bs != null && _bs.Contains(bu))
+                    if (_filteredSource != null && _filteredSource.Contains(bu))
                     {
-                        _bs.Remove(bu);
+                        _filteredSource.Remove(bu);
                     }
                 }
             }
@@ -1454,7 +1532,7 @@ namespace RTCV.UI
                 if ((row.DataBoundItem as BlastUnit).IsLocked == false)
                 {
                     var bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
-                    bs.Add(bu);
+                    _mainSource.Add(bu);
                 }
             }
             RefreshAllNoteIcons();
@@ -1509,9 +1587,9 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             batchOperation = true;
             currentSK.BlastLayer.SanitizeDuplicates();
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            _mainSource = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
             batchOperation = false;
-            dgvBlastEditor.DataSource = bs;
+            dgvBlastEditor.DataSource = _mainSource;
             dgvBlastEditor.Refresh();
             UpdateBottom();
         }
@@ -1523,10 +1601,10 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             batchOperation = true;
             currentSK.BlastLayer.RasterizeVMDs();
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            _mainSource = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
 
             batchOperation = false;
-            dgvBlastEditor.DataSource = bs;
+            dgvBlastEditor.DataSource = _mainSource;
             updateMaximum(this, dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
             dgvBlastEditor.Refresh();
             UpdateBottom();
@@ -1555,7 +1633,8 @@ namespace RTCV.UI
 
         public void ReplaceRomFromFile(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?",
+                "Invalidate State?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dialogResult == DialogResult.Yes)
             {
                 var openRomDialog = new OpenFileDialog
@@ -1868,14 +1947,14 @@ namespace RTCV.UI
             {
                 foreach (var bu in l)
                 {
-                    bs.Add(bu);
+                    _mainSource.Add(bu);
                 }
             }
             else
             {
                 currentSK.BlastLayer = new BlastLayer(l);
-                bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
-                dgvBlastEditor.DataSource = bs;
+                _mainSource = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+                dgvBlastEditor.DataSource = _mainSource;
             }
             dgvBlastEditor.ResetBindings();
             RefreshAllNoteIcons();
@@ -1964,9 +2043,9 @@ namespace RTCV.UI
                 foreach (var selected in targetRows
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
                 {
-                    bs.Insert(selected.Index, newBlastLayer.Layer[i]);
+                    _mainSource.Insert(selected.Index, newBlastLayer.Layer[i]);
                     i++;
-                    bs.Remove((BlastUnit)selected.DataBoundItem);
+                    _mainSource.Remove((BlastUnit)selected.DataBoundItem);
                 }
 
                 batchOperation = false;
@@ -2013,22 +2092,74 @@ namespace RTCV.UI
             var newSk = (StashKey)currentSK.Clone();
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
-
-        private static void RefreshNoteIcons(DataGridViewRowCollection rows)
+        
+        private void RefreshNoteIcons()
         {
-            foreach (DataGridViewRow row in rows)
+            foreach (var pair in _noteButtonsCache)
             {
-                DataGridViewCell buttonCell = row.Cells[BuProperty.Note.ToString()];
-                buttonCell.Value = string.IsNullOrWhiteSpace((row.DataBoundItem as BlastUnit)?.Note) ? string.Empty : "📝";
+                BlastUnit bu = pair.Key;
+                DataGridViewButtonCell cell = pair.Value;
+        
+                bool hasNote = !string.IsNullOrWhiteSpace(bu.Note);
+                cell.Value = hasNote ? "📝" : string.Empty;
             }
         }
 
         public void RefreshAllNoteIcons()
         {
-            RefreshNoteIcons(dgvBlastEditor.Rows);
+            ClearNoteButtonCache();
+            RefreshNoteIcons();
         }
 
+        private void RegisterDataSourceEvents(bool main)
+        {
+            if (main)
+            {
+                if (_filteredSource?.DataSource is SortableBindingList<BlastUnit> filteredList)
+                    filteredList.ListChanged -= OnListChanged;
+                if (_mainSource?.DataSource is SortableBindingList<BlastUnit> mainList)
+                    mainList.ListChanged += OnListChanged;
+            }
+            else
+            {
+                if (_mainSource?.DataSource is SortableBindingList<BlastUnit> mainList)
+                    mainList.ListChanged -= OnListChanged;
+                if (_filteredSource?.DataSource is SortableBindingList<BlastUnit> filteredList)
+                    filteredList.ListChanged += OnListChanged;
+            }
+        }
 
+        private void OnListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded ||
+                e.ListChangedType == ListChangedType.ItemDeleted ||
+                e.ListChangedType == ListChangedType.Reset)
+            {
+                SyncObjectSingleton.FormBeginExecute(ClearNoteButtonCache);
+            }
+        }
+        
+        private void ClearNoteButtonCache()
+        {
+            _noteButtonsCache.Clear();
+        }
+
+        private void OnCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvBlastEditor.Columns[e.ColumnIndex].Name != BuProperty.Note.ToString())
+                return;
+    
+            DataGridViewButtonCell cell = dgvBlastEditor.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+            BlastUnit unit = dgvBlastEditor.Rows[e.RowIndex].DataBoundItem as BlastUnit;
+    
+            if (cell != null && unit != null)
+            {
+                _noteButtonsCache[unit] = cell;
+        
+                bool hasNote = !string.IsNullOrWhiteSpace(unit.Note);
+                cell.Value = hasNote ? "📝" : string.Empty;
+            }
+        }
 
         public void ShiftBlastLayerDown(object sender, EventArgs e)
         {
@@ -2155,7 +2286,7 @@ namespace RTCV.UI
         private void AddRow(object sender, EventArgs e)
         {
             var bu = new BlastUnit(new byte[] { 0 }, _domains[0], 0, 1, MemoryDomains.GetInterface(_domains[0]).BigEndian);
-            bs.Add(bu);
+            _mainSource.Add(bu);
         }
 
         private void UpdateLayerSize()
@@ -2231,7 +2362,7 @@ namespace RTCV.UI
 
         private void NewBlastLayer(object sender, EventArgs e)
         {
-            bs.Clear();
+            _mainSource.Clear();
             dgvBlastEditor.ResetBindings();
             RefreshAllNoteIcons();
             dgvBlastEditor.Refresh();
@@ -2251,74 +2382,5 @@ namespace RTCV.UI
         private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
         private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
-
-        private void dgvBlastEditor_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!e.Control)
-            {
-                return;
-            }
-
-            switch (e.KeyCode)
-            {
-                case Keys.C:
-                    if (dgvBlastEditor.SelectedRows.Count == 0)
-                        return;
-
-                    Clipboard = this.dgvBlastEditor.SelectedRows
-                        .Cast<DataGridViewRow>()
-                        .Select(x => (BlastUnit)x.DataBoundItem)
-                        .ToList();
-                    break;
-                
-                case Keys.X:
-                    if (dgvBlastEditor.SelectedRows.Count == 0)
-                        return;
-
-                    Clipboard = this.dgvBlastEditor.SelectedRows
-                        .Cast<DataGridViewRow>()
-                        .Select(x => (BlastUnit)x.DataBoundItem)
-                        .ToList();
-
-                    RemoveSelected(null, null);
-                    break;
-                
-                case Keys.V:
-                    if (Clipboard is null)
-                        break;
-                    
-                    int position = dgvBlastEditor.Rows.Count - 1;
-                    if (dgvBlastEditor.SelectedRows.Count > 0)
-                    {
-                        position = dgvBlastEditor.CurrentCell.RowIndex + 1;
-                    }
-                    
-                    this.InsertClipboardAt(position);
-
-                    break;
-                
-                case Keys.A:
-                    dgvBlastEditor.ClearSelection();
-                    foreach (DataGridViewRow row in dgvBlastEditor.Rows)
-                    {
-                        row.Selected = true;
-                    }
-                    break;
-            }
-        }
-
-        private void InsertClipboardAt(int position)
-        {
-            foreach (BlastUnit unit in this.Clipboard)
-            {
-                this.bs.Insert(position, unit.Clone());
-            }
-                    
-            this.dgvBlastEditor.ClearSelection();
-            for (int i = 0; i < this.Clipboard.Count; i++)
-            {
-                this.dgvBlastEditor.Rows[position + i].Selected = true;
-            }
-        }
     }
 }

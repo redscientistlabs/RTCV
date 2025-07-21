@@ -27,7 +27,7 @@ namespace RTCV.UI.Modular
             this.InitializeComponent();
         }
 
-        internal void SetComponentForm(Form childForm, int sizeX, int sizeY, bool displayHeader)
+        public void SetComponentForm(Form childForm, int sizeX, int sizeY, bool displayHeader)
         {
             this.ChildForm = childForm;
             this._sizeX = sizeX;
@@ -80,7 +80,6 @@ namespace RTCV.UI.Modular
             }
 
             this._mouseDownAt = new Point(e.X, e.Y);
-            
             
             if (!((ComponentForm)this.ChildForm).PopoutAllowed)
             {

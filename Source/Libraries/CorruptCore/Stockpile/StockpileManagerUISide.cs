@@ -42,16 +42,16 @@ namespace RTCV.CorruptCore
                 LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
             }
 
-            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            bool useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
         }
 
         private static void PostApplyStashkey(StashKey sk)
         {
-            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-            bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
+            bool useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            bool useRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
 
-            if (Render.RenderAtLoad && UseRealtime)
+            if (Render.RenderAtLoad && useRealtime)
             {
                 Render.StartRender();
             }

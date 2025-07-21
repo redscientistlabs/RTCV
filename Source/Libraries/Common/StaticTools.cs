@@ -169,11 +169,10 @@ namespace RTCV.Common
                 if (newTyp == null)
                 {
                     instances.TryRemove(typ, out _);
+                    return;
                 }
-                else
-                {
-                    instances[typ] = newTyp;
-                }
+                
+                instances[typ] = newTyp;
 
                 if (typ.IsSubclassOf(typeof(Form)))
                 {

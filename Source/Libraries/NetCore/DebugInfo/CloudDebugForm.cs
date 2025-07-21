@@ -272,36 +272,29 @@ namespace RTCV.NetCore
 
         private void btnSendDebug_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                Control c = (Control)sender;
-                Point locate = new Point(c.Location.X + e.Location.X + c.Parent.Location.X, ((Control)sender).Location.Y + e.Location.Y + c.Parent.Location.Y);
+            if (e.Button != MouseButtons.Right) return;
+            if (!lbException.Text.Contains("SECRET")) return;
+            
+            Control c = (Control)sender;
+            Point locate = new Point(c.Location.X + e.Location.X + c.Parent.Location.X, ((Control)sender).Location.Y + e.Location.Y + c.Parent.Location.Y);
 
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
-                if (lbException.Text.Contains("SECRET"))
+            new ContextMenuBuilder()
+                .If(btnSendDebug.Text == "Send debug info to devs")
+                .AddItem("Switch to Retrieve Mode", (ob, ev) =>
                 {
-                    if (btnSendDebug.Text == "Send debug info to devs")
-                    {
-                        columnsMenu.Items.Add("Switch to retreive mode", null, new EventHandler((ob, ev) =>
-                        {
-                            tbKey.ReadOnly = false;
-                            btnSendDebug.Text = "Fetch data";
-                            Params.SetParam("DEBUG_FETCHMODE");
-                        }));
-                    }
-                    else
-                    {
-                        columnsMenu.Items.Add("Switch to send mode", null, new EventHandler((ob, ev) =>
-                        {
-                            tbKey.ReadOnly = false;
-                            btnSendDebug.Text = "Send debug info to devs";
-                            Params.RemoveParam("DEBUG_FETCHMODE");
-                        }));
-                    }
-                }
-                columnsMenu.Show(this, locate);
-            }
+                    tbKey.ReadOnly = false;
+                    btnSendDebug.Text = "Fetch data";
+                    Params.SetParam("DEBUG_FETCHMODE");
+                })
+                .Else()
+                .AddItem("Switch to Send Mode", (ob, ev) =>
+                {
+                    tbKey.ReadOnly = false;
+                    btnSendDebug.Text = "Send debug info to devs";
+                    Params.RemoveParam("DEBUG_FETCHMODE");
+                }).EndIf()
+                .Build()
+                .Show(this, locate);
         }
 
         private void CloudDebug_Load(object sender, EventArgs e)
@@ -317,19 +310,13 @@ namespace RTCV.NetCore
 
         private void btnOtherActions_MouseDown(object sender, MouseEventArgs e)
         {
-            Control c = (Control)sender;
             Point locate = new Point(e.Location.X + btnOtherActions.Location.X, e.Location.Y + btnOtherActions.Location.Y);
-            ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
-            columnsMenu.Items.Add("Close all Cloud Debug windows", null, new EventHandler((ob, ev) =>
-            {
-                foreach (var win in CloudWindows)
-                {
-                    win.Close();
-                }
-            }));
-
-            columnsMenu.Show(this, locate);
+            
+            new ContextMenuBuilder()
+                .AddItem("Close All Cloud Debug Windows", (ob, ev)
+                    => CloudWindows.ForEach(win => win.Close()))
+                .Build()
+                .Show(this, locate);
         }
 
         private void CloudDebug_FormClosed(object sender, FormClosedEventArgs e)

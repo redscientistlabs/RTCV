@@ -33,6 +33,48 @@ namespace RTCV.UI
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlastEditorForm));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.cbFilterColumn = new System.Windows.Forms.ComboBox();
+            this.tbFilter = new System.Windows.Forms.TextBox();
+            this.panelBottom = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbLoop = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnNote = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.cbStoreLimiterSource = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cbInvertLimiter = new System.Windows.Forms.CheckBox();
+            this.cbLimiterTime = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cbLimiterList = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cbSource = new System.Windows.Forms.ComboBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.cbSourceDomain = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbStoreTime = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbStoreType = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbDomain = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.cbBigEndian = new System.Windows.Forms.CheckBox();
+            this.cbLocked = new System.Windows.Forms.CheckBox();
+            this.cbEnabled = new System.Windows.Forms.CheckBox();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnDisable50 = new System.Windows.Forms.Button();
             this.btnInvertDisabled = new System.Windows.Forms.Button();
@@ -48,7 +90,6 @@ namespace RTCV.UI
             this.cbShiftBlastlayer = new System.Windows.Forms.ComboBox();
             this.btnShiftBlastLayerDown = new System.Windows.Forms.Button();
             this.btnShiftBlastLayerUp = new System.Windows.Forms.Button();
-            this.updownShiftBlastLayerAmount = new RTCV.UI.Components.NumericUpDownHexFix();
             this.pnMemoryTargetting = new System.Windows.Forms.Panel();
             this.lbBlastLayerSize = new System.Windows.Forms.Label();
             this.btnHelp = new System.Windows.Forms.Button();
@@ -57,56 +98,6 @@ namespace RTCV.UI
             this.btnCorrupt = new System.Windows.Forms.Button();
             this.btnSendToStash = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.cbFilterColumn = new System.Windows.Forms.ComboBox();
-            this.tbFilter = new System.Windows.Forms.TextBox();
-            this.panelBottom = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label20 = new System.Windows.Forms.Label();
-            this.upDownLoopTiming = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label16 = new System.Windows.Forms.Label();
-            this.upDownLifetime = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbLoop = new System.Windows.Forms.CheckBox();
-            this.upDownExecuteFrame = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btnNote = new System.Windows.Forms.Button();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.cbStoreLimiterSource = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.cbInvertLimiter = new System.Windows.Forms.CheckBox();
-            this.cbLimiterTime = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.cbLimiterList = new System.Windows.Forms.ComboBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.tbTiltValue = new RTCV.UI.Components.NumericTextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cbSource = new System.Windows.Forms.ComboBox();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbValue = new RTCV.UI.Components.Controls.HexTextBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.cbSourceDomain = new System.Windows.Forms.ComboBox();
-            this.upDownSourceAddress = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.cbStoreTime = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbStoreType = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.upDownPrecision = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label9 = new System.Windows.Forms.Label();
-            this.upDownAddress = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cbDomain = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.cbBigEndian = new System.Windows.Forms.CheckBox();
-            this.cbLocked = new System.Windows.Forms.CheckBox();
-            this.cbEnabled = new System.Windows.Forms.CheckBox();
             this.menuStripEx1 = new System.Windows.Forms.MenuStrip();
             this.blastLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,26 +124,35 @@ namespace RTCV.UI
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.breakDownAllBlastunitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upDownLoopTiming = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.upDownLifetime = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.upDownExecuteFrame = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.tbTiltValue = new RTCV.UI.Components.NumericTextBox();
+            this.tbValue = new RTCV.UI.Components.Controls.HexTextBox();
+            this.upDownSourceAddress = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.upDownPrecision = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.upDownAddress = new RTCV.UI.Components.NumericUpDownHexFix();
+            this.updownShiftBlastLayerAmount = new RTCV.UI.Components.NumericUpDownHexFix();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
-            this.panelSidebar.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.updownShiftBlastLayerAmount)).BeginInit();
-            this.pnMemoryTargetting.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelBottom.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panelSidebar.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.pnMemoryTargetting.SuspendLayout();
+            this.menuStripEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSourceAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownPrecision)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownAddress)).BeginInit();
-            this.panel4.SuspendLayout();
-            this.menuStripEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.updownShiftBlastLayerAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvBlastEditor
@@ -183,8 +183,487 @@ namespace RTCV.UI
             this.dgvBlastEditor.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.OnBlastEditorRowsAdded);
             this.dgvBlastEditor.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.OnBlastEditorRowsRemoved);
             this.dgvBlastEditor.SelectionChanged += new System.EventHandler(this.OnBlastEditorSelectionChange);
-            this.dgvBlastEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvBlastEditor_KeyDown);
+            this.dgvBlastEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnBlastEditorKeyDown);
             this.dgvBlastEditor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnBlastEditorMouseClick);
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.cbFilterColumn);
+            this.panel2.Controls.Add(this.tbFilter);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 269);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(662, 21);
+            this.panel2.TabIndex = 148;
+            this.panel2.Tag = "color:light1";
+            // 
+            // cbFilterColumn
+            // 
+            this.cbFilterColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbFilterColumn.BackColor = System.Drawing.Color.White;
+            this.cbFilterColumn.ForeColor = System.Drawing.Color.Black;
+            this.cbFilterColumn.FormattingEnabled = true;
+            this.cbFilterColumn.Location = new System.Drawing.Point(462, -1);
+            this.cbFilterColumn.Name = "cbFilterColumn";
+            this.cbFilterColumn.Size = new System.Drawing.Size(100, 21);
+            this.cbFilterColumn.TabIndex = 149;
+            this.cbFilterColumn.SelectedValueChanged += new System.EventHandler(this.OnFilterTextChanged);
+            // 
+            // tbFilter
+            // 
+            this.tbFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbFilter.Location = new System.Drawing.Point(562, -1);
+            this.tbFilter.Name = "tbFilter";
+            this.tbFilter.Size = new System.Drawing.Size(100, 22);
+            this.tbFilter.TabIndex = 7;
+            this.tbFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
+            // 
+            // panelBottom
+            // 
+            this.panelBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelBottom.Controls.Add(this.panel9);
+            this.panelBottom.Controls.Add(this.label5);
+            this.panelBottom.Controls.Add(this.panel5);
+            this.panelBottom.Controls.Add(this.label2);
+            this.panelBottom.Controls.Add(this.panel4);
+            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBottom.ForeColor = System.Drawing.Color.White;
+            this.panelBottom.Location = new System.Drawing.Point(0, 290);
+            this.panelBottom.Name = "panelBottom";
+            this.panelBottom.Size = new System.Drawing.Size(662, 251);
+            this.panelBottom.TabIndex = 149;
+            this.panelBottom.Tag = "color:normal";
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.label20);
+            this.panel9.Controls.Add(this.upDownLoopTiming);
+            this.panel9.Controls.Add(this.label16);
+            this.panel9.Controls.Add(this.upDownLifetime);
+            this.panel9.Controls.Add(this.label1);
+            this.panel9.Controls.Add(this.cbLoop);
+            this.panel9.Controls.Add(this.upDownExecuteFrame);
+            this.panel9.Location = new System.Drawing.Point(20, 82);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(118, 157);
+            this.panel9.TabIndex = 4;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(1, 110);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(70, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Loop Timing";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(-1, 50);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 13);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "Lifetime";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Execute Frame";
+            // 
+            // cbLoop
+            // 
+            this.cbLoop.AutoSize = true;
+            this.cbLoop.Location = new System.Drawing.Point(2, 93);
+            this.cbLoop.Name = "cbLoop";
+            this.cbLoop.Size = new System.Drawing.Size(52, 17);
+            this.cbLoop.TabIndex = 0;
+            this.cbLoop.Text = "Loop";
+            this.cbLoop.UseVisualStyleBackColor = true;
+            this.cbLoop.Validated += new System.EventHandler(this.OnLoopValidated);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(145, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Data";
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.btnNote);
+            this.panel5.Controls.Add(this.panel8);
+            this.panel5.Controls.Add(this.tbTiltValue);
+            this.panel5.Controls.Add(this.label15);
+            this.panel5.Controls.Add(this.label11);
+            this.panel5.Controls.Add(this.cbSource);
+            this.panel5.Controls.Add(this.panel6);
+            this.panel5.Controls.Add(this.panel7);
+            this.panel5.Controls.Add(this.label10);
+            this.panel5.Controls.Add(this.upDownPrecision);
+            this.panel5.Controls.Add(this.label9);
+            this.panel5.Controls.Add(this.upDownAddress);
+            this.panel5.Controls.Add(this.label8);
+            this.panel5.Controls.Add(this.cbDomain);
+            this.panel5.Location = new System.Drawing.Point(148, 24);
+            this.panel5.MinimumSize = new System.Drawing.Size(484, 215);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(484, 215);
+            this.panel5.TabIndex = 2;
+            // 
+            // btnNote
+            // 
+            this.btnNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnNote.FlatAppearance.BorderSize = 0;
+            this.btnNote.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnNote.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnNote.ForeColor = System.Drawing.Color.Black;
+            this.btnNote.Location = new System.Drawing.Point(353, 100);
+            this.btnNote.Name = "btnNote";
+            this.btnNote.Size = new System.Drawing.Size(120, 88);
+            this.btnNote.TabIndex = 142;
+            this.btnNote.TabStop = false;
+            this.btnNote.Tag = "color:light1";
+            this.btnNote.Text = "Open Note Editor";
+            this.btnNote.UseVisualStyleBackColor = false;
+            this.btnNote.Click += new System.EventHandler(this.OpenNoteEditor);
+            // 
+            // panel8
+            // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.cbStoreLimiterSource);
+            this.panel8.Controls.Add(this.label17);
+            this.panel8.Controls.Add(this.cbInvertLimiter);
+            this.panel8.Controls.Add(this.cbLimiterTime);
+            this.panel8.Controls.Add(this.label18);
+            this.panel8.Controls.Add(this.cbLimiterList);
+            this.panel8.Controls.Add(this.label19);
+            this.panel8.Location = new System.Drawing.Point(128, 104);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(210, 84);
+            this.panel8.TabIndex = 25;
+            // 
+            // cbStoreLimiterSource
+            // 
+            this.cbStoreLimiterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreLimiterSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbStoreLimiterSource.ForeColor = System.Drawing.Color.White;
+            this.cbStoreLimiterSource.FormattingEnabled = true;
+            this.cbStoreLimiterSource.Location = new System.Drawing.Point(107, 57);
+            this.cbStoreLimiterSource.Name = "cbStoreLimiterSource";
+            this.cbStoreLimiterSource.Size = new System.Drawing.Size(92, 21);
+            this.cbStoreLimiterSource.TabIndex = 13;
+            this.cbStoreLimiterSource.Tag = "color:dark1";
+            this.cbStoreLimiterSource.Validated += new System.EventHandler(this.OnStoreLimiterSourceValidated);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(104, 43);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(99, 13);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Store Comparison";
+            // 
+            // cbInvertLimiter
+            // 
+            this.cbInvertLimiter.AutoSize = true;
+            this.cbInvertLimiter.Location = new System.Drawing.Point(3, 47);
+            this.cbInvertLimiter.Name = "cbInvertLimiter";
+            this.cbInvertLimiter.Size = new System.Drawing.Size(92, 17);
+            this.cbInvertLimiter.TabIndex = 11;
+            this.cbInvertLimiter.Text = "Invert Limiter";
+            this.cbInvertLimiter.UseVisualStyleBackColor = true;
+            this.cbInvertLimiter.Validated += new System.EventHandler(this.OnInvertLimiterValidated);
+            // 
+            // cbLimiterTime
+            // 
+            this.cbLimiterTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbLimiterTime.ForeColor = System.Drawing.Color.White;
+            this.cbLimiterTime.FormattingEnabled = true;
+            this.cbLimiterTime.Location = new System.Drawing.Point(107, 19);
+            this.cbLimiterTime.Name = "cbLimiterTime";
+            this.cbLimiterTime.Size = new System.Drawing.Size(92, 21);
+            this.cbLimiterTime.TabIndex = 10;
+            this.cbLimiterTime.Tag = "color:dark1";
+            this.cbLimiterTime.Validated += new System.EventHandler(this.OnLimiterTimeValidated);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(104, 4);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(67, 13);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "Limiter Time";
+            // 
+            // cbLimiterList
+            // 
+            this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbLimiterList.ForeColor = System.Drawing.Color.White;
+            this.cbLimiterList.FormattingEnabled = true;
+            this.cbLimiterList.IntegralHeight = false;
+            this.cbLimiterList.Location = new System.Drawing.Point(3, 19);
+            this.cbLimiterList.MaxDropDownItems = 15;
+            this.cbLimiterList.Name = "cbLimiterList";
+            this.cbLimiterList.Size = new System.Drawing.Size(92, 21);
+            this.cbLimiterList.TabIndex = 8;
+            this.cbLimiterList.Tag = "color:dark1";
+            this.cbLimiterList.Validated += new System.EventHandler(this.OnLimiterListValidated);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(0, 4);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(61, 13);
+            this.label19.TabIndex = 7;
+            this.label19.Text = "Limiter List";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(1, 125);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(54, 13);
+            this.label15.TabIndex = 23;
+            this.label15.Text = "Tilt Value";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(125, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Source";
+            // 
+            // cbSource
+            // 
+            this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbSource.ForeColor = System.Drawing.Color.White;
+            this.cbSource.FormattingEnabled = true;
+            this.cbSource.Location = new System.Drawing.Point(128, 19);
+            this.cbSource.Name = "cbSource";
+            this.cbSource.Size = new System.Drawing.Size(109, 21);
+            this.cbSource.TabIndex = 15;
+            this.cbSource.Tag = "color:dark1";
+            this.cbSource.Validated += new System.EventHandler(this.OnSourceValidated);
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.label12);
+            this.panel6.Controls.Add(this.tbValue);
+            this.panel6.Location = new System.Drawing.Point(128, 43);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(109, 49);
+            this.panel6.TabIndex = 14;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 2);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(36, 13);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "Value";
+            // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.cbSourceDomain);
+            this.panel7.Controls.Add(this.upDownSourceAddress);
+            this.panel7.Controls.Add(this.label13);
+            this.panel7.Controls.Add(this.label14);
+            this.panel7.Controls.Add(this.cbStoreTime);
+            this.panel7.Controls.Add(this.label6);
+            this.panel7.Controls.Add(this.cbStoreType);
+            this.panel7.Controls.Add(this.label7);
+            this.panel7.Location = new System.Drawing.Point(257, 4);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(216, 88);
+            this.panel7.TabIndex = 13;
+            // 
+            // cbSourceDomain
+            // 
+            this.cbSourceDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSourceDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbSourceDomain.ForeColor = System.Drawing.Color.White;
+            this.cbSourceDomain.FormattingEnabled = true;
+            this.cbSourceDomain.Location = new System.Drawing.Point(95, 18);
+            this.cbSourceDomain.Name = "cbSourceDomain";
+            this.cbSourceDomain.Size = new System.Drawing.Size(109, 21);
+            this.cbSourceDomain.TabIndex = 11;
+            this.cbSourceDomain.Tag = "color:dark1";
+            this.cbSourceDomain.Validated += new System.EventHandler(this.OnSourceDomainValidated);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(92, 44);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(86, 13);
+            this.label13.TabIndex = 14;
+            this.label13.Text = "Source Address";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(92, 3);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(85, 13);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "Source Domain";
+            // 
+            // cbStoreTime
+            // 
+            this.cbStoreTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbStoreTime.ForeColor = System.Drawing.Color.White;
+            this.cbStoreTime.FormattingEnabled = true;
+            this.cbStoreTime.Location = new System.Drawing.Point(3, 58);
+            this.cbStoreTime.Name = "cbStoreTime";
+            this.cbStoreTime.Size = new System.Drawing.Size(83, 21);
+            this.cbStoreTime.TabIndex = 10;
+            this.cbStoreTime.Tag = "color:dark1";
+            this.cbStoreTime.Validated += new System.EventHandler(this.OnStoreTimeValidated);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 44);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Store Time";
+            // 
+            // cbStoreType
+            // 
+            this.cbStoreType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbStoreType.ForeColor = System.Drawing.Color.White;
+            this.cbStoreType.FormattingEnabled = true;
+            this.cbStoreType.Location = new System.Drawing.Point(3, 18);
+            this.cbStoreType.Name = "cbStoreType";
+            this.cbStoreType.Size = new System.Drawing.Size(83, 21);
+            this.cbStoreType.TabIndex = 8;
+            this.cbStoreType.Tag = "color:dark1";
+            this.cbStoreType.Validated += new System.EventHandler(this.OnStoreTypeValidated);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Store Type";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(0, 87);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Precision";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(1, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Address";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1, 3);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Domain";
+            // 
+            // cbDomain
+            // 
+            this.cbDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbDomain.ForeColor = System.Drawing.Color.White;
+            this.cbDomain.FormattingEnabled = true;
+            this.cbDomain.Location = new System.Drawing.Point(4, 18);
+            this.cbDomain.Name = "cbDomain";
+            this.cbDomain.Size = new System.Drawing.Size(109, 21);
+            this.cbDomain.TabIndex = 0;
+            this.cbDomain.Tag = "color:dark1";
+            this.cbDomain.Validated += new System.EventHandler(this.OnDomainValidated);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(17, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Settings";
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.cbBigEndian);
+            this.panel4.Controls.Add(this.cbLocked);
+            this.panel4.Controls.Add(this.cbEnabled);
+            this.panel4.Location = new System.Drawing.Point(20, 24);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(118, 60);
+            this.panel4.TabIndex = 0;
+            // 
+            // cbBigEndian
+            // 
+            this.cbBigEndian.AutoSize = true;
+            this.cbBigEndian.Location = new System.Drawing.Point(3, 38);
+            this.cbBigEndian.Name = "cbBigEndian";
+            this.cbBigEndian.Size = new System.Drawing.Size(82, 17);
+            this.cbBigEndian.TabIndex = 2;
+            this.cbBigEndian.Text = "Big Endian";
+            this.cbBigEndian.UseVisualStyleBackColor = true;
+            this.cbBigEndian.Validated += new System.EventHandler(this.OnBigEndianValidated);
+            // 
+            // cbLocked
+            // 
+            this.cbLocked.AutoSize = true;
+            this.cbLocked.Location = new System.Drawing.Point(3, 21);
+            this.cbLocked.Name = "cbLocked";
+            this.cbLocked.Size = new System.Drawing.Size(62, 17);
+            this.cbLocked.TabIndex = 1;
+            this.cbLocked.Text = "Locked";
+            this.cbLocked.UseVisualStyleBackColor = true;
+            this.cbLocked.Validated += new System.EventHandler(this.OnLockedValidated);
+            // 
+            // cbEnabled
+            // 
+            this.cbEnabled.AutoSize = true;
+            this.cbEnabled.Location = new System.Drawing.Point(3, 4);
+            this.cbEnabled.Name = "cbEnabled";
+            this.cbEnabled.Size = new System.Drawing.Size(68, 17);
+            this.cbEnabled.TabIndex = 0;
+            this.cbEnabled.Text = "Enabled";
+            this.cbEnabled.UseVisualStyleBackColor = true;
+            this.cbEnabled.Validated += new System.EventHandler(this.OnEnabledValidated);
             // 
             // panelSidebar
             // 
@@ -447,19 +926,6 @@ namespace RTCV.UI
             this.btnShiftBlastLayerUp.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerUp.Click += new System.EventHandler(this.ShiftBlastLayerUp);
             // 
-            // updownShiftBlastLayerAmount
-            // 
-            this.updownShiftBlastLayerAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.updownShiftBlastLayerAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.updownShiftBlastLayerAmount.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.updownShiftBlastLayerAmount.ForeColor = System.Drawing.Color.White;
-            this.updownShiftBlastLayerAmount.Hexadecimal = true;
-            this.updownShiftBlastLayerAmount.Location = new System.Drawing.Point(38, 33);
-            this.updownShiftBlastLayerAmount.Name = "updownShiftBlastLayerAmount";
-            this.updownShiftBlastLayerAmount.Size = new System.Drawing.Size(59, 22);
-            this.updownShiftBlastLayerAmount.TabIndex = 145;
-            this.updownShiftBlastLayerAmount.Tag = "color:dark1";
-            // 
             // pnMemoryTargetting
             // 
             this.pnMemoryTargetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -573,613 +1039,6 @@ namespace RTCV.UI
             this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 136;
             this.label4.Text = "Shift Selected Rows";
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.cbFilterColumn);
-            this.panel2.Controls.Add(this.tbFilter);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 269);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(662, 21);
-            this.panel2.TabIndex = 148;
-            this.panel2.Tag = "color:light1";
-            // 
-            // cbFilterColumn
-            // 
-            this.cbFilterColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbFilterColumn.BackColor = System.Drawing.Color.White;
-            this.cbFilterColumn.ForeColor = System.Drawing.Color.Black;
-            this.cbFilterColumn.FormattingEnabled = true;
-            this.cbFilterColumn.Location = new System.Drawing.Point(462, -1);
-            this.cbFilterColumn.Name = "cbFilterColumn";
-            this.cbFilterColumn.Size = new System.Drawing.Size(100, 21);
-            this.cbFilterColumn.TabIndex = 149;
-            this.cbFilterColumn.SelectedValueChanged += new System.EventHandler(this.OnFilterTextChanged);
-            // 
-            // tbFilter
-            // 
-            this.tbFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFilter.Location = new System.Drawing.Point(562, -1);
-            this.tbFilter.Name = "tbFilter";
-            this.tbFilter.Size = new System.Drawing.Size(100, 22);
-            this.tbFilter.TabIndex = 7;
-            this.tbFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
-            // 
-            // panelBottom
-            // 
-            this.panelBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelBottom.Controls.Add(this.panel9);
-            this.panelBottom.Controls.Add(this.label5);
-            this.panelBottom.Controls.Add(this.panel5);
-            this.panelBottom.Controls.Add(this.label2);
-            this.panelBottom.Controls.Add(this.panel4);
-            this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.ForeColor = System.Drawing.Color.White;
-            this.panelBottom.Location = new System.Drawing.Point(0, 290);
-            this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(662, 251);
-            this.panelBottom.TabIndex = 149;
-            this.panelBottom.Tag = "color:normal";
-            // 
-            // panel9
-            // 
-            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Controls.Add(this.label20);
-            this.panel9.Controls.Add(this.upDownLoopTiming);
-            this.panel9.Controls.Add(this.label16);
-            this.panel9.Controls.Add(this.upDownLifetime);
-            this.panel9.Controls.Add(this.label1);
-            this.panel9.Controls.Add(this.cbLoop);
-            this.panel9.Controls.Add(this.upDownExecuteFrame);
-            this.panel9.Location = new System.Drawing.Point(20, 82);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(118, 157);
-            this.panel9.TabIndex = 4;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(1, 110);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(70, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "Loop Timing";
-            // 
-            // upDownLoopTiming
-            // 
-            this.upDownLoopTiming.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownLoopTiming.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownLoopTiming.ForeColor = System.Drawing.Color.White;
-            this.upDownLoopTiming.Location = new System.Drawing.Point(4, 125);
-            this.upDownLoopTiming.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.upDownLoopTiming.Name = "upDownLoopTiming";
-            this.upDownLoopTiming.Size = new System.Drawing.Size(109, 22);
-            this.upDownLoopTiming.TabIndex = 27;
-            this.upDownLoopTiming.Tag = "color:dark1";
-            this.upDownLoopTiming.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.upDownLoopTiming.Validated += new System.EventHandler(this.OnLoopTimingValidated);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(-1, 50);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(47, 13);
-            this.label16.TabIndex = 26;
-            this.label16.Text = "Lifetime";
-            // 
-            // upDownLifetime
-            // 
-            this.upDownLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownLifetime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownLifetime.ForeColor = System.Drawing.Color.White;
-            this.upDownLifetime.Location = new System.Drawing.Point(3, 65);
-            this.upDownLifetime.Name = "upDownLifetime";
-            this.upDownLifetime.Size = new System.Drawing.Size(109, 22);
-            this.upDownLifetime.TabIndex = 25;
-            this.upDownLifetime.Tag = "color:dark1";
-            this.upDownLifetime.Validated += new System.EventHandler(this.OnLifetimeValidated);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Execute Frame";
-            // 
-            // cbLoop
-            // 
-            this.cbLoop.AutoSize = true;
-            this.cbLoop.Location = new System.Drawing.Point(2, 93);
-            this.cbLoop.Name = "cbLoop";
-            this.cbLoop.Size = new System.Drawing.Size(52, 17);
-            this.cbLoop.TabIndex = 0;
-            this.cbLoop.Text = "Loop";
-            this.cbLoop.UseVisualStyleBackColor = true;
-            this.cbLoop.Validated += new System.EventHandler(this.OnLoopValidated);
-            // 
-            // upDownExecuteFrame
-            // 
-            this.upDownExecuteFrame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownExecuteFrame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownExecuteFrame.ForeColor = System.Drawing.Color.White;
-            this.upDownExecuteFrame.Location = new System.Drawing.Point(3, 26);
-            this.upDownExecuteFrame.Name = "upDownExecuteFrame";
-            this.upDownExecuteFrame.Size = new System.Drawing.Size(109, 22);
-            this.upDownExecuteFrame.TabIndex = 12;
-            this.upDownExecuteFrame.Tag = "color:dark1";
-            this.upDownExecuteFrame.Validated += new System.EventHandler(this.OnExecuteFrameValidated);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(145, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Data";
-            // 
-            // panel5
-            // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.btnNote);
-            this.panel5.Controls.Add(this.panel8);
-            this.panel5.Controls.Add(this.tbTiltValue);
-            this.panel5.Controls.Add(this.label15);
-            this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.cbSource);
-            this.panel5.Controls.Add(this.panel6);
-            this.panel5.Controls.Add(this.panel7);
-            this.panel5.Controls.Add(this.label10);
-            this.panel5.Controls.Add(this.upDownPrecision);
-            this.panel5.Controls.Add(this.label9);
-            this.panel5.Controls.Add(this.upDownAddress);
-            this.panel5.Controls.Add(this.label8);
-            this.panel5.Controls.Add(this.cbDomain);
-            this.panel5.Location = new System.Drawing.Point(148, 24);
-            this.panel5.MinimumSize = new System.Drawing.Size(484, 215);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(484, 215);
-            this.panel5.TabIndex = 2;
-            // 
-            // btnNote
-            // 
-            this.btnNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnNote.FlatAppearance.BorderSize = 0;
-            this.btnNote.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnNote.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnNote.ForeColor = System.Drawing.Color.Black;
-            this.btnNote.Location = new System.Drawing.Point(353, 100);
-            this.btnNote.Name = "btnNote";
-            this.btnNote.Size = new System.Drawing.Size(120, 88);
-            this.btnNote.TabIndex = 142;
-            this.btnNote.TabStop = false;
-            this.btnNote.Tag = "color:light1";
-            this.btnNote.Text = "Open Note Editor";
-            this.btnNote.UseVisualStyleBackColor = false;
-            this.btnNote.Click += new System.EventHandler(this.OpenNoteEditor);
-            // 
-            // panel8
-            // 
-            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel8.Controls.Add(this.cbStoreLimiterSource);
-            this.panel8.Controls.Add(this.label17);
-            this.panel8.Controls.Add(this.cbInvertLimiter);
-            this.panel8.Controls.Add(this.cbLimiterTime);
-            this.panel8.Controls.Add(this.label18);
-            this.panel8.Controls.Add(this.cbLimiterList);
-            this.panel8.Controls.Add(this.label19);
-            this.panel8.Location = new System.Drawing.Point(128, 104);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(210, 84);
-            this.panel8.TabIndex = 25;
-            // 
-            // cbStoreLimiterSource
-            // 
-            this.cbStoreLimiterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbStoreLimiterSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbStoreLimiterSource.ForeColor = System.Drawing.Color.White;
-            this.cbStoreLimiterSource.FormattingEnabled = true;
-            this.cbStoreLimiterSource.Location = new System.Drawing.Point(107, 57);
-            this.cbStoreLimiterSource.Name = "cbStoreLimiterSource";
-            this.cbStoreLimiterSource.Size = new System.Drawing.Size(92, 21);
-            this.cbStoreLimiterSource.TabIndex = 13;
-            this.cbStoreLimiterSource.Tag = "color:dark1";
-            this.cbStoreLimiterSource.Validated += new System.EventHandler(this.OnStoreLimiterSourceValidated);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(104, 43);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(99, 13);
-            this.label17.TabIndex = 12;
-            this.label17.Text = "Store Comparison";
-            // 
-            // cbInvertLimiter
-            // 
-            this.cbInvertLimiter.AutoSize = true;
-            this.cbInvertLimiter.Location = new System.Drawing.Point(3, 47);
-            this.cbInvertLimiter.Name = "cbInvertLimiter";
-            this.cbInvertLimiter.Size = new System.Drawing.Size(92, 17);
-            this.cbInvertLimiter.TabIndex = 11;
-            this.cbInvertLimiter.Text = "Invert Limiter";
-            this.cbInvertLimiter.UseVisualStyleBackColor = true;
-            this.cbInvertLimiter.Validated += new System.EventHandler(this.OnInvertLimiterValidated);
-            // 
-            // cbLimiterTime
-            // 
-            this.cbLimiterTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbLimiterTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbLimiterTime.ForeColor = System.Drawing.Color.White;
-            this.cbLimiterTime.FormattingEnabled = true;
-            this.cbLimiterTime.Location = new System.Drawing.Point(107, 19);
-            this.cbLimiterTime.Name = "cbLimiterTime";
-            this.cbLimiterTime.Size = new System.Drawing.Size(92, 21);
-            this.cbLimiterTime.TabIndex = 10;
-            this.cbLimiterTime.Tag = "color:dark1";
-            this.cbLimiterTime.Validated += new System.EventHandler(this.OnLimiterTimeValidated);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(104, 4);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 13);
-            this.label18.TabIndex = 9;
-            this.label18.Text = "Limiter Time";
-            // 
-            // cbLimiterList
-            // 
-            this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbLimiterList.ForeColor = System.Drawing.Color.White;
-            this.cbLimiterList.FormattingEnabled = true;
-            this.cbLimiterList.IntegralHeight = false;
-            this.cbLimiterList.Location = new System.Drawing.Point(3, 19);
-            this.cbLimiterList.MaxDropDownItems = 15;
-            this.cbLimiterList.Name = "cbLimiterList";
-            this.cbLimiterList.Size = new System.Drawing.Size(92, 21);
-            this.cbLimiterList.TabIndex = 8;
-            this.cbLimiterList.Tag = "color:dark1";
-            this.cbLimiterList.Validated += new System.EventHandler(this.OnLimiterListValidated);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(0, 4);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(61, 13);
-            this.label19.TabIndex = 7;
-            this.label19.Text = "Limiter List";
-            // 
-            // tbTiltValue
-            // 
-            this.tbTiltValue.AllowDecimal = false;
-            this.tbTiltValue.AllowNegative = true;
-            this.tbTiltValue.AllowSpace = false;
-            this.tbTiltValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tbTiltValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbTiltValue.ForeColor = System.Drawing.Color.White;
-            this.tbTiltValue.Location = new System.Drawing.Point(4, 141);
-            this.tbTiltValue.Name = "tbTiltValue";
-            this.tbTiltValue.Size = new System.Drawing.Size(108, 22);
-            this.tbTiltValue.TabIndex = 24;
-            this.tbTiltValue.Tag = "color:dark1";
-            this.tbTiltValue.Validated += new System.EventHandler(this.OnTiltValueValidated);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(1, 125);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(54, 13);
-            this.label15.TabIndex = 23;
-            this.label15.Text = "Tilt Value";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(125, 4);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(42, 13);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "Source";
-            // 
-            // cbSource
-            // 
-            this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbSource.ForeColor = System.Drawing.Color.White;
-            this.cbSource.FormattingEnabled = true;
-            this.cbSource.Location = new System.Drawing.Point(128, 19);
-            this.cbSource.Name = "cbSource";
-            this.cbSource.Size = new System.Drawing.Size(109, 21);
-            this.cbSource.TabIndex = 15;
-            this.cbSource.Tag = "color:dark1";
-            this.cbSource.Validated += new System.EventHandler(this.OnSourceValidated);
-            // 
-            // panel6
-            // 
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.label12);
-            this.panel6.Controls.Add(this.tbValue);
-            this.panel6.Location = new System.Drawing.Point(128, 43);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(109, 49);
-            this.panel6.TabIndex = 14;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 2);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(36, 13);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "Value";
-            // 
-            // tbValue
-            // 
-            this.tbValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tbValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbValue.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbValue.ForeColor = System.Drawing.Color.White;
-            this.tbValue.Location = new System.Drawing.Point(3, 17);
-            this.tbValue.MaxLength = 16348;
-            this.tbValue.Name = "tbValue";
-            this.tbValue.Nullable = true;
-            this.tbValue.Size = new System.Drawing.Size(100, 20);
-            this.tbValue.TabIndex = 0;
-            this.tbValue.Tag = "color:dark1";
-            this.tbValue.Text = "FFFFFFFF";
-            this.tbValue.Validated += new System.EventHandler(this.OnValueValidated);
-            // 
-            // panel7
-            // 
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.cbSourceDomain);
-            this.panel7.Controls.Add(this.upDownSourceAddress);
-            this.panel7.Controls.Add(this.label13);
-            this.panel7.Controls.Add(this.label14);
-            this.panel7.Controls.Add(this.cbStoreTime);
-            this.panel7.Controls.Add(this.label6);
-            this.panel7.Controls.Add(this.cbStoreType);
-            this.panel7.Controls.Add(this.label7);
-            this.panel7.Location = new System.Drawing.Point(257, 4);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(216, 88);
-            this.panel7.TabIndex = 13;
-            // 
-            // cbSourceDomain
-            // 
-            this.cbSourceDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbSourceDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbSourceDomain.ForeColor = System.Drawing.Color.White;
-            this.cbSourceDomain.FormattingEnabled = true;
-            this.cbSourceDomain.Location = new System.Drawing.Point(95, 18);
-            this.cbSourceDomain.Name = "cbSourceDomain";
-            this.cbSourceDomain.Size = new System.Drawing.Size(109, 21);
-            this.cbSourceDomain.TabIndex = 11;
-            this.cbSourceDomain.Tag = "color:dark1";
-            this.cbSourceDomain.Validated += new System.EventHandler(this.OnSourceDomainValidated);
-            // 
-            // upDownSourceAddress
-            // 
-            this.upDownSourceAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownSourceAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownSourceAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.upDownSourceAddress.ForeColor = System.Drawing.Color.White;
-            this.upDownSourceAddress.Hexadecimal = true;
-            this.upDownSourceAddress.Location = new System.Drawing.Point(95, 58);
-            this.upDownSourceAddress.Name = "upDownSourceAddress";
-            this.upDownSourceAddress.Size = new System.Drawing.Size(109, 22);
-            this.upDownSourceAddress.TabIndex = 13;
-            this.upDownSourceAddress.Tag = "color:dark1";
-            this.upDownSourceAddress.Validated += new System.EventHandler(this.OnSourceAddressValidated);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(92, 44);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(86, 13);
-            this.label13.TabIndex = 14;
-            this.label13.Text = "Source Address";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(92, 3);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(85, 13);
-            this.label14.TabIndex = 12;
-            this.label14.Text = "Source Domain";
-            // 
-            // cbStoreTime
-            // 
-            this.cbStoreTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbStoreTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbStoreTime.ForeColor = System.Drawing.Color.White;
-            this.cbStoreTime.FormattingEnabled = true;
-            this.cbStoreTime.Location = new System.Drawing.Point(3, 58);
-            this.cbStoreTime.Name = "cbStoreTime";
-            this.cbStoreTime.Size = new System.Drawing.Size(83, 21);
-            this.cbStoreTime.TabIndex = 10;
-            this.cbStoreTime.Tag = "color:dark1";
-            this.cbStoreTime.Validated += new System.EventHandler(this.OnStoreTimeValidated);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Store Time";
-            // 
-            // cbStoreType
-            // 
-            this.cbStoreType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbStoreType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbStoreType.ForeColor = System.Drawing.Color.White;
-            this.cbStoreType.FormattingEnabled = true;
-            this.cbStoreType.Location = new System.Drawing.Point(3, 18);
-            this.cbStoreType.Name = "cbStoreType";
-            this.cbStoreType.Size = new System.Drawing.Size(83, 21);
-            this.cbStoreType.TabIndex = 8;
-            this.cbStoreType.Tag = "color:dark1";
-            this.cbStoreType.Validated += new System.EventHandler(this.OnStoreTypeValidated);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 3);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Store Type";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(0, 87);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 13);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "Precision";
-            // 
-            // upDownPrecision
-            // 
-            this.upDownPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownPrecision.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownPrecision.ForeColor = System.Drawing.Color.White;
-            this.upDownPrecision.Location = new System.Drawing.Point(3, 101);
-            this.upDownPrecision.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.upDownPrecision.Name = "upDownPrecision";
-            this.upDownPrecision.Size = new System.Drawing.Size(109, 22);
-            this.upDownPrecision.TabIndex = 11;
-            this.upDownPrecision.Tag = "color:dark1";
-            this.upDownPrecision.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.upDownPrecision.Validated += new System.EventHandler(this.OnPrecisionValidated);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 13);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Address";
-            // 
-            // upDownAddress
-            // 
-            this.upDownAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.upDownAddress.ForeColor = System.Drawing.Color.White;
-            this.upDownAddress.Hexadecimal = true;
-            this.upDownAddress.Location = new System.Drawing.Point(4, 59);
-            this.upDownAddress.Name = "upDownAddress";
-            this.upDownAddress.Size = new System.Drawing.Size(109, 22);
-            this.upDownAddress.TabIndex = 9;
-            this.upDownAddress.Tag = "color:dark1";
-            this.upDownAddress.Validated += new System.EventHandler(this.OnAddressValidated);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1, 3);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Domain";
-            // 
-            // cbDomain
-            // 
-            this.cbDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.cbDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbDomain.ForeColor = System.Drawing.Color.White;
-            this.cbDomain.FormattingEnabled = true;
-            this.cbDomain.Location = new System.Drawing.Point(4, 18);
-            this.cbDomain.Name = "cbDomain";
-            this.cbDomain.Size = new System.Drawing.Size(109, 21);
-            this.cbDomain.TabIndex = 0;
-            this.cbDomain.Tag = "color:dark1";
-            this.cbDomain.Validated += new System.EventHandler(this.OnDomainValidated);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Settings";
-            // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.cbBigEndian);
-            this.panel4.Controls.Add(this.cbLocked);
-            this.panel4.Controls.Add(this.cbEnabled);
-            this.panel4.Location = new System.Drawing.Point(20, 24);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(118, 60);
-            this.panel4.TabIndex = 0;
-            // 
-            // cbBigEndian
-            // 
-            this.cbBigEndian.AutoSize = true;
-            this.cbBigEndian.Location = new System.Drawing.Point(3, 38);
-            this.cbBigEndian.Name = "cbBigEndian";
-            this.cbBigEndian.Size = new System.Drawing.Size(82, 17);
-            this.cbBigEndian.TabIndex = 2;
-            this.cbBigEndian.Text = "Big Endian";
-            this.cbBigEndian.UseVisualStyleBackColor = true;
-            this.cbBigEndian.Validated += new System.EventHandler(this.OnBigEndianValidated);
-            // 
-            // cbLocked
-            // 
-            this.cbLocked.AutoSize = true;
-            this.cbLocked.Location = new System.Drawing.Point(3, 21);
-            this.cbLocked.Name = "cbLocked";
-            this.cbLocked.Size = new System.Drawing.Size(62, 17);
-            this.cbLocked.TabIndex = 1;
-            this.cbLocked.Text = "Locked";
-            this.cbLocked.UseVisualStyleBackColor = true;
-            this.cbLocked.Validated += new System.EventHandler(this.OnLockedValidated);
-            // 
-            // cbEnabled
-            // 
-            this.cbEnabled.AutoSize = true;
-            this.cbEnabled.Location = new System.Drawing.Point(3, 4);
-            this.cbEnabled.Name = "cbEnabled";
-            this.cbEnabled.Size = new System.Drawing.Size(68, 17);
-            this.cbEnabled.TabIndex = 0;
-            this.cbEnabled.Text = "Enabled";
-            this.cbEnabled.UseVisualStyleBackColor = true;
-            this.cbEnabled.Validated += new System.EventHandler(this.OnEnabledValidated);
             // 
             // menuStripEx1
             // 
@@ -1399,6 +1258,147 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGenerator);
             // 
+            // upDownLoopTiming
+            // 
+            this.upDownLoopTiming.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownLoopTiming.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownLoopTiming.ForeColor = System.Drawing.Color.White;
+            this.upDownLoopTiming.Location = new System.Drawing.Point(4, 125);
+            this.upDownLoopTiming.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.upDownLoopTiming.Name = "upDownLoopTiming";
+            this.upDownLoopTiming.Size = new System.Drawing.Size(109, 22);
+            this.upDownLoopTiming.TabIndex = 27;
+            this.upDownLoopTiming.Tag = "color:dark1";
+            this.upDownLoopTiming.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.upDownLoopTiming.Validated += new System.EventHandler(this.OnLoopTimingValidated);
+            // 
+            // upDownLifetime
+            // 
+            this.upDownLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownLifetime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownLifetime.ForeColor = System.Drawing.Color.White;
+            this.upDownLifetime.Location = new System.Drawing.Point(3, 65);
+            this.upDownLifetime.Name = "upDownLifetime";
+            this.upDownLifetime.Size = new System.Drawing.Size(109, 22);
+            this.upDownLifetime.TabIndex = 25;
+            this.upDownLifetime.Tag = "color:dark1";
+            this.upDownLifetime.Validated += new System.EventHandler(this.OnLifetimeValidated);
+            // 
+            // upDownExecuteFrame
+            // 
+            this.upDownExecuteFrame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownExecuteFrame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownExecuteFrame.ForeColor = System.Drawing.Color.White;
+            this.upDownExecuteFrame.Location = new System.Drawing.Point(3, 26);
+            this.upDownExecuteFrame.Name = "upDownExecuteFrame";
+            this.upDownExecuteFrame.Size = new System.Drawing.Size(109, 22);
+            this.upDownExecuteFrame.TabIndex = 12;
+            this.upDownExecuteFrame.Tag = "color:dark1";
+            this.upDownExecuteFrame.Validated += new System.EventHandler(this.OnExecuteFrameValidated);
+            // 
+            // tbTiltValue
+            // 
+            this.tbTiltValue.AllowDecimal = false;
+            this.tbTiltValue.AllowNegative = true;
+            this.tbTiltValue.AllowSpace = false;
+            this.tbTiltValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tbTiltValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbTiltValue.ForeColor = System.Drawing.Color.White;
+            this.tbTiltValue.Location = new System.Drawing.Point(4, 141);
+            this.tbTiltValue.Name = "tbTiltValue";
+            this.tbTiltValue.Size = new System.Drawing.Size(108, 22);
+            this.tbTiltValue.TabIndex = 24;
+            this.tbTiltValue.Tag = "color:dark1";
+            this.tbTiltValue.Validated += new System.EventHandler(this.OnTiltValueValidated);
+            // 
+            // tbValue
+            // 
+            this.tbValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tbValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbValue.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbValue.ForeColor = System.Drawing.Color.White;
+            this.tbValue.Location = new System.Drawing.Point(3, 17);
+            this.tbValue.MaxLength = 16348;
+            this.tbValue.Name = "tbValue";
+            this.tbValue.Nullable = true;
+            this.tbValue.Size = new System.Drawing.Size(100, 20);
+            this.tbValue.TabIndex = 0;
+            this.tbValue.Tag = "color:dark1";
+            this.tbValue.Text = "FFFFFFFF";
+            this.tbValue.Validated += new System.EventHandler(this.OnValueValidated);
+            // 
+            // upDownSourceAddress
+            // 
+            this.upDownSourceAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownSourceAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownSourceAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.upDownSourceAddress.ForeColor = System.Drawing.Color.White;
+            this.upDownSourceAddress.Hexadecimal = true;
+            this.upDownSourceAddress.Location = new System.Drawing.Point(95, 58);
+            this.upDownSourceAddress.Name = "upDownSourceAddress";
+            this.upDownSourceAddress.Size = new System.Drawing.Size(109, 22);
+            this.upDownSourceAddress.TabIndex = 13;
+            this.upDownSourceAddress.Tag = "color:dark1";
+            this.upDownSourceAddress.Validated += new System.EventHandler(this.OnSourceAddressValidated);
+            // 
+            // upDownPrecision
+            // 
+            this.upDownPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownPrecision.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownPrecision.ForeColor = System.Drawing.Color.White;
+            this.upDownPrecision.Location = new System.Drawing.Point(3, 101);
+            this.upDownPrecision.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.upDownPrecision.Name = "upDownPrecision";
+            this.upDownPrecision.Size = new System.Drawing.Size(109, 22);
+            this.upDownPrecision.TabIndex = 11;
+            this.upDownPrecision.Tag = "color:dark1";
+            this.upDownPrecision.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.upDownPrecision.Validated += new System.EventHandler(this.OnPrecisionValidated);
+            // 
+            // upDownAddress
+            // 
+            this.upDownAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.upDownAddress.ForeColor = System.Drawing.Color.White;
+            this.upDownAddress.Hexadecimal = true;
+            this.upDownAddress.Location = new System.Drawing.Point(4, 59);
+            this.upDownAddress.Name = "upDownAddress";
+            this.upDownAddress.Size = new System.Drawing.Size(109, 22);
+            this.upDownAddress.TabIndex = 9;
+            this.upDownAddress.Tag = "color:dark1";
+            this.upDownAddress.Validated += new System.EventHandler(this.OnAddressValidated);
+            // 
+            // updownShiftBlastLayerAmount
+            // 
+            this.updownShiftBlastLayerAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.updownShiftBlastLayerAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.updownShiftBlastLayerAmount.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.updownShiftBlastLayerAmount.ForeColor = System.Drawing.Color.White;
+            this.updownShiftBlastLayerAmount.Hexadecimal = true;
+            this.updownShiftBlastLayerAmount.Location = new System.Drawing.Point(38, 33);
+            this.updownShiftBlastLayerAmount.Name = "updownShiftBlastLayerAmount";
+            this.updownShiftBlastLayerAmount.Size = new System.Drawing.Size(59, 22);
+            this.updownShiftBlastLayerAmount.TabIndex = 145;
+            this.updownShiftBlastLayerAmount.Tag = "color:dark1";
+            // 
             // BlastEditorForm
             // 
             this.AllowDrop = true;
@@ -1422,20 +1422,12 @@ namespace RTCV.UI
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnFormDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.OnFormDragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).EndInit();
-            this.panelSidebar.ResumeLayout(false);
-            this.panelSidebar.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.updownShiftBlastLayerAmount)).EndInit();
-            this.pnMemoryTargetting.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -1444,13 +1436,21 @@ namespace RTCV.UI
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panelSidebar.ResumeLayout(false);
+            this.panelSidebar.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.pnMemoryTargetting.ResumeLayout(false);
+            this.menuStripEx1.ResumeLayout(false);
+            this.menuStripEx1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSourceAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownPrecision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownAddress)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.menuStripEx1.ResumeLayout(false);
-            this.menuStripEx1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.updownShiftBlastLayerAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

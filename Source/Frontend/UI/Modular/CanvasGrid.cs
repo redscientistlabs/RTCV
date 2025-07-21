@@ -253,7 +253,7 @@ namespace RTCV.UI
                             }
                             else
                             {
-                                coreForm.SetDefaultGrid(cuGrid);
+                                coreForm.SetDefaultGrid(cuGrid, true);
                                 cuGrid.LoadToNewWindow("External");
                             }
 
@@ -275,7 +275,7 @@ namespace RTCV.UI
         private static void RemoveExternalForm(object sender, FormClosingEventArgs e)
         {
             var coreForm = S.GET<CoreForm>();
-            coreForm.PreviousGrids[1] = coreForm.PreviousGrids[(coreForm.ExternalIndex + 1) % 1];
+            coreForm.PreviousGrids[1] = coreForm.PreviousGrids[(coreForm.ExternalIndex + 1) % 2];
             coreForm.ExternalIndex = -1;
             
             // if the external form had any modules that should also be in the main form's grid, they need to be put back

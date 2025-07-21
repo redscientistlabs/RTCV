@@ -205,79 +205,68 @@ namespace RTCV.UI
             if (e.Button == MouseButtons.Right)
             {
                 Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
-
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
+                
                 BlastLayer bl = null;
-
                 if(lbStashHistory.SelectedIndex != -1)
                     bl = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex].BlastLayer;
-
-                if(bl != null)
-                    columnsMenu.Items.Add($"Layer Size: {bl.Layer?.Count ?? 0}", null).Enabled = false;
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
-                {
-                    if (S.GET<BlastEditorForm>() != null)
+                
+                bool selectionExists = lbStashHistory.SelectedIndex != -1;
+                
+                new ContextMenuBuilder()
+                    .If(bl != null).AddText($"Layer Size: {bl?.Layer?.Count ?? 0}", false).EndIf()
+                    .AddItem("Open Selected Item in Blast Editor", (ob, ev) =>
                     {
-                        StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                        BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
-                    }
-                }))).Enabled = lbStashHistory.SelectedIndex != -1;
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
-                {
-                    if (S.GET<BlastEditorForm>() != null)
-                    {
-                        StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                        SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(), false);
-                    }
-                }))).Enabled = lbStashHistory.SelectedIndex != -1;
-
-                columnsMenu.Items.Add(new ToolStripSeparator());
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
-                {
-                    StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                    StockpileManagerForm.RenameStashKey(sk);
-                    RefreshStashHistory();
-                }))).Enabled = lbStashHistory.SelectedIndex != -1;
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD from Selected Item", null, new EventHandler((ob, ev) =>
-                {
-                    StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                    sk.BlastLayer.RasterizeVMDs();
-                    MemoryDomains.GenerateVmdFromStashkey(sk);
-                    S.GET<VmdPoolForm>().RefreshVMDs();
-                }))).Enabled = lbStashHistory.SelectedIndex != -1;
-
-                columnsMenu.Items.Add(new ToolStripSeparator());
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, new EventHandler((ob, ev) =>
-                {
-                    List<StashKey> sks = new List<StashKey>();
-                    foreach (StashKey sk in lbStashHistory.SelectedItems)
-                    {
-                        sks.Add(sk);
-                    }
-
-                    StockpileManagerUISide.MergeStashkeys(sks);
-
-                    RefreshStashHistory();
-                }))).Enabled = (lbStashHistory.SelectedIndex != -1 && lbStashHistory.SelectedItems.Count > 1);
-
-                /*
-                if (!RTC_NetcoreImplementation.isStandaloneUI)
-                {
-                    columnsMenu.Items.Add(new ToolStripSeparator());
-                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Pull State from peer", null, new EventHandler((ob, ev) =>
+                        if (S.GET<BlastEditorForm>() != null)
                         {
-                            S.GET<RTC_Multiplayer_Form>().cbPullStateToGlitchHarvester.Checked = true;
-                            RTC_NetcoreImplementation.Multiplayer.SendCommand(new RTC_Command(CommandType.PULLSTATE), false);
-                        }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-                }*/
+                            StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
+                            BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
+                        }
+                    }, selectionExists)
+                    .AddItem("Sanitize", (ob, ev) =>
+                    {
+                        if (S.GET<BlastEditorForm>() != null)
+                        {
+                            StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
+                            SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(), false);
+                        }
+                    }, selectionExists)
+                    .AddSeparator()
+                    .AddItem("Rename Selected Item", (ob, ev) =>
+                    {
+                        StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
+                        StockpileManagerForm.RenameStashKey(sk);
+                        RefreshStashHistory();
+                    }, selectionExists)
+                    .AddItem("Generate VMD from Selected Item", (ob, ev) =>
+                    {
+                        StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
+                        sk.BlastLayer.RasterizeVMDs();
+                        MemoryDomains.GenerateVmdFromStashkey(sk);
+                        S.GET<VmdPoolForm>().RefreshVMDs();
+                    }, selectionExists)
+                    .AddSeparator()
+                    .AddItem("Merge Selected Stashkeys", (ob, ev) =>
+                    {
+                        List<StashKey> sks = new List<StashKey>();
+                        foreach (StashKey sk in lbStashHistory.SelectedItems)
+                        {
+                            sks.Add(sk);
+                        }
 
-                columnsMenu.Show(this, locate);
+                        StockpileManagerUISide.MergeStashkeys(sks);
+
+                        RefreshStashHistorySelectLast();
+                    }, selectionExists && lbStashHistory.SelectedItems.Count > 1)
+                    /*
+                    .If(!RTC_NetcoreImplementation.isStandaloneUI).AddSeparator()
+                    .If(!RTC_NetcoreImplementation.isStandaloneUI).AddItem("[Multiplayer] Pull State From Peer", (ob, ev) =>
+                    {
+                        S.GET<RTC_Multiplayer_Form>().cbPullStateToGlitchHarvester.Checked = true;
+                        RTC_NetcoreImplementation.Multiplayer.SendCommand(new RTC_Command(CommandType.PULLSTATE), false);
+                    }, RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED)
+                    */
+                    .Build()
+                    .Show(this, locate);
             }
         }
 

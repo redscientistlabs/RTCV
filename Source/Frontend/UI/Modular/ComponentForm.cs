@@ -1,3 +1,5 @@
+using RTCV.Common;
+
 namespace RTCV.UI.Modular
 {
     using System;
@@ -44,7 +46,8 @@ namespace RTCV.UI.Modular
 
         public void AnchorToPanel(Panel pn)
         {
-            if (defaultPanel == null)
+            bool? defaultPanelValid = defaultPanel?.Parent?.Parent?.Visible;
+            if (defaultPanelValid == null || defaultPanelValid == false)
             {
                 defaultPanel = pn;
             }
@@ -97,7 +100,13 @@ namespace RTCV.UI.Modular
         public void SwitchToWindow()
         {
             this.Hide();
+
+            Point p = PointToScreen(Point.Empty);
+            
             this.Parent?.Controls.Remove(this);
+            
+            p.Y -= this.PointToScreen(Point.Empty).Y - Location.Y;
+            p.X -= this.PointToScreen(Point.Empty).X - Location.X;
 
             this.TopLevel = true;
             this.TopMost = true;
@@ -113,6 +122,7 @@ namespace RTCV.UI.Modular
                 this.MaximizeBox = false;
             }
 
+            this.Location = p;
             this.Show();
 
             // ReSharper disable ArrangeThisQualifier
@@ -194,13 +204,9 @@ namespace RTCV.UI.Modular
 
             if (this.PopoutAllowed && e.Button == MouseButtons.Right && (sender as ComponentForm).FormBorderStyle == FormBorderStyle.None)
             {
-                var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
-                var columnsMenu = new ContextMenuStrip();
-                columnsMenu.Items.Add("Detach to window", null, (ob, ev) =>
-                {
-                    (sender as ComponentForm)?.SwitchToWindow();
-                });
-                columnsMenu.Show(this, locate);
+                new ContextMenuBuilder().AddItem("Detach to Window", (ob, ev)
+                    => (sender as ComponentForm)?.SwitchToWindow())
+                    .Build().Show(this, this.PointToClient(Cursor.Position));
             }
         }
 

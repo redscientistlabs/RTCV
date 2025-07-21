@@ -38,7 +38,7 @@ namespace RTCV.UI
 
         private static ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
-            if (!loadedTileForms.ContainsKey(componentForm))
+            if (!loadedTileForms.TryGetValue(componentForm, out ComponentFormTile foundForm))
             {
                 var newForm = (ComponentFormTile)Activator.CreateInstance(typeof(ComponentFormTile));
                 loadedTileForms[componentForm] = newForm;
@@ -50,15 +50,8 @@ namespace RTCV.UI
             }
             else
             {
-                var foundForm = loadedTileForms[componentForm];
                 foundForm.SetComponentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
-            /*
-            else
-            {
-                componentForm.Size = new Size(newSizeX.Value, newSizeY.Value);
-            }
-            */
             return loadedTileForms[componentForm];
         }
 

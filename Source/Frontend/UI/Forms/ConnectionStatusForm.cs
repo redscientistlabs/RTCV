@@ -60,9 +60,8 @@ namespace RTCV.UI
             if (e.Button == MouseButtons.Right)
             {
                 Point locate = e.GetMouseLocation(sender);
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) => { CoreForm.ForceCloudDebug(); }));
-                columnsMenu.Show(this, locate);
+                new ContextMenuBuilder().AddItem("Open Debug Window", (ob, ev) => CoreForm.ForceCloudDebug())
+                    .Build().Show(this, locate);
                 return;
             }
 

@@ -226,32 +226,25 @@ namespace RTCV.UI.Components.Controls
             }
             else if (e.Button == MouseButtons.Right)
             {
-                var cms = new ContextMenuStrip();
                 var holder = (SavestateHolder)((Button)sender).Parent;
                 var holderIndex = _controlList.IndexOf(holder);
-                if (holderIndex != -1)
-                {
-                    var indexToRemove = holderIndex + _dataSource.Position;
-                    if (indexToRemove >= 0 && indexToRemove < _dataSource.Count)
+                var indexToRemove = holderIndex + _dataSource.Position;
+                new ContextMenuBuilder()
+                    .If(holderIndex != -1 && indexToRemove >= 0 && indexToRemove < _dataSource.Count)
+                    .AddItem("Delete Entry", (ob, ev) =>
                     {
-                        cms.Items.Add("Delete entry", null, (ob, ev) =>
-                        {
-                            _dataSource.RemoveAt(indexToRemove);
-                            S.GET<SavestateManagerForm>().UnsavedEdits = true;
-                        });
-                    }
-                }
-
-                if (holder.sk != null)
-                {
-                    cms.Items.Add("New Blastlayer from this Savestate (Blast Editor)", null, (ob, ev) =>
+                        _dataSource.RemoveAt(indexToRemove);
+                        S.GET<SavestateManagerForm>().UnsavedEdits = true;
+                    }).EndIf()
+                    .If(holder.sk != null).AddItem("New Blastlayer From This Savestate (Blast Editor)", (ob, ev) =>
                     {
                         var holder = (SavestateHolder)((Button)sender).Parent;
                         var psk = holder.sk;
 
                         if (psk == null)
                         {
-                            MessageBox.Show("There is no savestate associated with this box. Make a savestate and try again.");
+                            MessageBox.Show(
+                                "There is no savestate associated with this box. Make a savestate and try again.");
                             return;
                         }
 
@@ -268,40 +261,38 @@ namespace RTCV.UI.Components.Controls
                         newStashkey.BlastLayer = new BlastLayer();
 
                         BlastEditorForm.OpenBlastEditor(newStashkey);
-                    });
-                }
-
-                cms.Items.Add("Save to this entry", null, (ob, ev) =>
-                {
-                    var holder = (SavestateHolder)((Button)sender).Parent;
-                    StashKey sk = StockpileManagerUISide.SaveState();
-                    RegisterStashKeyTo(holder, sk);
-                });
-
-                cms.Items.Add("Load this entry", null, (ob, ev) =>
-                {
-                    var holder = (SavestateHolder)((Button)sender).Parent;
-                    StashKey psk = holder.sk;
-                    if (psk != null)
+                    }).EndIf()
+                    .AddItem("Save to this entry", (ob, ev) =>
                     {
-                        if (!CheckAndFixingMissingStates(psk))
+                        var holder = (SavestateHolder)((Button)sender).Parent;
+                        StashKey sk = StockpileManagerUISide.SaveState();
+                        RegisterStashKeyTo(holder, sk);
+                    })
+                    .AddItem("Load this entry", (ob, ev) =>
+                    {
+                        var holder = (SavestateHolder)((Button)sender).Parent;
+                        StashKey psk = holder.sk;
+                        if (psk != null)
                         {
-                            return;
+                            if (!CheckAndFixingMissingStates(psk))
+                            {
+                                return;
+                            }
+
+                            StockpileManagerUISide.LoadState(psk);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{_saveStateWord} box is empty");
                         }
 
-                        StockpileManagerUISide.LoadState(psk);
-                    }
-                    else
-                    {
-                        MessageBox.Show($"{_saveStateWord} box is empty");
-                    }
-                    StockpileManagerUISide.CurrentStashkey = null;
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
-                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
-                });
-                
-
-                cms.Show((Control)sender, locate);
+                        StockpileManagerUISide.CurrentStashkey = null;
+                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore,
+                            NetCore.Commands.Remote.ClearBlastlayerCache, false);
+                    })
+                    .Build()
+                    .Show((Control)sender, locate);
             }
         }
 
@@ -520,18 +511,16 @@ namespace RTCV.UI.Components.Controls
 
             if (e.Button == MouseButtons.Right)
             {
-                var cms = new ContextMenuStrip();
-                cms.Items.Add("New Savestate", null, (ob, ev) =>
-                {
-                    NewSavestateNow();
-                });
-
-                if(S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count > 0)
-                    cms.Items.Add("Import State From Selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
-                
-                cms.Items.Add("Import State from File", null, (ob, ev) => NewSavestateFromFile());
-
-                cms.Show((Control)sender, locate);
+                bool stockpileHasSelection = S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count > 0;
+                new ContextMenuBuilder()
+                    .AddItem("New Savestate", (ob, ev)
+                        => NewSavestateNow())
+                    .If(stockpileHasSelection).AddItem("Import State From Selected Stockpile Item", (ob, ev)
+                        => NewSavestateFromStockpile()).EndIf()
+                    .AddItem("Import State from File", (ob, ev)
+                        => NewSavestateFromFile())
+                    .Build()
+                    .Show((Control)sender, locate);
             }
         }
 

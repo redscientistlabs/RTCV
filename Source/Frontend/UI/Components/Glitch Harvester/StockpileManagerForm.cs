@@ -168,135 +168,117 @@ namespace RTCV.UI
                 
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-
                 BlastLayer bl = null;
+                
+                int rowCount = dgvStockpile.SelectedRows.Count;
+                bool oneRowSelected = rowCount == 1;
 
-                if (dgvStockpile.SelectedRows.Count == 1)
+                if (oneRowSelected)
                     bl = GetSelectedStashKey().BlastLayer;
 
-                if (bl != null)
-                    columnsMenu.Items.Add($"Layer Size: {bl.Layer?.Count ?? 0}", null).Enabled = false;
-
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
-                {
-                    if (S.GET<BlastEditorForm>() != null)
+                new ContextMenuBuilder()
+                    .If(bl != null).AddText($"Layer Size: {bl?.Layer?.Count ?? 0}", false).EndIf()
+                    .AddItem("Open Selected Item in Blast Editor", (ob, ev) =>
                     {
-                        var sk = GetSelectedStashKey();
-                        BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
-                    }
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, (ob, ev) =>
-                {
-                    if (S.GET<BlastEditorForm>() != null)
+                        if (S.GET<BlastEditorForm>() != null)
+                        {
+                            var sk = GetSelectedStashKey();
+                            BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
+                        }
+                    }, rowCount == 1)
+                    .AddItem("Sanitize", (ob, ev) =>
+                    {
+                        if (S.GET<BlastEditorForm>() != null)
+                        {
+                            var sk = this.GetSelectedStashKey();
+                            SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(),false);
+                        }
+                    }, rowCount == 1)
+                    .AddSeparator()
+                    .AddItem("Manual Inject", (ob, ev) =>
                     {
                         var sk = this.GetSelectedStashKey();
-                        SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(),false);
-                    }
-                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+                        StashKey newSk = (StashKey)sk.Clone();
 
-                columnsMenu.Items.Add(new ToolStripSeparator());
+                        bool isCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, (ob, ev) =>
-                {
-                    var sk = this.GetSelectedStashKey();
-                    StashKey newSk = (StashKey)sk.Clone();
-
-                    bool IsCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
-
-                    if (StockpileManagerUISide.CurrentStashkey != null)
-                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
-                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                columnsMenu.Items.Add(new ToolStripSeparator());
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Rename Selected Item", null, (ob, ev) =>
-                {
-                    if (this.dgvStockpile.SelectedRows.Count != 0)
+                        if (StockpileManagerUISide.CurrentStashkey != null)
+                            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = isCorrupted;
+                    }, rowCount == 1)
+                    .AddSeparator()
+                    .AddItem("Rename Selected Item", (ob, ev) =>
                     {
-                        if (RenameStashKey(this.GetSelectedStashKey()))
+                        if (this.dgvStockpile.SelectedRows.Count != 0)
                         {
-                            StockpileManagerUISide.StockpileChanged();
-                            this.dgvStockpile.Refresh();
-                            this.UnsavedEdits = true;
+                            if (RenameStashKey(this.GetSelectedStashKey()))
+                            {
+                                StockpileManagerUISide.StockpileChanged();
+                                this.dgvStockpile.Refresh();
+                                this.UnsavedEdits = true;
+                            }
+
+                            //lbStockpile.RefreshItemsReal();   
+                        }
+                    }, rowCount == 1)
+                    .AddItem("Generate VMD From Selected Item", (ob, ev) =>
+                    {
+                        var sk = this.GetSelectedStashKey();
+                        MemoryDomains.GenerateVmdFromStashkey(sk);
+                        S.GET<VmdPoolForm>().RefreshVMDs();
+                    }, rowCount == 1)
+                    .AddItem("Merge Selected Stashkeys", (ob, ev) =>
+                    {
+                        List<StashKey> sks = new List<StashKey>();
+                        foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
+                        {
+                            sks.Add((StashKey)row.Cells[0].Value);
                         }
 
-                        //lbStockpile.RefreshItemsReal();   
-                    }
-                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD From Selected Item", null, (ob, ev) =>
-                {
-                    var sk = this.GetSelectedStashKey();
-                    MemoryDomains.GenerateVmdFromStashkey(sk);
-                    S.GET<VmdPoolForm>().RefreshVMDs();
-                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, (ob, ev) =>
-                {
-                    List<StashKey> sks = new List<StashKey>();
-                    foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
+                        StockpileManagerUISide.MergeStashkeys(sks);
+                        S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
+                    }, rowCount > 1)
+                    .AddItem("Replace Associated ROM", (ob, ev) =>
                     {
-                        sks.Add((StashKey)row.Cells[0].Value);
-                    }
-
-                    StockpileManagerUISide.MergeStashkeys(sks);
-                    S.GET<StashHistoryForm>().RefreshStashHistory();
-                })).Enabled = (dgvStockpile.SelectedRows.Count > 1);
-
-
-
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Replace Associated ROM", null, (ob, ev) =>
-                {
-                    List<StashKey> sks = new List<StashKey>();
-                    foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
-                    {
-                        sks.Add((StashKey)row.Cells[0].Value);
-                    }
-
-                    OpenFileDialog ofd = new OpenFileDialog
-                    {
-                        DefaultExt = "*",
-                        Title = "Select Replacement File",
-                        Filter = "Any file|*.*",
-                        RestoreDirectory = true
-                    };
-                    if (ofd.ShowDialog() == DialogResult.OK)
-                    {
-                        string filename = ofd.FileName;
-                        string oldFilename = sks.First().RomFilename;
-                        foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
+                        List<StashKey> sks = new List<StashKey>();
+                        foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
                         {
-                            sk.RomFilename = filename;
-                            sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                            sks.Add((StashKey)row.Cells[0].Value);
                         }
-                    }
-                })).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
 
-                columnsMenu.Items.Add(new ToolStripSeparator());
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add($"Duplicate Selected Item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, (ob, ev) =>
-                {
-                    this.DuplicateSelected();
-                })).Enabled = (dgvStockpile.SelectedRows.Count > 0);
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add($"Remove Selected Item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, (ob, ev) =>
-                {
-                    this.RemoveSelected();
-                    
-                })).Enabled = (dgvStockpile.SelectedRows.Count > 0);
-
-                columnsMenu.Items.Add(new ToolStripSeparator());
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Add Savestate to Manager", null, (ob, ev) =>
-                {
-                    S.GET<SavestateManagerForm>().savestateList.NewSavestateFromStockpile();
-                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                columnsMenu.Show(this, locate);
+                        OpenFileDialog ofd = new OpenFileDialog
+                        {
+                            DefaultExt = "*",
+                            Title = "Select Replacement File",
+                            Filter = "Any file|*.*",
+                            RestoreDirectory = true
+                        };
+                        if (ofd.ShowDialog() == DialogResult.OK)
+                        {
+                            string filename = ofd.FileName;
+                            string oldFilename = sks.First().RomFilename;
+                            foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
+                            {
+                                sk.RomFilename = filename;
+                                sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                            }
+                        }
+                    }, rowCount >= 1)
+                    .AddSeparator()
+                    .AddItem($"Duplicate Selected Item{(rowCount > 1 ? "s" : "")}", (ob, ev) =>
+                    {
+                        this.DuplicateSelected();
+                    }, rowCount > 0)
+                    .AddItem($"Remove Selected Item{(rowCount > 1 ? "s" : "")}", (ob, ev) =>
+                    {
+                        this.RemoveSelected();
+                    }, rowCount > 0)
+                    .AddSeparator()
+                    .AddItem("Add Savestate to Manager", (ob, ev) =>
+                    {
+                        S.GET<SavestateManagerForm>().savestateList.NewSavestateFromStockpile();
+                    }, rowCount == 1)
+                    .Build()
+                    .Show(this, locate);
             }
         }
 
@@ -603,69 +585,53 @@ namespace RTCV.UI
             //RtcCore.CheckForProblematicProcesses();
 
             Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
-
-            ContextMenuStrip loadMenuItems = new ContextMenuStrip();
-            loadMenuItems.Items.Add("Load Stockpile", null, (ob, ev) =>
-            {
-                string filename = "";
-                OpenFileDialog ofd = new OpenFileDialog
+            
+            new ContextMenuBuilder()
+                .AddItem("Load Stockpile", (ob, ev) =>
                 {
-                    DefaultExt = "sks",
-                    Title = "Open Stockpile File",
-                    Filter = "SKS files|*.sks",
-                    RestoreDirectory = true
-                };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
-                {
-                    return;
-                }
+                    OpenFileDialog ofd = new OpenFileDialog
+                    {
+                        DefaultExt = "sks",
+                        Title = "Open Stockpile File",
+                        Filter = "SKS files|*.sks",
+                        RestoreDirectory = true
+                    };
+                    if (ofd.ShowDialog() != DialogResult.OK)
+                    {
+                        return;
+                    }
 
-                LoadStockpile(filename);
-            });
-
-            loadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, (ob, ev) =>
-            {
-                try
+                    string filename = ofd.FileName;
+                    LoadStockpile(filename);
+                })
+                .AddItem($"Load {RtcCore.VanguardImplementationName} Settings From Stockpile", (ob, ev) =>
                 {
                     if (UnsavedEdits && MessageBox.Show($"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
-                        "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+                            "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
                     {
                         return;
                     }
+                    bool wasEnabled = AutoKillSwitch.Enabled;
                     AutoKillSwitch.Enabled = false;
                     Stockpile.LoadConfigFromStockpile();
-                    AutoKillSwitch.Enabled = true;
-                }
-                finally
-                {
-                }
-            });
-
-            loadMenuItems.Items.Add($"Restore {RtcCore.VanguardImplementationName} config Backup", null, (ob, ev) =>
-            {
-                try
+                    AutoKillSwitch.Enabled = wasEnabled;
+                })
+                .AddItem($"Restore {RtcCore.VanguardImplementationName} Config Backup", (ob, ev) =>
                 {
                     if (UnsavedEdits && MessageBox.Show(
-                        $"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
-                        "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+                            $"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
+                            "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
                     {
                         return;
                     }
 
+                    bool wasEnabled = AutoKillSwitch.Enabled;
                     AutoKillSwitch.Enabled = false;
                     Stockpile.RestoreEmuConfig();
-                    AutoKillSwitch.Enabled = true;
-                }
-                finally
-                {
-                }
-            }).Enabled = (File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")));
-
-            loadMenuItems.Show(this, locate);
+                    AutoKillSwitch.Enabled = wasEnabled;
+                }, File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")))
+                .Build()
+                .Show(this, locate);
         }
 
         public void SaveStockpileAs(object sender, EventArgs e)
@@ -918,21 +884,6 @@ namespace RTCV.UI
         private void HandleGlitchHarvesterSettingsMouseDown(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
-            ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
-
-            ghSettingsMenu.Items.Add(new ToolStripLabel("Stockpile Manager settings")
-            {
-                Font = new Font("Segoe UI", 12)
-            });
-
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Stockpile items: " + dgvStockpile.Rows.Cast<DataGridViewRow>().Count(), null, (ob, ev) =>
-            {
-
-            })).Enabled = false;
-
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, (ob, ev) => Params.ToggleParam("COMPRESS_STOCKPILE"))).Checked = Params.IsParamSet("COMPRESS_STOCKPILE");
-
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, (ob, ev) => Params.ToggleParam("INCLUDE_REFERENCED_FILES"))).Checked = Params.IsParamSet("INCLUDE_REFERENCED_FILES");
             
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load entry when selected with arrows", null, (ob, ev) => _loadEntryWhenSelectedWithArrows = Params.ToggleParam("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK"))).Checked = Params.IsParamSet("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK");
 

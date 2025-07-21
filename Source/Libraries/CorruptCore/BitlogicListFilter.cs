@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using RTCV.Common;
+
 namespace RTCV.CorruptCore
 {
     using System;
@@ -139,7 +142,7 @@ namespace RTCV.CorruptCore
 
             try
             {
-                ulong data = BytesToULong(bytes); //Convert bytes to ulong
+                UInt128 data = BytesToUInt128(bytes); //Convert bytes to ulong
 
                 if (entries.Count > 0)
                 {
@@ -200,14 +203,14 @@ namespace RTCV.CorruptCore
             {
                 selectedEntry = entries[RtcCore.RND.Next(entries.Count)];
 
-                if (passthrough == null || passthrough.Length > 8)
+                if (passthrough == null || passthrough.Length > 16)
                 {
-                    outValue = BitConverter.GetBytes(selectedEntry.GetRandomLegacy()); //Bitconverter as little endian
+                    outValue = selectedEntry.GetRandomLegacy().ToByteArray(); //Bitconverter as little endian
                 }
                 else
                 {
-                    ulong passULong = BytesToULong(passthrough);
-                    outValue = BitConverter.GetBytes(selectedEntry.GetRandom(passULong)); //Bitconverter as little endian
+                    UInt128 passUInt128 = BytesToUInt128(passthrough);
+                    outValue = selectedEntry.GetRandom(passUInt128).ToByteArray(); //Bitconverter as little endian
                 }
             }
             else //Check exclusions
@@ -230,7 +233,7 @@ namespace RTCV.CorruptCore
                     for (int i = 0; i < maxRetries; i++)
                     {
                         bool matchedExclusion = false;
-                        ulong data = randomEntry.GetRandomLegacy();
+                        UInt128 data = randomEntry.GetRandomLegacy();
 
                         foreach (var e in exclusions)
                         {
@@ -253,7 +256,7 @@ namespace RTCV.CorruptCore
                         }
                         else //Didn't match exclusions, good
                         {
-                            outValue = BitConverter.GetBytes(data);
+                            outValue = data.ToByteArray();
                             if (this.entries.Count > 0) selectedEntry = randomEntry;
                             foundSuitable = true;
                             break;
@@ -262,12 +265,12 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    ulong passULong = BytesToULong(passthrough);
+                    UInt128 passUInt128 = BytesToUInt128(passthrough);
 
                     for (int i = 0; i < maxRetries; i++)
                     {
                         bool matchedExclusion = false;
-                        ulong data = randomEntry.GetRandom(passULong);
+                        UInt128 data = randomEntry.GetRandom(passUInt128);
 
                         foreach (var e in exclusions)
                         {
@@ -290,7 +293,7 @@ namespace RTCV.CorruptCore
                         }
                         else //Didn't match exclusions, good
                         {
-                            outValue = BitConverter.GetBytes(data);
+                            outValue = data.ToByteArray();
                             if (this.entries.Count > 0) selectedEntry = randomEntry;
                             foundSuitable = true;
                             break;
@@ -341,15 +344,15 @@ namespace RTCV.CorruptCore
             return res;
         }
 
-        private static ulong BytesToULong(byte[] bytes)
+        private static UInt128 BytesToUInt128(byte[] bytes)
         {
             ////Fun switch of fun, but is faster for most common paths than resizing to 8 bytes
             switch (bytes.Length)
             {
                 case 1:
-                    return (ulong)bytes[0];
+                    return bytes[0];
                 case 2:
-                    return (ulong)BitConverter.ToUInt16(bytes, 0);
+                    return BitConverter.ToUInt16(bytes, 0);
                 case 3:
                     byte[] new4byte = new byte[4];
                     Array.Copy(bytes, 0, new4byte, 1, 3);
@@ -365,6 +368,24 @@ namespace RTCV.CorruptCore
                     return BitConverter.ToUInt64(new8byte, 0);
                 case 8:
                     return BitConverter.ToUInt64(bytes, 0);
+                case 9:
+                    return new UInt128(BitConverter.ToUInt64(bytes, 0), bytes[8]);
+                case 10:
+                    return new UInt128(BitConverter.ToUInt64(bytes, 0), BitConverter.ToUInt16(bytes, 8));
+                case 11:
+                    byte[] new12byte = new byte[12];
+                    Array.Copy(bytes, 0, new12byte, 4, 8);
+                    return new UInt128(BitConverter.ToUInt64(new12byte, 0), BitConverter.ToUInt32(new12byte, 4));
+                case 12:
+                    return new UInt128(BitConverter.ToUInt64(bytes, 0), BitConverter.ToUInt32(bytes, 8));
+                case 13:
+                case 14:
+                case 15:
+                    byte[] new16byte = new byte[16];
+                    Array.Copy(bytes, 0, new16byte, 16 - bytes.Length, bytes.Length);
+                    return new UInt128(BitConverter.ToUInt64(new16byte, 0), BitConverter.ToUInt64(new16byte, 8));
+                case 16:
+                    return new UInt128(BitConverter.ToUInt64(bytes, 0), BitConverter.ToUInt64(bytes, 8));
                 default:
                     throw new Exception("Invalid byte count in BitLogicListFilter. Limiter must be less than 64 bits (8 bytes)");
             }
@@ -419,9 +440,9 @@ namespace RTCV.CorruptCore
 
             //Check for line sizes that may be too big
             //Note: May have to move and rework this depending on future formats
-            if ((!isHex && line.Length > 64) || (isHex && line.Length > 16))
+            if ((!isHex && line.Length > 128) || (isHex && line.Length > 32))
             {
-                throw new Exception($"Error reading list {Path.GetFileName(filePath)} (Line {lineNum}), total number of bits must be 64 or less (8 bytes)"); //Warn user about line size too big
+                throw new Exception($"Error reading list {Path.GetFileName(filePath)} (Line {lineNum}), total number of bits must be 128 or less (16 bytes)"); //Warn user about line size too big
             }
 
             //Discard non-byte divisible lines
@@ -475,11 +496,11 @@ namespace RTCV.CorruptCore
             return res;
         }
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint (does it do anything here? idk)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] //Inline hint (does it do anything here? idk)
         private static ulong CharToUlongHex(char c)
         {
             //Ascii format
-            int i = (int)c;
+            int i = c;
             return (ulong)(i - ((i <= 57) ? 48 : 55)); //optimized, values are guaranteed
         }
 
@@ -508,10 +529,10 @@ namespace RTCV.CorruptCore
 
             const ulong digitMask = 0b1111; //ulong mask for one hex digit
 
-            ulong template = 0L;
-            ulong wildcard = 0L;
-            ulong passthrough = 0L;
-            ulong reserved = 0L;
+            UInt128 template = 0;
+            UInt128 wildcard = 0;
+            UInt128 passthrough = 0;
+            UInt128 reserved = 0;
 
             //At this point we know only valid characters are in the line
 
@@ -519,13 +540,13 @@ namespace RTCV.CorruptCore
             int curLeftShift = 0; //Additional variable to maintain my sanity
             for (int j = line.Length - 1; j >= 0; j--)
             {
-                if (line[j] == CHAR_WILD) { wildcard |= digitMask << curLeftShift; } //Wildcard
-                else if (line[j] == CHAR_PASS) { passthrough |= digitMask << curLeftShift; } //Passthrough
+                if (line[j] == CHAR_WILD) { wildcard |= UInt128.LeftShift(digitMask, curLeftShift); } //Wildcard
+                else if (line[j] == CHAR_PASS) { passthrough |= UInt128.LeftShift(digitMask, curLeftShift); } //Passthrough
                 else //is a Constant
                 {
                     //line[j] is guaranteed to be Hex characters here
-                    template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
-                    reserved |= digitMask << curLeftShift; //Also add to reserved mask
+                    template |= UInt128.LeftShift(CharToUlongHex(line[j]), curLeftShift); //Convert char to ulong and shift
+                    reserved |= UInt128.LeftShift(digitMask, curLeftShift); //Also add to reserved mask
                 }
                 curLeftShift += 4; //add half byte shift
             }
@@ -534,10 +555,10 @@ namespace RTCV.CorruptCore
 
         private static BitlogicFilterEntry ParseBin(string line)
         {
-            ulong template = 0UL;
-            ulong wildcard = 0UL;
-            ulong passthrough = 0UL;
-            ulong reserved = 0UL;
+            UInt128 template = 0;
+            UInt128 wildcard = 0;
+            UInt128 passthrough = 0;
+            UInt128 reserved = 0;
 
             //At this point we know only valid characters are in the line
 
@@ -545,13 +566,14 @@ namespace RTCV.CorruptCore
             int curLeftShift = 0; //Additional variable to maintain my sanity
             for (int j = line.Length - 1; j >= 0; j--)
             {
-                if (line[j] == CHAR_WILD) { wildcard |= 1UL << curLeftShift; } //Wildcard
-                else if (line[j] == CHAR_PASS) { passthrough |= 1UL << curLeftShift; } //Passthrough
+                if (line[j] == CHAR_WILD) { wildcard |= UInt128.LeftShift(1UL, curLeftShift); } //Wildcard
+                else if (line[j] == CHAR_PASS) { passthrough |= UInt128.LeftShift(1UL, curLeftShift); } //Passthrough
                 else //Constant
                 {
                     //line[j] is guaranteed to be '1' or '0' here
-                    template |= ((ulong)line[j] - 48UL) << curLeftShift; //Convert char to ulong and shift
-                    reserved |= 1UL << curLeftShift; //Also add to reserved mask
+                    
+                    template |= UInt128.LeftShift(line[j] - 48UL, curLeftShift); //Convert char to ulong and shift
+                    reserved |= UInt128.LeftShift(1UL, curLeftShift); //Also add to reserved mask
                 }
 
                 curLeftShift++;
@@ -567,24 +589,24 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public class BitlogicFilterEntry
     {
-        ulong template;
-        ulong wildcard;
-        ulong passthrough;
-        ulong reserved;
-        ulong unreserved;
+        UInt128 template;
+        UInt128 wildcard;
+        UInt128 passthrough;
+        UInt128 reserved;
+        UInt128 unreserved;
 
         public int Precision { get; private set; }
         public string OriginalLine { get; set; }
 
         //Current random, slow, replace eventually
-        static byte[] byteBuffer = new byte[sizeof(ulong)];
-        static ulong NextULong()
+        static byte[] byteBuffer = new byte[Unsafe.SizeOf<UInt128>()];
+        static UInt128 NextUInt128()
         {
             RtcCore.RND.NextBytes(byteBuffer);
-            return BitConverter.ToUInt64(byteBuffer, 0);
+            return new UInt128(byteBuffer);
         }
 
-        public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved, int precision)
+        public BitlogicFilterEntry(UInt128 template, UInt128 wildcard, UInt128 passthrough, UInt128 reserved, int precision)
         {
             this.template = template;
             this.wildcard = wildcard;
@@ -605,22 +627,20 @@ namespace RTCV.CorruptCore
             Precision = 0;
         }
 
-        public bool Matches(ulong data)
+        public bool Matches(UInt128 data)
         {
             //template == data and reserved mask
             return template == (data & reserved);
         }
 
-        public ulong GetRandom(ulong data)
+        public UInt128 GetRandom(UInt128 data)
         {
-            //When passthrough is implemented, uncomment this line and remove the other
-            return (NextULong() & wildcard) | (data & passthrough) | template;
-            //return (NextLong() & unreserved) | template;
+            return (NextUInt128() & wildcard) | (data & passthrough) | template;
         }
 
-        public ulong GetRandomLegacy()
+        public UInt128 GetRandomLegacy()
         {
-            return (NextULong() & unreserved) | template;
+            return (NextUInt128() & unreserved) | template;
         }
 
         /// <summary>
@@ -629,10 +649,10 @@ namespace RTCV.CorruptCore
         public byte[] GetBytesForHash()
         {
             List<byte> bytes = new List<byte>();
-            bytes.AddRange(BitConverter.GetBytes(template));
-            bytes.AddRange(BitConverter.GetBytes(wildcard));
-            bytes.AddRange(BitConverter.GetBytes(passthrough));
-            bytes.AddRange(BitConverter.GetBytes(reserved));
+            bytes.AddRange(template.ToByteArray());
+            bytes.AddRange(wildcard.ToByteArray());
+            bytes.AddRange(passthrough.ToByteArray());
+            bytes.AddRange(reserved.ToByteArray());
             //Don't need unreserved, it's just reserved flipped
             return bytes.ToArray();
         }

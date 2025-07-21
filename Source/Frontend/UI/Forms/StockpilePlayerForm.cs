@@ -159,30 +159,38 @@ namespace RTCV.UI
 
                 ToolStripSeparator stripSeparator = new ToolStripSeparator();
                 stripSeparator.Paint += OnStripSeparatorPaint;
-
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                (columnsMenu.Items.Add("Show Item Name", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Item"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Item"].Visible;
-                (columnsMenu.Items.Add("Show Game Name", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["GameName"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["GameName"].Visible;
-                (columnsMenu.Items.Add("Show System Name", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["SystemName"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["SystemName"].Visible;
-                (columnsMenu.Items.Add("Show System Core", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["SystemCore"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["SystemCore"].Visible;
-                //TODO: Blast Layer Size
-                (columnsMenu.Items.Add("Show Note", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
-                columnsMenu.Items.Add(stripSeparator);
-                (columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<GlitchHarvesterBlastForm>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<GlitchHarvesterBlastForm>().LoadOnSelect;
-                (columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<GeneralParametersForm>().cbClearFreezesOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<GeneralParametersForm>().cbClearFreezesOnRewind.Checked;
-
-                columnsMenu.Items.Add(stripSeparator);
-
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
-                {
-                    var sk = GetSelectedStashKey();
-                    StashKey newSk = (StashKey)sk.Clone();
-                    bool IsCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
-                    if (StockpileManagerUISide.CurrentStashkey != null)
-                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
-                columnsMenu.Show(this, locate);
+                
+                BlastLayer bl = null;
+                if (dgvStockpile.SelectedRows.Count == 1)
+                    bl = GetSelectedStashKey().BlastLayer;
+                
+                bool itemVisible = dgvStockpile.Columns["Item"]!.Visible;
+                bool gameNameVisible = dgvStockpile.Columns["GameName"]!.Visible;
+                bool systemNameVisible = dgvStockpile.Columns["SystemName"]!.Visible;
+                bool systemCoreVisible = dgvStockpile.Columns["SystemCore"]!.Visible;
+                bool noteVisible = dgvStockpile.Columns["Note"]!.Visible;
+                bool loadOnSelect = S.GET<GlitchHarvesterBlastForm>().LoadOnSelect;
+                bool clearInfiniteUnitsOnRewind = S.GET<GeneralParametersForm>().cbClearFreezesOnRewind.Checked;
+                new ContextMenuBuilder()
+                    .If(bl != null).AddText($"Layer Size: {bl?.Layer?.Count ?? 0}", false).EndIf()
+                    .AddItem("Show Item Name", (ob, ev) => dgvStockpile.Columns["Item"].Visible = !itemVisible, isChecked: itemVisible)
+                    .AddItem("Show Game Name", (ob, ev) => dgvStockpile.Columns["GameName"].Visible = !gameNameVisible, isChecked: gameNameVisible)
+                    .AddItem("Show System Name", (ob, ev) => dgvStockpile.Columns["SystemName"].Visible = !systemNameVisible, isChecked: systemNameVisible)
+                    .AddItem("Show System Core", (ob, ev) => dgvStockpile.Columns["SystemCore"].Visible = !systemCoreVisible, isChecked: systemCoreVisible)
+                    .AddItem("Show Note", (ob, ev) => dgvStockpile.Columns["Note"].Visible = !noteVisible, isChecked: noteVisible)
+                    .AddItem("Load on Select", (ob, ev) => S.GET<GlitchHarvesterBlastForm>().LoadOnSelect = !loadOnSelect, isChecked: loadOnSelect)
+                    .AddItem("Clear Infinite Units on Rewind", (ob, ev) => S.GET<GeneralParametersForm>().cbClearFreezesOnRewind.Checked = !clearInfiniteUnitsOnRewind, isChecked: clearInfiniteUnitsOnRewind)
+                    .AddItem(stripSeparator)
+                    .AddItem("Manual Inject", (ob, ev) =>
+                    {
+                        var sk = GetSelectedStashKey();
+                        StashKey newSk = (StashKey)sk.Clone();
+                        bool isCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+                        if (StockpileManagerUISide.CurrentStashkey != null)
+                            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = isCorrupted;
+                    }, dgvStockpile.SelectedRows.Count == 1)
+                    .Build()
+                    .Show(this, locate);
             }
         }
 
@@ -254,70 +262,61 @@ namespace RTCV.UI
         {
             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
-            ContextMenuStrip LoadMenuItems = new ContextMenuStrip();
-            LoadMenuItems.Items.Add("Load Stockpile", null, new EventHandler((ob, ev) =>
-            {
-                try
+            new ContextMenuBuilder()
+                .AddItem("Load Stockpile", (ob, ev) =>
                 {
-                    string filename = "";
-                    OpenFileDialog ofd = new OpenFileDialog
+                    try
                     {
-                        DefaultExt = "sks",
-                        Title = "Open Stockpile File",
-                        Filter = "SKS files|*.sks",
-                        RestoreDirectory = true
-                    };
-                    if (ofd.ShowDialog() == DialogResult.OK)
-                    {
-                        filename = ofd.FileName;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                        OpenFileDialog ofd = new OpenFileDialog
+                        {
+                            DefaultExt = "sks",
+                            Title = "Open Stockpile File",
+                            Filter = "SKS files|*.sks",
+                            RestoreDirectory = true
+                        };
+                        if (ofd.ShowDialog() != DialogResult.OK)
+                        {
+                            return;
+                        }
 
-                    LoadStockpile(filename);
-                }
-                catch (Exception ex)
-                {
-                    if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-                    {
-                        throw new AbortEverythingException();
-                    }
-                }
-            }));
+                        string filename = ofd.FileName;
 
-            LoadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, new EventHandler((ob, ev) =>
-            {
-                try
-                {
-                    AutoKillSwitch.Enabled = false;
-                    Stockpile.LoadConfigFromStockpile();
-                    AutoKillSwitch.Enabled = true;
-                }
-                catch (Exception ex)
-                {
-                    if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-                    {
-                        throw new AbortEverythingException();
+                        LoadStockpile(filename);
                     }
-                }
-            }));
-
-            LoadMenuItems.Items.Add($"Restore {RtcCore.VanguardImplementationName} config Backup", null, new EventHandler((ob, ev) =>
-            {
-                try
+                    catch (Exception ex)
+                    {
+                        if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                        {
+                            throw new AbortEverythingException();
+                        }
+                    }
+                })
+                .AddItem($"Load {RtcCore.VanguardImplementationName} Settings From Stockpile", (ob, ev) =>
                 {
+                    try
+                    {
+                        bool wasEnabled = AutoKillSwitch.Enabled;
+                        AutoKillSwitch.Enabled = false;
+                        Stockpile.LoadConfigFromStockpile();
+                        AutoKillSwitch.Enabled = wasEnabled;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                        {
+                            throw new AbortEverythingException();
+                        }
+                    }
+                })
+                .AddItem($"Restore {RtcCore.VanguardImplementationName} Config Backup", (ob, ev) =>
+                {
+                    bool wasEnabled = AutoKillSwitch.Enabled;
                     AutoKillSwitch.Enabled = false;
                     Stockpile.RestoreEmuConfig();
-                    AutoKillSwitch.Enabled = true;
-                }
-                finally
-                {
-                }
-            })).Enabled = (File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")));
-
-            LoadMenuItems.Show(this, locate);
+                    AutoKillSwitch.Enabled = wasEnabled;
+                }, File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")))
+                .Build()
+                .Show(this, locate);
         }
 
         private void OnStockpileCellClick(object sender, DataGridViewCellEventArgs e)

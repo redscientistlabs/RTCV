@@ -172,6 +172,7 @@
             this.tbCustomAddresses.Font = new System.Drawing.Font("Consolas", 8F);
             this.tbCustomAddresses.ForeColor = System.Drawing.Color.White;
             this.tbCustomAddresses.Location = new System.Drawing.Point(225, 24);
+            this.tbCustomAddresses.MaxLength = 0;
             this.tbCustomAddresses.Multiline = true;
             this.tbCustomAddresses.Name = "tbCustomAddresses";
             this.tbCustomAddresses.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;

@@ -74,7 +74,7 @@ namespace RTCV.UI
             }
 
             MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
-            VirtualMemoryDomain VMD = new VirtualMemoryDomain();
+            VirtualMemoryDomain vmd;
             VmdPrototype proto = new VmdPrototype
             {
                 GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString(),
@@ -172,15 +172,15 @@ namespace RTCV.UI
                 }
             }
 
-            VMD = proto.Generate();
+            vmd = proto.Generate();
 
-            if (VMD.Size == 0)
+            if (vmd.Size == 0)
             {
                 MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
                 return false;
             }
 
-            MemoryDomains.AddVMD(VMD);
+            MemoryDomains.AddVMD(vmd);
 
             tbVmdName.Text = "";
             cbSelectedMemoryDomain.SelectedIndex = -1;

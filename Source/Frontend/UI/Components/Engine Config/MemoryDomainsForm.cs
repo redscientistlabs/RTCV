@@ -198,128 +198,118 @@ namespace RTCV.UI
             //Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
             Point locate = new Point(e.Location.X, e.Location.Y);
 
-            if (e.Button == MouseButtons.Right)
-            {
-                string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
-                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")).ToList();
+            if (e.Button != MouseButtons.Right)
+                return;
+            
+            string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
 
-
-                if (vectorLimiter != null)
+            if (vectorLimiter == null)
+                return;
+            var autoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")).ToList();
+            var vlpForm = S.GET<VmdLimiterProfilerForm>();
+            var cmb = new ContextMenuBuilder()
+                //.AddItem("Generate VMD using Vector Limiter", (ob, ev) => {}, false)
+                .AddText("Limiter Profiler", FontStyle.Italic)
+                .AddSeparator()
+                .AddItem("Regenerate All Profiled VMDs", (ob, ev) =>
                 {
-                    ContextMenuStrip cms = new ContextMenuStrip();
-                    //cms.Items.Add($"Generate VMD using Vector Limiter", null, (ob, ev) => {}).Enabled = false;
-                    var lbGen = new ToolStripLabel($"Limiter Profiler");
-                    lbGen.Font = new Font(lbGen.Font, FontStyle.Italic);
-
-                    cms.Items.Add(lbGen);
-                    cms.Items.Add(new ToolStripSeparator());
-                    cms.Items.Add($"Regenerate all Profiled VMDs", null, (ob, ev) =>
+                    foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it =>
+                                 it.Value is VirtualMemoryDomain && it.Key.Contains("--")))
                     {
-                        foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")))
+                        var vmd = (mi.Value as VirtualMemoryDomain);
+
+                        string realDomain = vmd.GetRealDomain(0);
+                        var realDomainInterface =
+                            MemoryDomains.AllMemoryInterfaces.Count(it => it.Key == realDomain);
+                        if (realDomainInterface == 0)
                         {
-                            var vmd = (mi.Value as VirtualMemoryDomain);
+                            //this is not very good, it only checks for the first domain referenced in the VMDs.
+                            //like, if you were to do "Regenerate all VMDs" and had a cross-domain VMD loaded and
+                            //you changed games and one of the domains isn't loaded but the first domain referenced in the VMD
+                            //is loaded, this will go through and shit itself when it tries to read from the domain that is unloaded
 
-                            string realDomain = vmd.GetRealDomain(0);
-                            var realDomainInterface = MemoryDomains.AllMemoryInterfaces.Where(it => it.Key == realDomain).Count();
-                            if (realDomainInterface == 0)
-                            {
-                                //this is not very good, it only checks for the first domain referenced in the VMDs.
-                                //like, if you were to do "Regenerate all VMDs" and had a cross-domain VMD loaded and
-                                //you changed games and one of the domains isn't loaded but the first domain referenced in the VMD
-                                //is loaded, this will go through and shit itself when it tries to read from the domain that is unloaded
+                            //in order to fix this, we would have to store with each VMD a list of the domains it references so that
+                            //we don't have to check every single pointer address or range.
 
-                                //in order to fix this, we would have to store with each VMD a list of the domains it references so that
-                                //we don't have to check every single pointer address or range.
-
-                                MessageBox.Show($"The Memory Domain named {realDomain} does not appear to be loaded. {vmd} cannot be regenerated.");
-                                continue;
-                            }
-
-                            string domain;
-                            if (vmd.CompactPointerDomains.Length > 0)
-                            {
-                                domain = vmd.CompactPointerDomains.FirstOrDefault();
-                            }
-                            else
-                            {
-                                domain = vmd.PointerDomains.FirstOrDefault();
-                            }
-
-                            if (domain != null)
-                            {
-                                string limiter = vmd.Name.Substring(vmd.Name.IndexOf("--") + 3);
-                                S.GET<VmdLimiterProfilerForm>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
-                            }
+                            MessageBox.Show(
+                                $"The Memory Domain named {realDomain} does not appear to be loaded. {vmd} cannot be regenerated.");
+                            continue;
                         }
-                    }).Enabled = (AutoLimitedDomains.Count > 0);
 
+                        string domain;
+                        if (vmd.CompactPointerDomains.Length > 0)
+                        {
+                            domain = vmd.CompactPointerDomains.FirstOrDefault();
+                        }
+                        else
+                        {
+                            domain = vmd.PointerDomains.FirstOrDefault();
+                        }
 
-                    var cbLoadState = new ToolStripMenuItem();
-                    cbLoadState.Text = "Load GH State on Generate";
-                    var vlpForm = S.GET<VmdLimiterProfilerForm>();
-                    cbLoadState.Checked = vlpForm.cbLoadBeforeGenerate.Checked;
-                    cbLoadState.Click += (ob, ev) => {
-                        vlpForm.cbLoadBeforeGenerate.Checked = !vlpForm.cbLoadBeforeGenerate.Checked;
-                    };
-                    cms.Items.Add(cbLoadState);
+                        if (domain != null)
+                        {
+                            string limiter = vmd.Name.Substring(vmd.Name.IndexOf("--") + 3);
+                            S.GET<VmdLimiterProfilerForm>()
+                                .AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
+                        }
+                    }
+                }, autoLimitedDomains.Count > 0)
+                .AddItem("Load GH State on Generate", (ob, ev) =>
+                {
+                    vlpForm.cbLoadBeforeGenerate.Checked = !vlpForm.cbLoadBeforeGenerate.Checked;
+                }, isChecked: vlpForm.cbLoadBeforeGenerate.Checked)
+                .AddSeparator();
 
-                    cms.Items.Add(new ToolStripSeparator());
+            foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it =>
+                         !(it.Value is VirtualMemoryDomain)))
+            {
+                string extraVector = "";
+                if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {vectorLimiter}"))
+                {
+                    extraVector = " (Regenerate)";
+                }
 
-                    foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => !(it.Value is VirtualMemoryDomain)))
+                var currentListMenuItem = new ToolStripMenuItem(mi.Key);
+                var vectorMenuItem =
+                    new ToolStripMenuItem($"Use Vector Engine Limiter: -> {vectorLimiter}" + extraVector);
+                vectorMenuItem.Click += (ob, ev) =>
+                {
+                    S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, vectorLimiter);
+                };
+
+                currentListMenuItem.DropDownItems.Add(vectorMenuItem);
+                currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
+
+                foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().VectorEngineControl
+                             .cbVectorLimiterList.Items)
+                {
+                    var listName = listItem.Name;
+
+                    string extra = "";
+                    if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {listName}"))
                     {
-                        var menu = new ToolStripMenuItem();
-
-                        string extraVector = "";
-                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {vectorLimiter}"))
-                        {
-                            extraVector = " (Regenerate)";
-                        }
-
-                        var currentListMenuItem = new ToolStripMenuItem();
-                        currentListMenuItem.Text = mi.Key.ToString();
-
-                        var vectorMenuItem = new ToolStripMenuItem();
-                        vectorMenuItem.Text = $"Use Vector Engine Limiter: -> {vectorLimiter}" + extraVector;
-
-                        vectorMenuItem.Click += (ob, ev) => {
-                            S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, vectorLimiter);
-                        };
-
-                        currentListMenuItem.DropDownItems.Add(vectorMenuItem);
-                        currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
-
-                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items)
-                        {
-                            var listName = listItem.Name;
-                            var subMenuItem = new ToolStripMenuItem();
-
-                            string extra = "";
-                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {listName}"))
-                            {
-                                extra = " (Regenerate)";
-                            }
-
-                            subMenuItem.Text = "-> " + listName + extra;
-
-                            subMenuItem.Click += (ob, ev) => {
-                                S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, listName);
-                            };
-
-                            currentListMenuItem.DropDownItems.Add(subMenuItem);
-                        }
-
-                        cms.Items.Add(currentListMenuItem);
+                        extra = " (Regenerate)";
                     }
 
-                    cms.Show((Control)sender, locate);
+                    var subMenuItem = new ToolStripMenuItem("-> " + listName + extra);
+                    subMenuItem.Click += (ob, ev) =>
+                    {
+                        S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, listName);
+                    };
+
+                    currentListMenuItem.DropDownItems.Add(subMenuItem);
                 }
+
+                cmb.AddItem(currentListMenuItem);
             }
+
+            cmb.Build().Show((Control)sender, locate);
         }
 
         private void lbMemoryDomains_DoubleClick(object sender, MouseEventArgs e)
         {
             int index = this.lbMemoryDomains.IndexFromPoint(e.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches)
+            if (index != ListBox.NoMatches)
             {
                 for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
                 {

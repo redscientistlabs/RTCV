@@ -981,18 +981,13 @@ namespace RTCV.UI
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    cms = new ContextMenuStrip();
-                    if (e.RowIndex != -1 && e.ColumnIndex != -1)
-                    {
-                        if (e.ColumnIndex == dgvBlastGenerator.Columns["dgvSeed"].Index)
+                    cms = new ContextMenuBuilder()
+                        .If(e.RowIndex != -1 && e.ColumnIndex != -1 && e.ColumnIndex == dgvBlastGenerator.Columns["dgvSeed"].Index)
+                        .AddItem("Reroll Seed", (ob, ev) =>
                         {
-                            ((ToolStripMenuItem)cms.Items.Add("Reroll Seed", null, new EventHandler((ob, ev) =>
-                            {
-                                var cell = dgvBlastGenerator[e.ColumnIndex, e.RowIndex];
-                                cell.Value = RtcCore.RND.Next(int.MinValue, int.MaxValue);
-                            }))).Enabled = true;
-                        }
-                    }
+                            var cell = dgvBlastGenerator[e.ColumnIndex, e.RowIndex];
+                            cell.Value = RtcCore.RND.Next(int.MinValue, int.MaxValue);
+                        }).EndIf().Build();
                     cms.Show(dgvBlastGenerator, dgvBlastGenerator.PointToClient(Cursor.Position));
                 }
             }

@@ -183,6 +183,11 @@ namespace RTCV.UI.Components
 
         private new void DragOver(object sender, DragEventArgs e)
         {
+            if (Rows.Count == 0)
+            {
+                return;
+            }
+            
             e.Effect = DragDropEffects.Move;
             var headeroffset = this.Top + this.ColumnHeadersHeight;
 

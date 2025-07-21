@@ -310,25 +310,22 @@ namespace RTCV.UI
 
         private void OnLoadSavestateListButtonMouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+            if (e.Button != MouseButtons.Right) return;
 
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                columnsMenu.Items.Add("Clear Savestate List", null, new EventHandler((ob, ev) =>
+            var button = (Control)sender;
+            Point locate = new Point(button.Location.X + e.Location.X, button.Location.Y + e.Location.Y);
+
+            new ContextMenuBuilder()
+                .AddItem("Clear Savestate List", (ob, ev) =>
                 {
                     //Commit any used states to disk
                     commitUsedStatesToSession();
                     savestateBindingSource.Clear();
-                }));
-
-                columnsMenu.Items.Add("Import SSK", null, (ob, ev) =>
-                {
-                    loadSavestateList(true);
-                });
-
-                columnsMenu.Show(this, locate);
-            }
+                })
+                .AddItem("Import SSK", (ob, ev)
+                    => loadSavestateList(true))
+                .Build()
+                .Show(button, locate);
         }
 
         public void SaveSSK(string path)
