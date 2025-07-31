@@ -106,6 +106,7 @@ namespace VanguardHook
 			partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
 			partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
 			partial[VSPEC.CORE_DISKBASED] = config.CORE_DISKBASED;
+			partial[VSPEC.RELOAD_ON_SAVESTATE] = false;
 			partial[VSPEC.CONFIG_PATHS] = new[] { "" };
 			partial[VSPEC.EMUDIR] = EmuDirectory.emuDir;
 			EmuDirectory.emuEXE = config.EmuEXE;
@@ -218,6 +219,12 @@ namespace VanguardHook
 		public static void SaveEmuSettings()
 		{
             var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", (string)AllSpec.VanguardSpec[VSPEC.NAME] + "VanguardDefaultSettings");
+
+            //If the default settings file is still here somehow, delete it before creating a new one
+            if (File.Exists(defaultSettingsPath))
+            {
+                File.Delete(defaultSettingsPath);
+            }
 
             //Get the settings from the emulator and save them to a file
             PartialSpec storeDefaultSettings = new PartialSpec("VanguardSpec");

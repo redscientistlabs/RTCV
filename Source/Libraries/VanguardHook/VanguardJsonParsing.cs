@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
+using RTCV.NetCore;
 
 namespace VanguardHook
 {
@@ -30,6 +32,7 @@ namespace VanguardHook
         public bool SUPPORTS_REFERENCES { get; set; }
         public bool SUPPORTS_MIXED_STOCKPILE { get; set; }
         public bool CORE_DISKBASED { get; set; }
+        public Dictionary<string, object> RELOAD_ON_SAVESTATE { get; set; }
     }
 
     // Memory domains used by emulator from config file
@@ -60,13 +63,20 @@ namespace VanguardHook
                 MessageBox.Show(configErrMessage,
                 "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
                                      MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-                
                 Environment.Exit(-1);
                 return null;
             }
 
             string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardConfig.Json");
             ConfigRoot configFile = JsonConvert.DeserializeObject<ConfigRoot>(config);
+
+            // If the implementation's config file doesn't have a reload on savestate entry, just create an empty one so it
+            // doesn't through a null exception when accessed
+            if (configFile.VSpecConfig.RELOAD_ON_SAVESTATE == null)
+            {
+                configFile.VSpecConfig.RELOAD_ON_SAVESTATE = new Dictionary<string, object>();
+            }
+
             return configFile;
         }
     }

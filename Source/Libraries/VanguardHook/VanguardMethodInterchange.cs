@@ -86,7 +86,7 @@ namespace VanguardHook
         [DllExport("LOADGAMESTART")]
         public static void LOADGAMESTART([MarshalAs(UnmanagedType.BStr)] string rompath)
         {
-            ConsoleEx.WriteLine("LOAD_GAME_START");
+            ConsoleEx.WriteLine("LOAD_GAME_START: " + rompath);
             StepActions.ClearStepBlastUnits();
             RtcClock.ResetCount();
 
@@ -96,20 +96,14 @@ namespace VanguardHook
                 GAME_TO_LOAD = "";
             }
 
-            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
-
-            //If the default settings file is still here somehow, delete it before creating a new one
-            if (File.Exists(defaultSettingsPath))
+            if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] == "")
             {
-                File.Delete(defaultSettingsPath);
+                //Save the emulator settings to a file and update SyncSettings
+                VanguardCore.SaveEmuSettings();
             }
-
-            //Save the emulator settings to a file
-            VanguardCore.SaveEmuSettings();
 
             rompath = rompath.Replace("/", "\\");
             AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
-            ConsoleEx.WriteLine(AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString());
         }
         
         // Called when a game succesfully finishes loading on the emulator. Finishes updating the
@@ -117,7 +111,7 @@ namespace VanguardHook
         [DllExport("LOADGAMEDONE")]
         public static void LOADGAMEDONE([MarshalAs(UnmanagedType.BStr)] string gamename)
         {
-            ConsoleEx.WriteLine("LOAD_GAME_DONE");
+            ConsoleEx.WriteLine("LOAD_GAME_DONE: " + gamename);
             if (AllSpec.UISpec == null)
             {
                 VanguardCore.StopGame();
@@ -134,25 +128,40 @@ namespace VanguardHook
             PartialSpec gameDone = new PartialSpec("VanguardSpec");
             gameDone[VSPEC.SYSTEM] = VanguardConfigReader.configFile.VSpecConfig.NAME;
             gameDone[VSPEC.SYSTEMPREFIX] = VanguardConfigReader.configFile.VSpecConfig.NAME;
-            gameDone[VSPEC.SYNCSETTINGS] = "";
 
             // remove any invalid file characters before storing it
             string gamenameFixed = StringExtensions.MakeSafeFilename(gamename, '-');
 
             gameDone[VSPEC.GAMENAME] = gamenameFixed;
 
-            if (gamenameFixed != AllSpec.VanguardSpec[VSPEC.GAMENAME].ToString())
+
+            bool reloadDomains = true;
+            if (gamenameFixed != (string)AllSpec.VanguardSpec[VSPEC.GAMENAME])
             {
                 IntPtr systemCorePtr = MethodImports.Vanguard_getSystemCore();
                 var systemCore = Marshal.PtrToStringAnsi(systemCorePtr);
                 //Make sure to free the pointer after using it
                 Marshal.FreeHGlobal(systemCorePtr);
                 gameDone[VSPEC.SYSTEMCORE] = systemCore;
-                ConsoleEx.WriteLine(systemCore);
+                ConsoleEx.WriteLine("systemCore: " + systemCore);
+
+                if (VanguardConfigReader.configFile.VSpecConfig.RELOAD_ON_SAVESTATE.ContainsKey(systemCore))
+                {
+                    gameDone[VSPEC.RELOAD_ON_SAVESTATE] = (bool)VanguardConfigReader.configFile.VSpecConfig.RELOAD_ON_SAVESTATE[systemCore];
+                }
+                else
+                    ConsoleEx.WriteLine("Failed to find system core");
+            }
+            else
+            {
+                reloadDomains = !(bool)AllSpec.VanguardSpec[VSPEC.RELOAD_ON_SAVESTATE];
             }
 
             AllSpec.VanguardSpec.Update(gameDone);
-            VanguardImplementation.RefreshDomains();
+            if (reloadDomains)
+            {
+                VanguardImplementation.RefreshDomains();
+            }
             RtcCore.InvokeLoadGameDone();
             MethodImports.Vanguard_finishLoading();
         }
@@ -165,6 +174,7 @@ namespace VanguardHook
             ConsoleEx.WriteLine("GAMECLOSED");
             PartialSpec gameClosed = new PartialSpec("VanguardSpec");
             gameClosed[VSPEC.OPENROMFILENAME] = "";
+            gameClosed[VSPEC.GAMENAME] = "";
             AllSpec.VanguardSpec.Update(gameClosed);
             RtcCore.InvokeGameClosed(true);
 
