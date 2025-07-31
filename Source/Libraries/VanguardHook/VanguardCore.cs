@@ -161,6 +161,7 @@ namespace VanguardHook
             RtcCore.EmuDir = EmuDirectory.emuDir;
 
             VanguardImplementation.StartClient();
+			RegisterVanguardSpec();
 
             Thread.Sleep(500);
             RtcCore.StartEmuSide();
