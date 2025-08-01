@@ -12,12 +12,17 @@ namespace RTCV.UI
     using RTCV.NetCore.Commands;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Timers;
 
     public static class VanguardImplementation
     {
         internal static UIConnector connector = null;
         private static string lastVanguardClient = "";
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public static bool isSwapping = false;
+        public static bool finishedClosing = false;
+        public static bool finishedSwapping = false;
 
         public static void StartServer()
         {
@@ -57,7 +62,7 @@ namespace RTCV.UI
                         break;
                     case Remote.AllSpecSent:
                         AllSpecSent();
-                        UICore.finishedSwapping = true;
+                        VanguardImplementation.finishedSwapping = true;
                         break;
                     case Remote.PushVanguardSpecUpdate:
                         PushVanguardSpecUpdate(advancedMessage, ref e);
@@ -155,6 +160,13 @@ namespace RTCV.UI
                             UICore.CheckHotkey(hotkey);
                         }
                         break;
+                    case Remote.SwapImplementation:
+                        {
+                            var newEmu = (string)(advancedMessage.objectValue as object[])[0];
+                            var form = (ComponentForm)(advancedMessage.objectValue as object[])[1] ?? S.GET<GeneralParametersForm>();
+                            e.setReturnValue(SwapImplementation(newEmu, form));
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -166,6 +178,131 @@ namespace RTCV.UI
 
                 return;
             }
+        }
+
+        private static double timeout = 10.0;
+        private static double time_elapsed = 0.0;
+        private static System.Timers.Timer swapTimeout = new System.Timers.Timer
+        {
+            AutoReset = false,
+            Interval = 100
+        };
+        private static event ElapsedEventHandler timeoutHandler;
+
+        private static void OnSwapTimeout(object source, ElapsedEventArgs e, ComponentForm form)
+        {
+            time_elapsed += 0.1;
+            logger.Trace(time_elapsed);
+            if (time_elapsed >= timeout)
+            {
+                Task.Run(() => MessageBox.Show($"Failed to swap emulators."));
+
+                form.ParentCanvas?.CloseSubForm();
+                logger.Trace("Unlocking Interface");
+                UICore.UnlockInterface();
+                logger.Trace("Load cancelled");
+
+                AutoKillSwitch.Enabled = true;
+                VanguardImplementation.isSwapping = false;
+                VanguardImplementation.finishedClosing = false;
+                VanguardImplementation.finishedSwapping = false;
+                swapTimeout.Stop();
+                swapTimeout.Elapsed -= timeoutHandler;
+                return;
+            }
+            else
+            {
+                swapTimeout.Stop();
+                swapTimeout.Start();
+            }
+        }
+
+        private static bool SwapImplementation(string newEmu, ComponentForm form)
+        {
+            VanguardImplementation.isSwapping = true;
+            VanguardImplementation.finishedClosing = false;
+            VanguardImplementation.finishedSwapping = false;
+
+            timeoutHandler ??= (sender, e) => OnSwapTimeout(sender, e, form);
+
+            time_elapsed = 0.0;
+            swapTimeout.Elapsed += timeoutHandler;
+            swapTimeout.Start();
+
+            logger.Trace("different emulator found, switching");
+
+            AutoKillSwitch.Enabled = false;
+                
+            var focusCoreForm = form.ParentCanvas.Name == "CoreForm" ? true : false;
+            logger.Trace("Blocking UI");
+            UICore.LockInterface(focusCoreForm, true);
+            logger.Trace("UI Blocked");
+
+            string oldEmuDir = CorruptCore.RtcCore.EmuDir;
+            var newEmuDir = Path.Combine(Path.Combine(new DirectoryInfo(RtcCore.RtcDir).Parent.Parent.FullName, StockpileManagerUISide.CurrentStashkey.EmuVer));
+            CorruptCore.RtcCore.EmuDir = newEmuDir;
+
+            // Load the save progress form
+            S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+            form.ParentCanvas?.OpenSubForm(S.GET<SaveProgressForm>());
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Switching from " + new DirectoryInfo(oldEmuDir).Name +
+                                            " to " + StockpileManagerUISide.CurrentStashkey.EmuVer, 0));
+
+            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
+            while (!VanguardImplementation.finishedClosing)
+            {
+                if (!swapTimeout.Enabled)
+                    return false;
+
+                Application.DoEvents();
+                Thread.Sleep(100);
+            }
+
+            var info = new System.Diagnostics.ProcessStartInfo()
+            {
+                UseShellExecute = false,
+                WorkingDirectory = newEmuDir,
+                FileName = Path.Combine(newEmuDir, "RESTARTDETACHEDRTC.bat"),
+            };
+
+            if (!File.Exists(info.FileName))
+            {
+                MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
+
+                form.ParentCanvas?.CloseSubForm();
+                logger.Trace("Unlocking Interface");
+                UICore.UnlockInterface();
+                logger.Trace("Load cancelled");
+
+                AutoKillSwitch.Enabled = true;
+                VanguardImplementation.isSwapping = false;
+
+                return false;
+            }
+
+            // Restart the timeout timer
+            swapTimeout.Stop();
+            swapTimeout.Start();
+
+            logger.Trace("Starting the new process");
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Starting " + StockpileManagerUISide.CurrentStashkey.EmuVer, 50));
+
+            System.Diagnostics.Process.Start(info);
+
+            // Once AllSpecSent() is finished, we've successfully finished swapping to the new emulator
+            while (!VanguardImplementation.finishedSwapping)
+            {
+                Application.DoEvents();
+                Thread.Sleep(100);
+            }
+
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading stockpile entry", 100));
+
+            swapTimeout.Stop();
+            swapTimeout.Elapsed -= timeoutHandler;
+            form.ParentCanvas?.CloseSubForm();
+            VanguardImplementation.isSwapping = false;
+            return true;
         }
 
         private static void PushVanguardSpec(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
@@ -242,7 +379,7 @@ namespace RTCV.UI
 
                     DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
                 }
-                else if (UICore.isSwapping)
+                else if (VanguardImplementation.isSwapping)
                 {
                     lastVanguardClient = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
 
