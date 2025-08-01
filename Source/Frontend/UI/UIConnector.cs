@@ -43,8 +43,14 @@ namespace RTCV.UI
 
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
         {
-            if (UICore.isClosing || UICore.FirstConnect || UICore.isSwapping)
+            if (UICore.isClosing || UICore.FirstConnect)
             {
+                return;
+            }
+
+            if (UICore.isSwapping)
+            {
+                UICore.finishedClosing = true;
                 return;
             }
 

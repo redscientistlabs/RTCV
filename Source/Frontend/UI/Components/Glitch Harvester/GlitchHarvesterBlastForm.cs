@@ -124,35 +124,78 @@ namespace RTCV.UI
             S.GET<CoreForm>().AutoCorrupt = false;
 
             bool killswitchWasEnabled = AutoKillSwitch.Enabled;
+
+            var timeout = 10.0;
+            var time_elapsed = 0.0;
+            var swapTimeout = new System.Timers.Timer
+            {
+                AutoReset = false,
+                Interval = 100
+            };
+
+            swapTimeout.Elapsed += (sender, eventArgs) =>
+            {
+                time_elapsed += 0.1;
+                logger.Trace(time_elapsed);
+                if (time_elapsed >= timeout)
+                {
+                    MessageBox.Show($"Savestate failed to load.");
+
+                    this.ParentCanvas?.CloseSubForm();
+                    logger.Trace("Unlocking Interface");
+                    UICore.UnlockInterface();
+                    logger.Trace("Load cancelled");
+
+                    AutoKillSwitch.Enabled = killswitchWasEnabled;
+                    UICore.isSwapping = false;
+                    swapTimeout.Stop();
+                    return;
+                }
+                else
+                {
+                    swapTimeout.Stop();
+                    swapTimeout.Start();
+                }
+            };
+            
             // If the stockpile entry is from a different emulator, close the current one and wait until the new one has connected
             if (StockpileManagerUISide.CurrentStashkey.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
+
                 logger.Trace("different emulator found, switching");
 
                 AutoKillSwitch.Enabled = false;
                 UICore.isSwapping = true;
                 
+
                 logger.Trace("Blocking UI");
                 UICore.LockInterface(false, true);
                 logger.Trace("UI Blocked");
 
+                string oldEmuDir = CorruptCore.RtcCore.EmuDir;
+                var newEmuDir = Path.Combine(Path.Combine(new DirectoryInfo(RtcCore.RtcDir).Parent.Parent.FullName, StockpileManagerUISide.CurrentStashkey.EmuVer));
+                CorruptCore.RtcCore.EmuDir = newEmuDir;
+
+                // Load the save progress form
                 S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
                 this.ParentCanvas?.OpenSubForm(S.GET<SaveProgressForm>());
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Switching from " + new DirectoryInfo(RtcCore.EmuDir).Name + " to " + StockpileManagerUISide.CurrentStashkey.EmuVer, 0));
+                RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Switching from " + new DirectoryInfo(oldEmuDir).Name +
+                                                " to " + StockpileManagerUISide.CurrentStashkey.EmuVer, 0));
 
                 LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
-                VanguardImplementation.Shutdown();
 
-                //UICore.FirstConnect = true;
-                CorruptCore.RtcCore.EmuDir = Path.Combine(Path.Combine(new DirectoryInfo(RtcCore.RtcDir).Parent.Parent.FullName, StockpileManagerUISide.CurrentStashkey.EmuVer));
+                UICore.finishedClosing = false;
+                while (!UICore.finishedClosing)
+                {
+                    Thread.Sleep(100);
+                    Application.DoEvents();
+                }
 
-                logger.Trace("Starting the new process");
-                var oldEmuDir = CorruptCore.RtcCore.EmuDir;
                 var info = new ProcessStartInfo()
                 {
                     UseShellExecute = false,
-                    WorkingDirectory = oldEmuDir,
-                    FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat"),
+                    WorkingDirectory = newEmuDir,
+                    FileName = Path.Combine(newEmuDir, "RESTARTDETACHEDRTC.bat"),
                 };
 
                 if (!File.Exists(info.FileName))
@@ -170,30 +213,35 @@ namespace RTCV.UI
                     return;
                 }
 
+                logger.Trace("Starting the new process");
+                RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Starting " + StockpileManagerUISide.CurrentStashkey.EmuVer, 50));
+
                 Process.Start(info);
-                VanguardImplementation.StartServer();
-                var previous_status = VanguardImplementation.connector.netConn.status;
-                var reconnected = false;
-                while (!reconnected)
+
+                time_elapsed = 0.0;
+                swapTimeout.Start();
+
+                while (VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
                 {
-                    if (previous_status != VanguardImplementation.connector.netConn.status)
-                    {
-                        if (VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
-                        {
-                            reconnected = true;
-                        }
-                        else
-                        {
-                            previous_status = VanguardImplementation.connector.netConn.status;
-                        }
-                    }
-                    logger.Trace("sleeping");
-                    Thread.Sleep(250);
+                    Thread.Sleep(100);
+                    Application.DoEvents();
                 }
 
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Loading stockpile entry", 50));
+                UICore.finishedSwapping = false;
+                // Once AllSpecSent() is finished, we've successfully finished swapping to the new emulator
+                while (!UICore.finishedSwapping)
+                {
+                    Thread.Sleep(100);
+                    Application.DoEvents();
+                }
             }
 
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading stockpile entry", 100));
+
+            time_elapsed = 0.0;
+            swapTimeout.Stop();
+            swapTimeout.Start();
+            
             if (ghMode == GlitchHarvesterMode.CORRUPT)
             {
                 IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
@@ -217,7 +265,8 @@ namespace RTCV.UI
                 Render.StopRender();
             }
 
-            RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
+            swapTimeout.Stop();
+
 
             this.ParentCanvas?.CloseSubForm();
             logger.Trace("Unlocking Interface");
