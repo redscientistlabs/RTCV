@@ -14,6 +14,7 @@ namespace RTCV.UI
     using System.Threading;
     using System.Threading.Tasks;
     using RTCV.NetCore.Enums;
+    using System.Timers;
 
     public partial class GlitchHarvesterBlastForm : ComponentForm, IBlockable
     {
@@ -40,6 +41,15 @@ namespace RTCV.UI
                 isCorruptionApplied = value;
             }
         }
+
+        private double timeout = 10.0;
+        private double time_elapsed = 0.0;
+        private System.Timers.Timer swapTimeout = new System.Timers.Timer
+        {
+            AutoReset = false,
+            Interval = 100
+        };
+        private event ElapsedEventHandler timeoutHandler;
 
         public GlitchHarvesterBlastForm()
         {
@@ -117,6 +127,32 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
+        private void OnSwapTimeout(object source, ElapsedEventArgs e, bool killswitchWasEnabled)
+        {
+            time_elapsed += 0.1;
+            logger.Trace(time_elapsed);
+            if (time_elapsed >= timeout)
+            {
+                MessageBox.Show($"Savestate failed to load.");
+
+                this.ParentCanvas?.CloseSubForm();
+                logger.Trace("Unlocking Interface");
+                UICore.UnlockInterface();
+                logger.Trace("Load cancelled");
+
+                AutoKillSwitch.Enabled = killswitchWasEnabled;
+                UICore.isSwapping = false;
+                swapTimeout.Stop();
+                swapTimeout.Elapsed -= timeoutHandler;
+                return;
+            }
+            else
+            {
+                swapTimeout.Stop();
+                swapTimeout.Start();
+            }
+        }
+
         public void OneTimeExecute()
         {
             logger.Trace("Entering OneTimeExecute()");
@@ -125,42 +161,14 @@ namespace RTCV.UI
 
             bool killswitchWasEnabled = AutoKillSwitch.Enabled;
 
-            var timeout = 10.0;
-            var time_elapsed = 0.0;
-            var swapTimeout = new System.Timers.Timer
-            {
-                AutoReset = false,
-                Interval = 100
-            };
-
-            swapTimeout.Elapsed += (sender, eventArgs) =>
-            {
-                time_elapsed += 0.1;
-                logger.Trace(time_elapsed);
-                if (time_elapsed >= timeout)
-                {
-                    MessageBox.Show($"Savestate failed to load.");
-
-                    this.ParentCanvas?.CloseSubForm();
-                    logger.Trace("Unlocking Interface");
-                    UICore.UnlockInterface();
-                    logger.Trace("Load cancelled");
-
-                    AutoKillSwitch.Enabled = killswitchWasEnabled;
-                    UICore.isSwapping = false;
-                    swapTimeout.Stop();
-                    return;
-                }
-                else
-                {
-                    swapTimeout.Stop();
-                    swapTimeout.Start();
-                }
-            };
+            timeoutHandler ??= (sender, e) => OnSwapTimeout(sender, e, killswitchWasEnabled);
             
             // If the stockpile entry is from a different emulator, close the current one and wait until the new one has connected
             if (StockpileManagerUISide.CurrentStashkey.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
+                time_elapsed = 0.0;
+                swapTimeout.Elapsed += timeoutHandler;
+                swapTimeout.Start();
 
                 logger.Trace("different emulator found, switching");
 
@@ -218,9 +226,6 @@ namespace RTCV.UI
 
                 Process.Start(info);
 
-                time_elapsed = 0.0;
-                swapTimeout.Start();
-
                 while (VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
                 {
                     Thread.Sleep(100);
@@ -238,7 +243,6 @@ namespace RTCV.UI
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading stockpile entry", 100));
 
-            time_elapsed = 0.0;
             swapTimeout.Stop();
             swapTimeout.Start();
             
@@ -266,7 +270,7 @@ namespace RTCV.UI
             }
 
             swapTimeout.Stop();
-
+            swapTimeout.Elapsed -= timeoutHandler;
 
             this.ParentCanvas?.CloseSubForm();
             logger.Trace("Unlocking Interface");
