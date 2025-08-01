@@ -198,6 +198,7 @@
             this.Controls.Add(this.lbDetachedModeSettings);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(224, 236);
             this.Name = "SettingsNetCoreForm";
             this.Tag = "color:dark1";
             this.Text = "NetCore";

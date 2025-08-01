@@ -331,10 +331,12 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(328, 368);
             this.Name = "SettingsCorruptForm";
             this.ShowInTaskbar = false;
             this.Tag = "color:dark1";
             this.Text = "Corruption Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();

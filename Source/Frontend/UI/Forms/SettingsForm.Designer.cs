@@ -144,7 +144,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(703, 544);
+            this.ClientSize = new System.Drawing.Size(704, 560);
             this.Controls.Add(this.btnTestForm);
             this.Controls.Add(this.btnDebugInfo);
             this.Controls.Add(this.btnOpenConsole);
@@ -153,9 +153,11 @@
             this.Controls.Add(this.lbSettingsAndTools);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(704, 555);
             this.Name = "SettingsForm";
             this.Tag = "color:dark1";
             this.Text = "RTC : Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.OnFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();

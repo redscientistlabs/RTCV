@@ -8,6 +8,8 @@ namespace RTCV.UI
 
     public partial class ConnectionStatusForm : ComponentForm, IBlockable
     {
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        
         public ConnectionStatusForm()
         {
             InitializeComponent();

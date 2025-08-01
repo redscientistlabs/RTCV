@@ -547,10 +547,10 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(655, 515);
+            this.MinimumSize = new System.Drawing.Size(704, 560);
             this.Name = "SimpleModeForm";
             this.Tag = "color:dark1";
-            this.Text = "Stockpile Player";
+            this.Text = "Simple Mode";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.gbSimpleGlitchHarvester.ResumeLayout(false);
             this.gbRealTimeCorruption.ResumeLayout(false);

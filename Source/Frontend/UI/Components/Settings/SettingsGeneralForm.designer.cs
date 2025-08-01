@@ -408,6 +408,7 @@ namespace RTCV.UI
             this.Controls.Add(this.btnOpenOnlineWiki);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(481, 392);
             this.Name = "SettingsGeneralForm";
             this.Tag = "color:dark1";
             this.Text = "General";

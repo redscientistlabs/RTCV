@@ -52,6 +52,7 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(212, 98);
             this.Name = "OpenToolsForm";
             this.Tag = "color:dark2";
             this.Text = "Extra Tools and Plugins";

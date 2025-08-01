@@ -84,6 +84,7 @@ namespace RTCV.UI
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(400, 344);
             this.Name = "SettingsHotkeyConfigForm";
             this.Tag = "color:dark1";
             this.Text = "Hotkey Config";

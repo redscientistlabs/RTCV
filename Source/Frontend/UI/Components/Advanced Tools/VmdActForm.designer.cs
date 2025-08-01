@@ -611,7 +611,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(371, 250);
+            this.MinimumSize = new System.Drawing.Size(371, 248);
             this.Name = "VmdActForm";
             this.Tag = "color:dark2";
             this.Text = "Active Table Generator";

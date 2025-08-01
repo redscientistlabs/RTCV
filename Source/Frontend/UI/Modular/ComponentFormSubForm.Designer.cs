@@ -55,6 +55,7 @@
             this.Name = "ComponentFormSubForm";
             this.Tag = "color:dark1";
             this.Text = "UI_DummySubForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

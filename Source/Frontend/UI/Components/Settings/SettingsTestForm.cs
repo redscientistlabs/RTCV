@@ -47,7 +47,7 @@ namespace RTCV.UI
         private void btnTestLockdown_Click(object sender, EventArgs e)
         {
             UICore.LockInterface();
-            DefaultGrids.connectionStatus.LoadToMain();
+            DefaultGrids.connectionStatus.LoadToMain(setDefault: false);
         }
 
         private void btnOpenCloudDebug_Click(object sender, EventArgs e)

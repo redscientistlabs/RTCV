@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace RTCV.UI
 {
     using System;
@@ -5,6 +7,7 @@ namespace RTCV.UI
 
     public partial class ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
     {
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         public ComponentFormSubForm()
         {
             InitializeComponent();

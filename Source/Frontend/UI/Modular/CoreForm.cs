@@ -576,7 +576,7 @@ This message only appears once.";
 
         private void OnLogoClick(object sender, EventArgs e)
         {
-            DefaultGrids.connectionStatus.LoadToMain();
+            DefaultGrids.connectionStatus.LoadToMain(setDefault: false);
         }
 
         private static void StartEasyMode(bool useTemplate)

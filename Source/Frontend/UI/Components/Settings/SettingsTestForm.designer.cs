@@ -156,6 +156,7 @@ namespace RTCV.UI
             this.Controls.Add(this.label2);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(468, 248);
             this.Name = "SettingsTestForm";
             this.Tag = "color:dark2";
             this.Text = "Test Tools";

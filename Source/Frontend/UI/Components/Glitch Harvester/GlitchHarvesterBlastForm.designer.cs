@@ -228,6 +228,7 @@ namespace RTCV.UI
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(176, 152);
             this.Name = "GlitchHarvesterBlastForm";
             this.Tag = "color:dark1";
             this.Text = "Blast Tools";

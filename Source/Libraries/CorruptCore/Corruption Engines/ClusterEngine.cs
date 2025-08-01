@@ -10,8 +10,9 @@ namespace RTCV.CorruptCore
         const string rotFW = "Rotate Forwards";
         const string rotBW = "Rotate Backwards";
         const string overWrite = "Overwrite";
+        const string interleave = "Interleave";
 
-        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite };
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite,interleave };
 
 
         const string forwards = "Forwards";
@@ -174,6 +175,30 @@ namespace RTCV.CorruptCore
                 }
             }
 
+            void Interleave(List<byte[]> list)
+            {
+                int half = list.Count / 2; 
+                List<byte[]> interleaved = new List<byte[]>(list.Count); 
+
+                for (int i = 0; i < half; i++) // iterate over the first half then the second half of the list then adds the elements to the interleaved list
+                {  
+                    interleaved.Add(list[i]);
+                    interleaved.Add(list[half + i]);
+                }
+
+                if (list.Count % 2 != 0) // if the list has an odd number of elements then add the last element
+                {
+                    interleaved.Add(list[list.Count - 1]); 
+                }
+
+                for (int i = 0; i < list.Count; i++) // copy the interleaved list back to the original list
+                {
+                    list[i] = interleaved[i];
+                }
+            }
+
+
+
             //filter
             if (FilterAll)
             {
@@ -219,6 +244,9 @@ namespace RTCV.CorruptCore
                 case overWrite:
                     OverWrite(byteArr);
                     break;
+                case interleave:
+                    Interleave(byteArr);
+                    break;
                 case rand:
                 default:
                     ShuffleRandom(byteArr);
@@ -247,6 +275,7 @@ namespace RTCV.CorruptCore
                 //do not swap endianess
                 return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (precision * chunkSize), false, 0, RtcCore.CreateInfiniteUnits ? 0 : 1, null, true, false, true) };
             }
+        
         }
     }
 }

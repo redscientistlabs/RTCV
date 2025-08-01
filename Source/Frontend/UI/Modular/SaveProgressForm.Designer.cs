@@ -67,6 +67,7 @@
             this.Name = "SaveProgressForm";
             this.Tag = "color:dark1";
             this.Text = "Save Progress";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

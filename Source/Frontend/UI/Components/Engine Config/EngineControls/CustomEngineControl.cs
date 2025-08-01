@@ -18,7 +18,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         public void ResyncEngineUI()
         {
-            //throw new NotImplementedException();
+            S.GET<CustomEngineConfigForm>().RestoreUIStateFromSpec();
         }
     }
 }

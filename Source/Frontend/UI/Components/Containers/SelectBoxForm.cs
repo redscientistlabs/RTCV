@@ -13,8 +13,21 @@ namespace RTCV.UI
 
         public override bool PopoutAllowed
         {
-            get => ((ComponentForm)((dynamic)this.cbSelectBox.SelectedItem).value).PopoutAllowed;
-            set { }
+            get
+            {
+                if (this.cbSelectBox.SelectedItem is ComponentForm form)
+                {
+                    return form.PopoutAllowed;
+                }
+                try
+                {
+                    return ((ComponentForm)((dynamic)this.cbSelectBox.SelectedItem).value).PopoutAllowed;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
 
         public SelectBoxForm(ComponentForm[] childForms)

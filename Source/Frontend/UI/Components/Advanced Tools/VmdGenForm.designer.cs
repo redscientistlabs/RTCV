@@ -411,7 +411,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(371, 250);
+            this.MinimumSize = new System.Drawing.Size(371, 248);
             this.Name = "VmdGenForm";
             this.Tag = "color:dark3";
             this.Text = "VMD Generator";

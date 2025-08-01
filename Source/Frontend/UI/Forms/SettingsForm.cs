@@ -12,6 +12,7 @@ namespace RTCV.UI
 #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class SettingsForm : ComponentForm, IBlockable
     {
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         public ListBoxForm lbForm { get; private set; }
 
         public SettingsForm()

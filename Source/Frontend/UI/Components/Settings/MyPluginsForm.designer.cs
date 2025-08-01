@@ -179,7 +179,7 @@ namespace RTCV.UI
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(390, 250);
+            this.MinimumSize = new System.Drawing.Size(390, 248);
             this.Name = "MyPluginsForm";
             this.Tag = "color:dark1";
             this.Text = "My Plugins";

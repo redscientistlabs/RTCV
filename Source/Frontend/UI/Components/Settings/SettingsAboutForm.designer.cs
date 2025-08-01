@@ -324,6 +324,7 @@ namespace RTCV.UI
             this.Controls.Add(this.lbVersion);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(448, 392);
             this.Name = "SettingsAboutForm";
             this.Tag = "color:dark1";
             this.Text = "About";

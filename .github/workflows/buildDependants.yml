@@ -2,14 +2,14 @@ name: Build dependants
 on:
   push:
     branches:
-      - '51X'
+      - '52X'
   pull_request:
     branches:
-      - '51X'
+      - '52X'
 
 jobs:
   Bizhawk:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -25,7 +25,7 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
 
     # Restore packages for all targets
     - name: Restore packages in current build target
@@ -38,7 +38,7 @@ jobs:
       run: msbuild '.\Bizhawk-Vanguard\BizHawk.sln'
 
   FileStub:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -54,7 +54,7 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
 
     # Restore packages for all targets
     - name: Restore packages in current build target
@@ -67,7 +67,7 @@ jobs:
       run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
 
   ProcessStub:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -83,7 +83,7 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
 
     # Restore packages for all targets
     - name: Restore packages in current build target
@@ -96,11 +96,11 @@ jobs:
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
   melonDS:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
 
     # Setup RTCV
     - name: Checkout current build target
@@ -136,7 +136,7 @@ jobs:
     # error C2855: command-line option '/std:c++' inconsistent with precompiled header
     # See https://github.com/scowalt/dolphin-vanguard/actions/runs/3773017863/jobs/6414258994
     if: ${{ false }}
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: Checkout dolphin
       uses: actions/checkout@v2
@@ -150,7 +150,7 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
     - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore packages in dolphin-vanguard
@@ -159,7 +159,7 @@ jobs:
       run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
   pcsx2:
-    runs-on: windows-2019
+    runs-on: windows-2022
     # pcsx2 builds aren't working. I suspect that submodules got messed up
     # the last time `pcsx2-Vanguard` merged from upstream, but there
     # could be additional issues as well.
@@ -177,7 +177,7 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
     - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore packages in pcsx2-Vanguard
@@ -188,7 +188,7 @@ jobs:
   citra:
     # Our citra fork can't yet build on Visual Studio 2022
     # It requires QtCore prebuilt binaries, which are not available in our current fork
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # RTCV
     - name: Checkout current build target
@@ -196,7 +196,7 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1.3
     - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV

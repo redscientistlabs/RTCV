@@ -8,6 +8,7 @@ namespace RTCV.UI
 
     public partial class SettingsCorruptForm : ComponentForm, IBlockable
     {
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         public SettingsCorruptForm()
         {
             InitializeComponent();
