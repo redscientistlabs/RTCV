@@ -171,24 +171,23 @@ namespace VanguardHook
         [DllExport("GAMECLOSED")]
         public static void GAMECLOSED()
         {
-            ConsoleEx.WriteLine("GAMECLOSED");
-            PartialSpec gameClosed = new PartialSpec("VanguardSpec");
-            gameClosed[VSPEC.OPENROMFILENAME] = "";
-            gameClosed[VSPEC.GAMENAME] = "";
-            AllSpec.VanguardSpec.Update(gameClosed);
-            RtcCore.InvokeGameClosed(true);
-
-            //Load the default settings after closing a game to remove any temporary changes
-            VanguardCore.LoadEmuSettings();
-
-            // If we're closing the emulator, don't refresh the domains or else it will hang
+            // If we're closing the emulator, don't refresh the settings or domains or else it will hang
             if (VanguardImplementation.waitForEmulatorClose)
             {
+
                 ConsoleEx.WriteLine("closing Vanguard");
                 VanguardCore.StopVanguard();
             }
             else
+            {
+                ConsoleEx.WriteLine("GAMECLOSED");
+                PartialSpec gameClosed = new PartialSpec("VanguardSpec");
+                gameClosed[VSPEC.OPENROMFILENAME] = "";
+                gameClosed[VSPEC.GAMENAME] = "";
+                AllSpec.VanguardSpec.Update(gameClosed);
+                RtcCore.InvokeGameClosed(true);
                 VanguardImplementation.RefreshDomains();
+            }
         }
 
 
