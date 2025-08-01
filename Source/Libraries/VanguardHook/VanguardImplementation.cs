@@ -339,9 +339,10 @@ namespace VanguardHook
                         if (AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString() != "")
 						{
 							waitForEmulatorClose = true;
-						}
-						// Load the default settings if a game was open
-						VanguardCore.LoadEmuSettings();
+
+                            // Load the default settings if a game was open
+                            VanguardCore.LoadEmuSettings();
+                        }
 
                         // Close the emulator
                         MethodImports.Vanguard_forceStop();
