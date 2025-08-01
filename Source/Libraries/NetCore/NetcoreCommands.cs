@@ -91,6 +91,8 @@ namespace RTCV.NetCore.Commands
         public const string BlastToolsGetAppliedBackupLayer = nameof(Remote) + "_" + nameof(BlastToolsGetAppliedBackupLayer);
         public const string KeySetSyncSettings = nameof(Remote) + "_" + nameof(KeySetSyncSettings);
         public const string KeySetSystemCore = nameof(Remote) + "_" + nameof(KeySetSystemCore);
+
+        public const string SwapImplementation = nameof(Remote) + "_" + nameof(SwapImplementation);
         
         //HOTKEYS
         public const string HotkeyManualBlast = nameof(Remote) + "_" + nameof(HotkeyManualBlast);

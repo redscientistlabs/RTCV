@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
     using NLog;
+    using System.Windows.Forms;
 
     public class UIConnector : IRoutable, IDisposable
     {
@@ -48,9 +49,9 @@ namespace RTCV.UI
                 return;
             }
 
-            if (UICore.isSwapping)
+            if (VanguardImplementation.isSwapping)
             {
-                UICore.finishedClosing = true;
+                VanguardImplementation.finishedClosing = true;
                 return;
             }
 

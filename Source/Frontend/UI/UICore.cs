@@ -21,9 +21,6 @@ namespace RTCV.UI
     public static class UICore
     {
         internal static bool FirstConnect = true;
-        internal static bool isSwapping = false;
-        internal static bool finishedClosing = false;
-        internal static bool finishedSwapping = false;
         internal static ManualResetEvent Initialized = new ManualResetEvent(false);
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
