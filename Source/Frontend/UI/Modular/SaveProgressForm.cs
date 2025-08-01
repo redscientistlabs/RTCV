@@ -49,6 +49,8 @@ namespace RTCV.UI
             logger.Trace("Entering OnShown() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
             lbCurrentAction.Text = "Waiting";
             pbSave.Value = 0;
+            if (!UICore.isSwapping)
+            {
             try
             {
                 VanguardImplementation.connector?.netConn?.Spec?.LockStatusEventLockout();
@@ -58,13 +60,17 @@ namespace RTCV.UI
             {
                 logger.Trace("AbandonedMutexException! Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
+            }
         }
 
         public void OnHidden()
         {
             logger.Trace("Entering OnHidden() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
+            if (!UICore.isSwapping)
+            {
             VanguardImplementation.connector?.netConn?.Spec?.UnlockLockStatusEventLockout();
             logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            }
         }
     }
 }

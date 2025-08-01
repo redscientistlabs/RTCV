@@ -396,6 +396,63 @@ namespace RTCV.UI
             }
         }
 
+        // Check if any emulators in the stockpile are not installed, and prompt the user
+        // to select an emu version if it's a legacy stockpile.
+        public bool CheckForEmulators(Stockpile sks)
+        {
+            List<string> missingEmulators = new List<string> { };
+            bool missingEmuVer = false;
+            foreach (StashKey key in sks.StashKeys)
+            {
+                if (key.EmuVer != null)
+                {
+                    string emulatorPath = Path.Combine(RtcCore.RtcDir, "..\\..\\", key.EmuVer);
+                    if (!Directory.Exists(emulatorPath))
+                        missingEmulators.Add(key.EmuVer);
+                }
+                // Update stashkey emulator version if it's empty
+                else if (key.EmuVer == null)
+                {
+                    missingEmuVer = true;
+                }
+            }
+
+            if (missingEmulators.Count > 0)
+            {
+                string missingEmulatorsString = "";
+                foreach (string emulator in missingEmulators)
+                {
+                    missingEmulatorsString += emulator + "\n";
+                }
+                string missingEmulatorsMessage = "You are missing the following emulators used in this stockpile: \n\n" +
+                                                  String.Join(Environment.NewLine, missingEmulatorsString + "\n" +
+                                                  "Please install these emulators and then load the stockpile again.");
+                MessageBox.Show(missingEmulatorsMessage, "Operation cancelled", MessageBoxButtons.OK);
+                return false;
+            }
+            else if (missingEmuVer)
+            {
+                var form = new StockpileEmuVersionForm();
+
+                // start/show the control
+                form.ShowDialog();
+
+                if (form.SelectedVersion != null)
+                {
+                    foreach (StashKey key in sks.StashKeys)
+                    {
+                        key.EmuVer = form.SelectedVersion;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Emulator system and version selection was cancelled, the stockpile will not be loaded.", "Operation cancelled", MessageBoxButtons.OK);
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public async void LoadStockpile(string filename)
         {
             logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
@@ -428,7 +485,6 @@ namespace RTCV.UI
                 var r = await Task.Run(() => Stockpile.Load(filename));
                 logger.Trace("Load Task Done");
 
-                var updated_emu_ver = false;
                 if (r.Failed)
                 {
                     logger.Trace("Load Task Failed");
@@ -443,36 +499,10 @@ namespace RTCV.UI
                     StockpileManagerUISide.SetCurrentStockpile(sks);
 
 
-                    foreach (StashKey t in sks.StashKeys)
-                    {
-                        // Update stashkey emulator version if it's empty
-                        if (t.EmuVer == null)
-                        {
-                            var form = new StockpileEmuVersionForm();
+                    if (!CheckForEmulators(sks))
+                        return;
 
-                            // start/show the control
-                            form.ShowDialog();
-
-                            if (form.SelectedVersion != null)
-                            {
-                                foreach (StashKey u in sks.StashKeys)
-                                {
-                                    u.EmuVer = form.SelectedVersion;
-                                }
-                                UnsavedEdits = true;
-                                updated_emu_ver = true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Emulator system and version selection was cancelled, the stockpile will not be loaded.", "Operation cancelled", MessageBoxButtons.OK);
-                                return;
-                            }
-                        }
-                        break;
-                    }
-
-
-                        logger.Trace("Populating DGV");
+                    logger.Trace("Populating DGV");
                     foreach (StashKey key in sks.StashKeys)
                     {
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.EmuVer, key.Note);
@@ -491,7 +521,7 @@ namespace RTCV.UI
                 dgvStockpile.ClearSelection();
                 StockpileManagerUISide.StockpileChanged();
 
-                UnsavedEdits = updated_emu_ver ? true : false;
+                UnsavedEdits = true;
             }
             finally
             {
@@ -524,9 +554,12 @@ namespace RTCV.UI
                     //Populate the dgv
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", 95));
 
+                    if (!CheckForEmulators(sks))
+                        return;
+
                     foreach (StashKey key in sks.StashKeys)
                     {
-                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.EmuVer, key.Note);
                     }
 
                     UnsavedEdits = true;
@@ -884,7 +917,8 @@ namespace RTCV.UI
         private void HandleGlitchHarvesterSettingsMouseDown(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
-            
+            ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
+
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load entry when selected with arrows", null, (ob, ev) => _loadEntryWhenSelectedWithArrows = Params.ToggleParam("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK"))).Checked = Params.IsParamSet("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK");
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
@@ -925,7 +959,6 @@ namespace RTCV.UI
 
         private void UpdateEmuVersionButton_Click(object sender, EventArgs e)
         {
-            logger.Trace("test");
             var form = new StockpileEmuVersionForm(false);
 
             // start/show the control

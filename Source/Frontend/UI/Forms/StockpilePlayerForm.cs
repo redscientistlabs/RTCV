@@ -48,7 +48,7 @@ namespace RTCV.UI
 
                     foreach (StashKey key in sks.StashKeys)
                     {
-                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.EmuVer, key.Note);
                     }
                 }
                 //Check for missing ref files
@@ -236,7 +236,7 @@ namespace RTCV.UI
                     {
                         foreach (StashKey key in sks.StashKeys) //Populate the dgv
                         {
-                            dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                            dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.EmuVer, key.Note);
                         }
                     });
                 }

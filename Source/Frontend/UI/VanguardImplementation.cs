@@ -57,6 +57,7 @@ namespace RTCV.UI
                         break;
                     case Remote.AllSpecSent:
                         AllSpecSent();
+                        UICore.finishedSwapping = true;
                         break;
                     case Remote.PushVanguardSpecUpdate:
                         PushVanguardSpecUpdate(advancedMessage, ref e);
@@ -274,11 +275,12 @@ namespace RTCV.UI
                     //make sure the other side reloads the plugins
 
                     var clientName = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
-                    if (clientName != lastVanguardClient)
+                    // Disabled with the addition of cross-emulator stockpiles
+                    /*if (clientName != lastVanguardClient)
                     {
                         MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
                         return;
-                    }
+                    }*/
 
                     //Push the VMDs since we store them out of spec
                     var vmdProtos = MemoryDomains.VmdPool.Values.Select(x => x.Proto).ToArray();
