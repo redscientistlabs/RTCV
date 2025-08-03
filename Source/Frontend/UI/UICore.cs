@@ -216,6 +216,7 @@ namespace RTCV.UI
 
                 if (focusCoreForm)
                 {
+                    cf.BringToFront();
                     cf.Focus();
                 }
             }
