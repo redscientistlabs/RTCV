@@ -120,7 +120,7 @@ namespace RTCV.UI
 
 
 
-        public void OneTimeExecute()
+        public async void OneTimeExecute()
         {
             logger.Trace("Entering OneTimeExecute()");
             //Disable autocorrupt
@@ -131,8 +131,7 @@ namespace RTCV.UI
             // If the stockpile entry is from a different emulator, close the current one and wait until the new one has connected
             if (StockpileManagerUISide.CurrentStashkey.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
-                var args = new object[] { StockpileManagerUISide.CurrentStashkey.EmuVer, this };
-                if (!LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, RTCV.NetCore.Commands.Remote.SwapImplementation, args))
+                if (!(await Task.Run(() => VanguardImplementation.SwapImplementation(StockpileManagerUISide.CurrentStashkey.EmuVer))))
                     return;
             }
 
