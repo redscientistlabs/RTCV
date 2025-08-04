@@ -50,6 +50,10 @@ namespace RTCV.UI
                 decimal.TryParse(Params.ReadParam("AUTOSAVE_MAX_SIZE"), out decimal maxSize)
                 ? maxSize
                 : 2.5m;
+            if (int.TryParse(Params.ReadParam("SWAP_EMU_TIMEOUT"), out int timeoutSeconds))
+                nmSwapEmuTimeout.Value = timeoutSeconds;
+            else
+                nmSwapEmuTimeout.Value = 20;
         }
 
         private void OpenOnlineWiki(object sender, EventArgs e)
@@ -140,6 +144,12 @@ namespace RTCV.UI
         {
             Params.SetParam("AUTOSAVE_MAX_SIZE", nmMaxAutosaveSize.Value.ToString());
             AutoSave.SetMaxSize(this.nmMaxAutosaveSize.Value);
+        }
+
+        private void nmSwapEmuTimeout_ValueChanged(object sender, EventArgs e)
+        {
+            Params.SetParam("SWAP_EMU_TIMEOUT", nmSwapEmuTimeout.Value.ToString());
+            VanguardImplementation.timeout = (int)nmSwapEmuTimeout.Value;
         }
 
         //todo - rewrite this?
