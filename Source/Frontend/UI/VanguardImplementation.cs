@@ -23,6 +23,7 @@ namespace RTCV.UI
         public static bool isSwapping = false;
         public static TaskCompletionSource<bool> finishedClosing;
         public static TaskCompletionSource<bool> finishedSwapping;
+        public static int timeout = 20;
 
         public static void StartServer()
         {
@@ -182,8 +183,6 @@ namespace RTCV.UI
                 return;
             }
         }
-
-        private static double timeout = 10.0;
 
         private static void SwapTimeout(CanvasForm form)
         {

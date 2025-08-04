@@ -30,6 +30,8 @@ namespace RTCV.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsGeneralForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.nmSwapEmuTimeout = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.nmMaxAutosaveSize = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +53,7 @@ namespace RTCV.UI
             this.btnWatchTutorialVideo = new System.Windows.Forms.Button();
             this.btnResetRandomSeed = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSwapEmuTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmMaxAutosaveSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmAutosaveSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmAutosaveMinutes)).BeginInit();
@@ -59,6 +62,8 @@ namespace RTCV.UI
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.nmSwapEmuTimeout);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.nmMaxAutosaveSize);
             this.panel1.Controls.Add(this.label2);
@@ -73,11 +78,46 @@ namespace RTCV.UI
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
             this.panel1.Controls.Add(this.cbAllowCrossCoreCorruption);
             this.panel1.Controls.Add(this.cbDisableEmulatorOSD);
-            this.panel1.Location = new System.Drawing.Point(18, 206);
+            this.panel1.Location = new System.Drawing.Point(18, 197);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(323, 177);
+            this.panel1.Size = new System.Drawing.Size(323, 196);
             this.panel1.TabIndex = 138;
             this.panel1.Tag = "color:normal";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label5.Location = new System.Drawing.Point(55, 170);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(218, 13);
+            this.label5.TabIndex = 123;
+            this.label5.Text = "seconds before swapping emulators fails";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // nmSwapEmuTimeout
+            // 
+            this.nmSwapEmuTimeout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.nmSwapEmuTimeout.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.nmSwapEmuTimeout.ForeColor = System.Drawing.Color.White;
+            this.nmSwapEmuTimeout.Location = new System.Drawing.Point(11, 168);
+            this.nmSwapEmuTimeout.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.nmSwapEmuTimeout.Name = "nmSwapEmuTimeout";
+            this.nmSwapEmuTimeout.Size = new System.Drawing.Size(44, 22);
+            this.nmSwapEmuTimeout.TabIndex = 122;
+            this.nmSwapEmuTimeout.Tag = "color:dark1";
+            this.nmSwapEmuTimeout.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.nmSwapEmuTimeout.ValueChanged += new System.EventHandler(this.nmSwapEmuTimeout_ValueChanged);
             // 
             // label3
             // 
@@ -87,7 +127,7 @@ namespace RTCV.UI
             this.label3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.label3.Location = new System.Drawing.Point(223, 152);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 13);
+            this.label3.Size = new System.Drawing.Size(24, 13);
             this.label3.TabIndex = 121;
             this.label3.Text = "GiB";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -292,7 +332,7 @@ namespace RTCV.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(15, 188);
+            this.label4.Location = new System.Drawing.Point(15, 179);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(322, 15);
             this.label4.TabIndex = 139;
@@ -416,6 +456,7 @@ namespace RTCV.UI
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmSwapEmuTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmMaxAutosaveSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmAutosaveSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmAutosaveMinutes)).EndInit();
@@ -445,5 +486,7 @@ namespace RTCV.UI
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.NumericUpDown nmMaxAutosaveSize;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.NumericUpDown nmSwapEmuTimeout;
     }
 }
