@@ -125,7 +125,8 @@ namespace RTCV.CorruptCore
                 SystemCore = psk.SystemCore,
                 GameName = psk.GameName,
                 SyncSettings = psk.SyncSettings,
-                StateLocation = psk.StateLocation
+                StateLocation = psk.StateLocation,
+                EmuVer = psk.EmuVer
             };
 
 
@@ -175,7 +176,8 @@ namespace RTCV.CorruptCore
                 SystemCore = psk.SystemCore,
                 GameName = psk.GameName,
                 SyncSettings = psk.SyncSettings,
-                StateLocation = psk.StateLocation
+                StateLocation = psk.StateLocation,
+                EmuVer = psk.EmuVer
             };
 
 
@@ -243,7 +245,8 @@ namespace RTCV.CorruptCore
                 SystemCore = psk.SystemCore,
                 GameName = psk.GameName,
                 SyncSettings = psk.SyncSettings,
-                StateLocation = psk.StateLocation
+                StateLocation = psk.StateLocation,
+                EmuVer = psk.EmuVer
             };
 
             if (loadBeforeOperation)
@@ -347,7 +350,8 @@ namespace RTCV.CorruptCore
                     SystemCore = master.SystemCore,
                     GameName = master.GameName,
                     SyncSettings = master.SyncSettings,
-                    StateLocation = master.StateLocation
+                    StateLocation = master.StateLocation,
+                    EmuVer = master.EmuVer
                 };
 
 

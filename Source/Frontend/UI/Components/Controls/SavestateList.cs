@@ -255,7 +255,8 @@ namespace RTCV.UI.Components.Controls
                             SystemCore = psk.SystemCore,
                             GameName = psk.GameName,
                             SyncSettings = psk.SyncSettings,
-                            StateLocation = psk.StateLocation
+                            StateLocation = psk.StateLocation,
+                            EmuVer = psk.EmuVer
                         };
 
                         newStashkey.BlastLayer = new BlastLayer();

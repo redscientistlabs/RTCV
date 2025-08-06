@@ -129,9 +129,6 @@ namespace RTCV.UI
             if (Params.IsParamSet("RASTERIZE_VMD_UPON_STOCKPILING"))
                 sk.BlastLayer.RasterizeVMDs();
 
-            // Add the emulator directory name
-            sk.EmuVer = new DirectoryInfo((string)AllSpec.VanguardSpec[VSPEC.EMUDIR]).Name;
-
             DataGridViewRow dataRow = S.GET<StockpileManagerForm>().dgvStockpile.Rows[S.GET<StockpileManagerForm>().dgvStockpile.Rows.Add()];
             dataRow.Cells["Item"].Value = sk;
             dataRow.Cells["GameName"].Value = sk.GameName;
