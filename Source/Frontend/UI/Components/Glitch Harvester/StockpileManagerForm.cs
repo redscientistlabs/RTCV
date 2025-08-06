@@ -919,7 +919,23 @@ namespace RTCV.UI
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
 
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load entry when selected with arrows", null, (ob, ev) => _loadEntryWhenSelectedWithArrows = Params.ToggleParam("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK"))).Checked = Params.IsParamSet("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK");
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Stockpile Manager Settings") { Font = new Font("Segoe UI", 12) });
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load entry when selected with arrows", null, (ob, ev) => 
+            _loadEntryWhenSelectedWithArrows = Params.ToggleParam("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK")))
+            .Checked = Params.IsParamSet("LOAD_STOCKPILE_ENTRY_ON_ARROW_CLICK");
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            (ghSettingsMenu.Items.Add("Compress Stockpiles", null, (ob, ev) => 
+                Params.ToggleParam("COMPRESS_STOCKPILE")) as ToolStripMenuItem)
+                .Checked = NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
+
+            (ghSettingsMenu.Items.Add("Include Referenced Files", null, (ob, ev) =>
+                Params.ToggleParam("INCLUDE_REFERENCED_FILES")) as ToolStripMenuItem)
+                .Checked = NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
 
@@ -966,11 +982,9 @@ namespace RTCV.UI
 
             if (form.SelectedVersion != null)
             {
-                List<StashKey> sks = new List<StashKey>();
                 foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
                 {
-                    StashKey sk = ((StashKey)row.Cells[0].Value);
-                    sk.EmuVer = form.SelectedVersion;
+                    ((StashKey)row.Cells[0].Value).EmuVer = form.SelectedVersion;
                     row.Cells[EmuVer.Index].Value = form.SelectedVersion;
                 }
 
