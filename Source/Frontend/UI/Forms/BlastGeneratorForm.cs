@@ -339,7 +339,8 @@ namespace RTCV.UI
                         SystemCore = psk.SystemCore,
                         GameName = psk.GameName,
                         SyncSettings = psk.SyncSettings,
-                        StateLocation = psk.StateLocation
+                        StateLocation = psk.StateLocation,
+                        EmuVer = psk.EmuVer
                     };
                 }
                 else
@@ -394,7 +395,8 @@ namespace RTCV.UI
                         SystemCore = psk.SystemCore,
                         GameName = psk.GameName,
                         SyncSettings = psk.SyncSettings,
-                        StateLocation = psk.StateLocation
+                        StateLocation = psk.StateLocation,
+                        EmuVer = psk.EmuVer
                     };
                 }
                 else
@@ -518,7 +520,8 @@ namespace RTCV.UI
                             SystemCore = psk.SystemCore,
                             GameName = psk.GameName,
                             StateLocation = psk.StateLocation,
-                            SyncSettings = psk.SyncSettings
+                            SyncSettings = psk.SyncSettings,
+                            EmuVer = psk.EmuVer
                         };
                     }
                     else
