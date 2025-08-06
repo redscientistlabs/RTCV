@@ -525,7 +525,7 @@ namespace RTCV.UI
         internal async Task LoadCorrupt()
         {
             internalSK.BlastLayer = new BlastLayer(shownHalf);
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await internalSK.Run();
 
             await Task.Delay(1);
         }
@@ -557,7 +557,7 @@ namespace RTCV.UI
 
         internal async Task Replay()
         {
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await internalSK.Run();
 
             await Task.Delay(1);
         }

@@ -11,6 +11,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Components;
+    using System.Threading.Tasks;
 
     // 0  dgvBlastProtoReference
     // 1  dgvRowDirty
@@ -31,7 +32,7 @@ namespace RTCV.UI
     //TYPE = BLASTUNITTYPE
     //MODE = GENERATIONMODE
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
+#pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class BlastGeneratorForm : Form, IColorize
     {
         private enum BlastGeneratorColumn
@@ -305,7 +306,7 @@ namespace RTCV.UI
             }
         }
 
-        private void LoadAndCorrupt(object sender, EventArgs e)
+        private async void LoadAndCorrupt(object sender, EventArgs e)
         {
             string saveStateWord = "Savestate";
 
@@ -346,6 +347,13 @@ namespace RTCV.UI
                 else
                 {
                     newSk = (StashKey)_sk.Clone();
+                }
+
+                if (newSk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+                {
+                    
+                    if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))
+                        return;
                 }
 
                 BlastLayer bl = GenerateBlastLayers(true, true);

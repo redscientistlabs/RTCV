@@ -17,6 +17,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
     using RTCV.NetCore.Commands;
     using System.Dynamic;
+    using System.Threading.Tasks;
 
     public static class UICore
     {
@@ -444,21 +445,21 @@ namespace RTCV.UI
                     break;
 
                 case "Load and Corrupt":
-                    SyncObjectSingleton.FormExecute(() =>
+                    SyncObjectSingleton.FormExecute(async () =>
                     {
                         S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = true;
-                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null));
                     });
                     break;
 
                 case "Just Corrupt":
                     AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
-                    SyncObjectSingleton.FormExecute(() =>
+                    SyncObjectSingleton.FormExecute(async () =>
                     {
                         bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
                         S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
-                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null));
                         S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
                     });
                     break;
@@ -478,11 +479,11 @@ namespace RTCV.UI
                     // COPY FROM JUST CORRUPT
                     AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
-                    SyncObjectSingleton.FormExecute(() =>
+                    SyncObjectSingleton.FormExecute(async () =>
                     {
                         bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
                         S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
-                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null));
                         S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
                     });
                     //--------------------------------------
@@ -507,7 +508,7 @@ namespace RTCV.UI
 
                 case "Reload Corruption":
 
-                    SyncObjectSingleton.FormExecute(() =>
+                    SyncObjectSingleton.FormExecute(async () =>
                     {
                         var sh = S.GET<StashHistoryForm>();
                         var sm = S.GET<StockpileManagerForm>();
@@ -524,7 +525,7 @@ namespace RTCV.UI
 
                             if (rows.Count > 1)
                             {
-                                ghb.Corrupt(null, null);
+                                await Task.Run(() => ghb.Corrupt(null, null));
                             }
                             else
                             {

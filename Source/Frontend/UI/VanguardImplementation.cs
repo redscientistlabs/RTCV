@@ -167,7 +167,7 @@ namespace RTCV.UI
                         {
                             var newEmu = (string)(advancedMessage.objectValue as object[])[0];
 
-                            bool result = await Task.Run(() => SwapImplementation(newEmu));
+                            bool result = await SwapImplementation(newEmu);
 
                             e.setReturnValue(result);
                         }
