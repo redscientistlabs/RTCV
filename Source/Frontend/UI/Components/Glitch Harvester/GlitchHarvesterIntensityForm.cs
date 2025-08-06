@@ -20,14 +20,22 @@ namespace RTCV.UI
             multiTB_Intensity.ValueChanged += (sender, args) => RtcCore.Intensity = multiTB_Intensity.Value;
         }
 
-        private void OnFormShown(object sender, EventArgs e)
+        public void UpdateMaxIntensity()
         {
             object paramValue = AllSpec.VanguardSpec[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY];
 
-            if (paramValue != null && paramValue is int maxintensity)
-            {
-                multiTB_Intensity.SetMaximum(maxintensity, false);
-            }
+            if (paramValue is int maxIntensity)
+                multiTB_Intensity.SetMaximum(maxIntensity, false);
+            else
+                multiTB_Intensity.SetMaximum(65535, false);
+
+            if (multiTB_Intensity.Value > multiTB_Intensity.Maximum)
+                multiTB_Intensity.Value = multiTB_Intensity.Maximum;
+        }
+
+        private void OnFormShown(object sender, EventArgs e)
+        {
+            UpdateMaxIntensity();
         }
     }
 }

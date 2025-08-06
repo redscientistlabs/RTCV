@@ -39,14 +39,22 @@ namespace RTCV.UI
             RtcCore.CreateInfiniteUnits = cbCreateInfiniteUnits.Checked;
         }
 
-        private void OnFormShown(object sender, EventArgs e)
+        public void UpdateMaxIntensity()
         {
             object paramValue = AllSpec.VanguardSpec[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY];
 
             if (paramValue is int maxIntensity)
-            {
                 multiTB_Intensity.SetMaximum(maxIntensity, false);
-            }
+            else
+                multiTB_Intensity.SetMaximum(65535, false);
+
+            if (multiTB_Intensity.Value > multiTB_Intensity.Maximum)
+                multiTB_Intensity.Value = multiTB_Intensity.Maximum;
+        }
+
+        private void OnFormShown(object sender, EventArgs e)
+        {
+            UpdateMaxIntensity();
         }
     }
 }

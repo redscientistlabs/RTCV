@@ -730,6 +730,9 @@ namespace RTCV.UI
 
                 S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
             }
+
+            S.GET<GeneralParametersForm>().UpdateMaxIntensity();
+            S.GET<GlitchHarvesterIntensityForm>().UpdateMaxIntensity();
         }
 
         private static void toggleLimiterBoxSource(bool setToBindingSource)
