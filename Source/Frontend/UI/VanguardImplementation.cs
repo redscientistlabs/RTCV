@@ -13,6 +13,7 @@ namespace RTCV.UI
     using System.Threading.Tasks;
     using System.Threading;
     using System.Timers;
+    using System.Collections.Generic;
 
     public static class VanguardImplementation
     {
@@ -217,9 +218,10 @@ namespace RTCV.UI
 
             AutoKillSwitch.Enabled = false;
 
-            // If we were focused on the glitch harvester, don't focus the core form
+            // If we were focused on anything other than the core form (aka we're swapping emulators from the launcher), don't focus it
             logger.Trace("Blocking UI");
-            bool focusCoreForm = windowSelect.Text == "Glitch Harvester" ? false : true;
+            var stayFocusedForms = new List<string> { "Glitch Harvester", "Blast Editor", "Blast Generator" };
+            bool focusCoreForm = stayFocusedForms.Contains(windowSelect.Text, StringComparer.OrdinalIgnoreCase) ? false : true;
             SyncObjectSingleton.FormExecute(() => { UICore.LockInterface(focusCoreForm, true); });
             logger.Trace("UI Blocked");
 
