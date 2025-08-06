@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
 
@@ -64,7 +65,7 @@ namespace RTCV.CorruptCore
             });
         }
 
-        public static bool ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
+        public static async Task<bool> ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
         {
             PreApplyStashkey(clearUnitsBeforeApply);
 
@@ -72,7 +73,7 @@ namespace RTCV.CorruptCore
 
             if (loadBeforeOperation)
             {
-                if (!LoadState(sk))
+                if (!(await LoadState(sk)))
                 {
                     return isCorruptionApplied;
                 }
@@ -136,7 +137,7 @@ namespace RTCV.CorruptCore
             StashHistory.Add(CurrentStashkey);
         }
 
-        public static bool Corrupt(bool loadBeforeOperation = true)
+        public static async Task<bool> Corrupt(bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -160,6 +161,15 @@ namespace RTCV.CorruptCore
                 MessageBox.Show($"The Glitch Harvester could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                 return false;
             }
+            
+            if (psk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            {
+                {
+                    if (!(await Task.Run(() => LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, psk.EmuVer))))
+                        return false;
+                }
+            }
+            
 
             string currentGame = (string)AllSpec.VanguardSpec[VSPEC.GAMENAME];
             string currentCore = (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
@@ -207,7 +217,7 @@ namespace RTCV.CorruptCore
             StashHistory.RemoveAt(0);
         }
 
-        public static bool InjectFromStashkey(StashKey sk, bool loadBeforeOperation = true)
+        public static async Task<bool> InjectFromStashkey(StashKey sk, bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -251,7 +261,7 @@ namespace RTCV.CorruptCore
 
             if (loadBeforeOperation)
             {
-                if (!LoadState(CurrentStashkey))
+                if (!(await LoadState(CurrentStashkey)))
                 {
                     return false;
                 }
@@ -272,7 +282,7 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
-        public static bool OriginalFromStashkey(StashKey sk)
+        public static async Task<bool> OriginalFromStashkey(StashKey sk)
         {
             PreApplyStashkey();
 
@@ -284,7 +294,7 @@ namespace RTCV.CorruptCore
 
             bool isCorruptionApplied = false;
 
-            if (!LoadState(sk, true, false))
+            if (!(await LoadState(sk, true, false)))
             {
                 return isCorruptionApplied;
             }
@@ -293,7 +303,7 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
-        public static bool MergeStashkeys(List<StashKey> sks, bool loadBeforeOperation = true)
+        public async static Task<bool> MergeStashkeys(List<StashKey> sks, bool loadBeforeOperation = true)
         {
             PreApplyStashkey();
 
@@ -359,7 +369,7 @@ namespace RTCV.CorruptCore
 
                 if (loadBeforeOperation)
                 {
-                    if (!LoadState(CurrentStashkey))
+                    if (!( await LoadState(CurrentStashkey)))
                     {
                         return isCorruptionApplied;
                     }
@@ -383,8 +393,14 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
+        public static async Task<bool> LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
+            if (sk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            {
+                if (!(await Task.Run(() => LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, sk.EmuVer))))
+                    return false;
+            }
+
             bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);
             return success;
         }

@@ -5,6 +5,7 @@ namespace RTCV.CorruptCore
     using System.Data;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using Ceras;
     using Newtonsoft.Json;
@@ -106,19 +107,19 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-        public bool Run()
+        public async Task<bool> Run()
         {
             StockpileManagerUISide.CurrentStashkey = this;
-            return StockpileManagerUISide.ApplyStashkey(this);
+            return await StockpileManagerUISide.ApplyStashkey(this);
         }
 
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-        public void RunOriginal()
+        public async Task RunOriginal()
         {
             StockpileManagerUISide.CurrentStashkey = this;
-            StockpileManagerUISide.OriginalFromStashkey(this);
+            await StockpileManagerUISide.OriginalFromStashkey(this);
         }
 
         public byte[] EmbedState()

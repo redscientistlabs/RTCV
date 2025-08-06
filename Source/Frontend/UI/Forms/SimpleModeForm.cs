@@ -9,6 +9,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
+    using System.Threading.Tasks;
 
     public partial class SimpleModeForm : ComponentForm, IBlockable
     {
@@ -111,14 +112,14 @@ namespace RTCV.UI
             btnCreateGhSavestate.Text = "  Update the Glitch Harvester savestate";
         }
 
-        private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
+        private async void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
         {
             if (S.GET<StashHistoryForm>().lbStashHistory.Items.Count >= 20)
             {
                 S.GET<StashHistoryForm>().RemoveFirstStashHistoryItem();
             }
 
-            S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+            await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null));
         }
 
         private void SelectClassicPlatforms(object sender, EventArgs e)

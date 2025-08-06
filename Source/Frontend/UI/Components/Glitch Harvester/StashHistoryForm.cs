@@ -9,6 +9,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
     using System.IO;
+    using System.Threading.Tasks;
 
     public partial class StashHistoryForm : ComponentForm, IBlockable
     {
@@ -242,7 +243,7 @@ namespace RTCV.UI
                         S.GET<VmdPoolForm>().RefreshVMDs();
                     }, selectionExists)
                     .AddSeparator()
-                    .AddItem("Merge Selected Stashkeys", (ob, ev) =>
+                    .AddItem("Merge Selected Stashkeys", async (ob, ev) =>
                     {
                         List<StashKey> sks = new List<StashKey>();
                         foreach (StashKey sk in lbStashHistory.SelectedItems)
@@ -250,7 +251,7 @@ namespace RTCV.UI
                             sks.Add(sk);
                         }
 
-                        StockpileManagerUISide.MergeStashkeys(sks);
+                        await StockpileManagerUISide.MergeStashkeys(sks);
 
                         RefreshStashHistorySelectLast();
                     }, selectionExists && lbStashHistory.SelectedItems.Count > 1)

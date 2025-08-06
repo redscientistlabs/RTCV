@@ -382,11 +382,11 @@ This message only appears once.";
             }
         }
 
-        public void ManualBlast(object sender, EventArgs e)
+        public async void ManualBlast(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
             {
-                S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e);
+                await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e));
             }
             else
             {

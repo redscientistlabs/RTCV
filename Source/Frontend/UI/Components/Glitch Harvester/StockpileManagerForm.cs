@@ -51,7 +51,7 @@ namespace RTCV.UI
             btnSaveStockpileAs.BackColorChanged += (o, e) => UpdateSaveButtonColor(UnsavedEdits);
         }
 
-        public void HandleCellClick(object sender, DataGridViewCellEventArgs e)
+        public async void HandleCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {
@@ -123,7 +123,7 @@ namespace RTCV.UI
 
                     sks.Reverse();
 
-                    StockpileManagerUISide.MergeStashkeys(sks);
+                    await StockpileManagerUISide.MergeStashkeys(sks);
 
                     if (Render.RenderAtLoad && S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation)
                     {
@@ -195,12 +195,12 @@ namespace RTCV.UI
                         }
                     }, rowCount == 1)
                     .AddSeparator()
-                    .AddItem("Manual Inject", (ob, ev) =>
+                    .AddItem("Manual Inject", async (ob, ev) =>
                     {
                         var sk = this.GetSelectedStashKey();
                         StashKey newSk = (StashKey)sk.Clone();
 
-                        bool isCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+                        bool isCorrupted = await StockpileManagerUISide.ApplyStashkey(newSk, false, false);
 
                         if (StockpileManagerUISide.CurrentStashkey != null)
                             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = isCorrupted;
@@ -226,7 +226,7 @@ namespace RTCV.UI
                         MemoryDomains.GenerateVmdFromStashkey(sk);
                         S.GET<VmdPoolForm>().RefreshVMDs();
                     }, rowCount == 1)
-                    .AddItem("Merge Selected Stashkeys", (ob, ev) =>
+                    .AddItem("Merge Selected Stashkeys", async (ob, ev) =>
                     {
                         List<StashKey> sks = new List<StashKey>();
                         foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
@@ -234,7 +234,7 @@ namespace RTCV.UI
                             sks.Add((StashKey)row.Cells[0].Value);
                         }
 
-                        StockpileManagerUISide.MergeStashkeys(sks);
+                        await StockpileManagerUISide.MergeStashkeys(sks);
                         S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                     }, rowCount > 1)
                     .AddItem("Replace Associated ROM", (ob, ev) =>
@@ -854,7 +854,7 @@ namespace RTCV.UI
             }
         }
 
-        private void StockpileUp(object sender, EventArgs e)
+        private async void StockpileUp(object sender, EventArgs e)
         {
             if (dgvStockpile.SelectedRows.Count == 0)
             {
@@ -876,11 +876,11 @@ namespace RTCV.UI
 
             if (_loadEntryWhenSelectedWithArrows)
             {
-                HandleCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
+                await Task.Run(() => HandleCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index)));
             }
         }
 
-        private void StockpileDown(object sender, EventArgs e)
+        private async void StockpileDown(object sender, EventArgs e)
         {
             if (dgvStockpile.SelectedRows.Count == 0)
             {
@@ -902,7 +902,7 @@ namespace RTCV.UI
 
             if (_loadEntryWhenSelectedWithArrows)
             {
-                HandleCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
+                await Task.Run(() => HandleCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index)));
             }
         }
 

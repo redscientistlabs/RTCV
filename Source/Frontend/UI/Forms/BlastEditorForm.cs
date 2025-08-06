@@ -56,8 +56,9 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Components;
+    using System.Threading.Tasks;
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
+#pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class BlastEditorForm : Modular.ColorizedForm
     {
         private const int buttonFillWeight = 20;
@@ -1777,7 +1778,7 @@ namespace RTCV.UI
             originalSK.StateLocation = temp.StateLocation;
         }
 
-        public void ReplaceSavestateFromFileToolStrip(string filename = null)
+        public async void ReplaceSavestateFromFileToolStrip(string filename = null)
         {
             if (filename == null)
             {
@@ -1807,8 +1808,14 @@ namespace RTCV.UI
             //Let's hope the game name is correct!
             File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
+            if (currentSK.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            {
+                if (!(await VanguardImplementation.SwapImplementation(currentSK.EmuVer)))
+                    return;
+            }
+
             //Attempt to load and if it fails, don't let them update it.
-            if (!StockpileManagerUISide.LoadState(currentSK))
+            if (!(await StockpileManagerUISide.LoadState(currentSK)))
             {
                 currentSK.ParentKey = oldKey;
                 currentSK.SyncSettings = oldSS;
@@ -2062,7 +2069,7 @@ namespace RTCV.UI
             }
         }
 
-        public void LoadCorrupt(object sender, EventArgs e)
+        public async void LoadCorrupt(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -2071,10 +2078,18 @@ namespace RTCV.UI
             }
 
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = newSk.Run();
+
+            if (newSk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            {
+
+                if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))
+                    return;
+            }
+
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await newSk.Run();
         }
 
-        public void LoadOriginal()
+        public async void LoadOriginal()
         {
             if (currentSK.ParentKey == null)
             {
@@ -2084,13 +2099,13 @@ namespace RTCV.UI
 
             var newSk = (StashKey)currentSK.Clone();
             newSk.BlastLayer.Layer.Clear();
-            newSk.Run();
+            await newSk.Run();
         }
 
-        public void Corrupt(object sender, EventArgs e)
+        public async void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
         
         private void RefreshNoteIcons()
