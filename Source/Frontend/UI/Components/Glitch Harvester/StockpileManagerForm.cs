@@ -971,11 +971,9 @@ namespace RTCV.UI
 
             if (form.SelectedVersion != null)
             {
-                List<StashKey> sks = new List<StashKey>();
                 foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
                 {
-                    StashKey sk = ((StashKey)row.Cells[0].Value);
-                    sk.EmuVer = form.SelectedVersion;
+                    ((StashKey)row.Cells[0].Value).EmuVer = form.SelectedVersion;
                     row.Cells[EmuVer.Index].Value = form.SelectedVersion;
                 }
 
