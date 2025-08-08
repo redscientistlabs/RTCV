@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
@@ -29,6 +30,12 @@ namespace RTCV.CorruptCore
                 _currentStashKey = value;
             }
         }
+
+        public static TaskCompletionSource<bool> finishedClosing;
+        public static TaskCompletionSource<bool> finishedSwapping;
+        public static int timeout = 20;
+        public static Task timeoutTask;
+
         public static StashKey CurrentSavestateStashKey { get; set; }
 
         [SuppressMessage("Microsoft.Design", "CA2211", Justification = "This field cannot be made private or const because it is used by stubs")]
@@ -164,9 +171,13 @@ namespace RTCV.CorruptCore
             
             if (psk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
+                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
+                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, psk.EmuVer);
+
+                Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
+                if (completedTask == timeoutTask)
                 {
-                    if (!(await Task.Run(() => LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, psk.EmuVer))))
-                        return false;
+                    return false;
                 }
             }
             
@@ -397,8 +408,14 @@ namespace RTCV.CorruptCore
         {
             if (sk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
-                if (!(await Task.Run(() => LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, sk.EmuVer))))
+                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
+                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, sk.EmuVer);
+
+                Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
+                if (completedTask == timeoutTask)
+                {
                     return false;
+                }
             }
 
             bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);

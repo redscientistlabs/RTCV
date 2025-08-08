@@ -22,9 +22,6 @@ namespace RTCV.UI
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static bool isSwapping = false;
-        public static TaskCompletionSource<bool> finishedClosing;
-        public static TaskCompletionSource<bool> finishedSwapping;
-        public static int timeout = 20;
 
         public static void StartServer()
         {
@@ -65,7 +62,7 @@ namespace RTCV.UI
                     case Remote.AllSpecSent:
                         AllSpecSent();
                         if (isSwapping)
-                            VanguardImplementation.finishedSwapping.TrySetResult(true);
+                            StockpileManagerUISide.finishedSwapping.TrySetResult(true);
                         break;
                     case Remote.PushVanguardSpecUpdate:
                         PushVanguardSpecUpdate(advancedMessage, ref e);
@@ -165,7 +162,7 @@ namespace RTCV.UI
                         break;
                     case Remote.SwapImplementation:
                         {
-                            var newEmu = (string)(advancedMessage.objectValue as object[])[0];
+                            var newEmu = (string)(advancedMessage.objectValue);
 
                             bool result = await SwapImplementation(newEmu);
 
@@ -208,11 +205,11 @@ namespace RTCV.UI
             var windowSelect = activeForm ?? openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
 
             Task completedTask = null;
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
+            
 
             isSwapping = true;
-            finishedClosing = new TaskCompletionSource<bool>(false);
-            finishedSwapping = new TaskCompletionSource<bool>(false);
+            StockpileManagerUISide.finishedClosing = new TaskCompletionSource<bool>(false);
+            StockpileManagerUISide.finishedSwapping = new TaskCompletionSource<bool>(false);
 
             logger.Trace("different emulator found, switching");
 
@@ -239,8 +236,8 @@ namespace RTCV.UI
 
             // Wait until the UI thread has confirmed the emulator has finished closing
             // This will be when RTC has lost the TCP connection with the emulator
-            completedTask = await Task.WhenAny(finishedClosing.Task, timeoutTask).ConfigureAwait(false);
-            if (completedTask == timeoutTask)
+            completedTask = await Task.WhenAny(StockpileManagerUISide.finishedClosing.Task, StockpileManagerUISide.timeoutTask).ConfigureAwait(false);
+            if (completedTask == StockpileManagerUISide.timeoutTask)
             {
                 SwapTimeout(windowSelect);
                 return false;
@@ -277,8 +274,8 @@ namespace RTCV.UI
 
             // Wait until the UI thread has confirmed the emulator has finished opening
             // This will be once AllSpecSent() has finished
-            completedTask = await Task.WhenAny(finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
-            if (completedTask == timeoutTask)
+            completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, StockpileManagerUISide.timeoutTask).ConfigureAwait(false);
+            if (completedTask == StockpileManagerUISide.timeoutTask)
             {
                 SwapTimeout(windowSelect);
                 return false;

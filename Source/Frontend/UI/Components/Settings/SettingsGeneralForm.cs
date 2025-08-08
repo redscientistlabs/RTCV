@@ -149,7 +149,7 @@ namespace RTCV.UI
         private void nmSwapEmuTimeout_ValueChanged(object sender, EventArgs e)
         {
             Params.SetParam("SWAP_EMU_TIMEOUT", nmSwapEmuTimeout.Value.ToString());
-            VanguardImplementation.timeout = (int)nmSwapEmuTimeout.Value;
+            StockpileManagerUISide.timeout = (int)nmSwapEmuTimeout.Value;
         }
 
         //todo - rewrite this?
