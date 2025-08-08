@@ -51,7 +51,7 @@ namespace RTCV.UI
 
             if (VanguardImplementation.isSwapping)
             {
-                VanguardImplementation.finishedClosing.TrySetResult(true);
+                StockpileManagerUISide.finishedClosing.TrySetResult(true);
                 return;
             }
 
