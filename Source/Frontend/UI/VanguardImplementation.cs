@@ -162,7 +162,7 @@ namespace RTCV.UI
                         break;
                     case Remote.SwapImplementation:
                         {
-                            var newEmu = (string)(advancedMessage.objectValue);
+                            var newEmu = (string)(advancedMessage.objectValue as object[])[0];
 
                             bool result = await SwapImplementation(newEmu);
 
@@ -205,7 +205,8 @@ namespace RTCV.UI
             var windowSelect = activeForm ?? openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
 
             Task completedTask = null;
-            
+            if (StockpileManagerUISide.timeoutTask == null || StockpileManagerUISide.timeoutTask.IsCompleted.Equals(true))
+                StockpileManagerUISide.timeoutTask = Task.Delay(TimeSpan.FromSeconds(StockpileManagerUISide.timeout));
 
             isSwapping = true;
             StockpileManagerUISide.finishedClosing = new TaskCompletionSource<bool>(false);
