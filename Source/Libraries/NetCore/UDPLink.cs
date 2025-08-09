@@ -6,6 +6,7 @@ namespace RTCV.NetCore
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
+    using System.Windows.Forms;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using RTCV.NetCore.Enums;
@@ -140,9 +141,10 @@ namespace RTCV.NetCore
                     if (bytes != null)
                     {
                         string byteString = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                        // if there's more than one element, it's an advanced message
-                        if (byteString.Contains(","))
-                        { 
+
+                        // if there's an objectValue, it's an advanced message
+                        if (byteString.Contains("objectValue"))
+                        {
                             NetCoreAdvancedMessage message = JsonConvert.DeserializeObject<NetCoreAdvancedMessage>(byteString);
                             JArray jArray = (JArray)message.objectValue;
                             message.objectValue = jArray.ToObject<List<object>>().ToArray();

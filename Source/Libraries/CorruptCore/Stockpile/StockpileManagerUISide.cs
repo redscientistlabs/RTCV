@@ -168,11 +168,11 @@ namespace RTCV.CorruptCore
                 MessageBox.Show($"The Glitch Harvester could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                 return false;
             }
-            
+
             if (psk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
                 timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
-                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, psk.EmuVer);
+                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, new object[] { psk.EmuVer });
 
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
@@ -409,7 +409,7 @@ namespace RTCV.CorruptCore
             if (sk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
                 timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
-                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, sk.EmuVer);
+                LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, new object[] { sk.EmuVer });
 
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
