@@ -163,9 +163,13 @@ namespace RTCV.UI
                         break;
                     case Remote.SwapImplementation:
                         {
-                            var newEmu = (string)(advancedMessage.objectValue as object[])[0];
+                            var args = (object[])(advancedMessage.objectValue as object[]);
+                            var newEmu = (string)args[0];
+                            var unlockAfterSwap = false;
+                            if (args.Length > 1)
+                                unlockAfterSwap = (bool)args[1];
 
-                            bool result = await SwapImplementation(newEmu);
+                            bool result = await SwapImplementation(newEmu, unlockAfterSwap);
 
                             e.setReturnValue(result);
                         }
@@ -209,7 +213,7 @@ namespace RTCV.UI
             return;
         }
         
-        public static async Task<bool> SwapImplementation(string newEmu)
+        public static async Task<bool> SwapImplementation(string newEmu, bool unlockAfterSwap = false)
         {
             // Get the currently active form for displaying the loading bar. If there isn't any (a.k.a we're loading an implementation from the launcher),
             // then find the first visible CanvasForm and display it on that instead.
@@ -309,6 +313,10 @@ namespace RTCV.UI
 
             VanguardImplementation.isSwapping = false;
             cts.Cancel();
+
+            if (unlockAfterSwap)
+                LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
+
             return true;
         }
 
