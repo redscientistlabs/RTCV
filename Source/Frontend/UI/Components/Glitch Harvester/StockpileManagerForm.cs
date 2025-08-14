@@ -407,7 +407,7 @@ namespace RTCV.UI
                 if (key.EmuVer != null)
                 {
                     string emulatorPath = Path.Combine(RtcCore.RtcDir, "..\\..\\", key.EmuVer);
-                    if (!Directory.Exists(emulatorPath))
+                    if (!Directory.Exists(emulatorPath) && !missingEmulators.Contains(key.EmuVer))
                         missingEmulators.Add(key.EmuVer);
                 }
                 // Update stashkey emulator version if it's empty
