@@ -178,6 +178,7 @@ namespace RTCV.CorruptCore
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
                 {
+                    LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
                     return false;
                 }
                 else
@@ -225,6 +226,7 @@ namespace RTCV.CorruptCore
             }
 
             PostApplyStashkey(CurrentStashkey);
+            LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             return isCorruptionApplied;
         }
 
@@ -420,6 +422,7 @@ namespace RTCV.CorruptCore
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
                 {
+                    LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
                     return false;
                 }
                 else
@@ -429,6 +432,7 @@ namespace RTCV.CorruptCore
             }
 
             bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);
+            LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             return success;
         }
 

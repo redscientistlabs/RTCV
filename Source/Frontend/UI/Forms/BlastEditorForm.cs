@@ -1814,6 +1814,7 @@ namespace RTCV.UI
             {
                 if (!(await VanguardImplementation.SwapImplementation(currentSK.EmuVer)))
                     return;
+                LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             }
 
             //Attempt to load and if it fails, don't let them update it.
@@ -2086,6 +2087,7 @@ namespace RTCV.UI
 
                 if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))
                     return;
+                LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             }
 
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await newSk.Run();

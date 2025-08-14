@@ -22,6 +22,7 @@ namespace RTCV.UI
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static bool isSwapping = false;
+        public static CanvasForm windowSelect = null;
 
         public static void StartServer()
         {
@@ -169,6 +170,16 @@ namespace RTCV.UI
                             e.setReturnValue(result);
                         }
                         break;
+                    case Remote.UnlockInterface:
+                        {
+                            if (windowSelect != null)
+                                SyncObjectSingleton.FormExecute(() => { windowSelect.CloseSubForm(); });
+
+                            logger.Trace("Unlocking UI");
+                            SyncObjectSingleton.FormExecute(() => { UICore.UnlockInterface(); });
+                            logger.Trace("UI Unlocked");
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -204,7 +215,7 @@ namespace RTCV.UI
             // then find the first visible CanvasForm and display it on that instead.
             var openForms = Application.OpenForms.Cast<Form>();
             var activeForm = openForms.Where(form => form == Form.ActiveForm).FirstOrDefault() as CanvasForm;
-            var windowSelect = activeForm ?? openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
+            windowSelect = activeForm ?? openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
 
             Task completedTask = null;
             CancellationTokenSource cts = new CancellationTokenSource();
@@ -294,7 +305,7 @@ namespace RTCV.UI
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
             });
 
-            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading stockpile entry", 100));
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading game", 100));
 
             VanguardImplementation.isSwapping = false;
             cts.Cancel();
