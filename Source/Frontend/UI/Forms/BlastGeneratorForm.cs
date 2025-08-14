@@ -354,6 +354,7 @@ namespace RTCV.UI
                     
                     if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))
                         return;
+                    LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
                 }
 
                 BlastLayer bl = GenerateBlastLayers(true, true);
