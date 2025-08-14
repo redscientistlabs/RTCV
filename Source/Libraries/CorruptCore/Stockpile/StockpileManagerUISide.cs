@@ -171,13 +171,18 @@ namespace RTCV.CorruptCore
 
             if (psk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
-                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
+                CancellationTokenSource cts = new CancellationTokenSource();
+                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout), cts.Token);
                 LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, new object[] { psk.EmuVer });
 
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
                 {
                     return false;
+                }
+                else
+                {
+                    cts.Cancel();
                 }
             }
             
@@ -408,13 +413,18 @@ namespace RTCV.CorruptCore
         {
             if (sk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
             {
-                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout));
+                CancellationTokenSource cts = new CancellationTokenSource();
+                timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout), cts.Token);
                 LocalNetCoreRouter.QueryRoute<bool>(Endpoints.UI, NetCore.Commands.Remote.SwapImplementation, new object[] { sk.EmuVer });
 
                 Task completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, timeoutTask).ConfigureAwait(false);
                 if (completedTask == timeoutTask)
                 {
                     return false;
+                }
+                else
+                {
+                    cts.Cancel();
                 }
             }
 
