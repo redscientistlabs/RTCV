@@ -184,7 +184,9 @@ namespace RTCV.UI
 
         private static void SwapTimeout(CanvasForm form)
         {
-            Task.Run(() => MessageBox.Show($"Failed to swap emulators."));
+            Task.Run(() => MessageBox.Show($"Failed to swap emulators. Please save your work, then close and reopen RTC. If you are able to reproduce this issue," +
+                $"poke the RTC devs for help (Discord is in the launcher).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly));
 
             SyncObjectSingleton.FormExecute(() => { form.CloseSubForm(); });
             logger.Trace("Unlocking Interface");
@@ -205,8 +207,11 @@ namespace RTCV.UI
             var windowSelect = activeForm ?? openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
 
             Task completedTask = null;
-            if (StockpileManagerUISide.timeoutTask == null || StockpileManagerUISide.timeoutTask.IsCompleted.Equals(true))
-                StockpileManagerUISide.timeoutTask = Task.Delay(TimeSpan.FromSeconds(StockpileManagerUISide.timeout));
+            CancellationTokenSource cts = new CancellationTokenSource();
+            if (StockpileManagerUISide.timeoutTask == null || StockpileManagerUISide.timeoutTask.IsCanceled)
+            {
+                StockpileManagerUISide.timeoutTask = Task.Delay(TimeSpan.FromSeconds(StockpileManagerUISide.timeout), cts.Token);
+            }
 
             isSwapping = true;
             StockpileManagerUISide.finishedClosing = new TaskCompletionSource<bool>(false);
@@ -238,7 +243,7 @@ namespace RTCV.UI
             // Wait until the UI thread has confirmed the emulator has finished closing
             // This will be when RTC has lost the TCP connection with the emulator
             completedTask = await Task.WhenAny(StockpileManagerUISide.finishedClosing.Task, StockpileManagerUISide.timeoutTask).ConfigureAwait(false);
-            if (completedTask == StockpileManagerUISide.timeoutTask)
+            if (completedTask == StockpileManagerUISide.timeoutTask && !completedTask.IsCanceled)
             {
                 SwapTimeout(windowSelect);
                 return false;
@@ -276,7 +281,7 @@ namespace RTCV.UI
             // Wait until the UI thread has confirmed the emulator has finished opening
             // This will be once AllSpecSent() has finished
             completedTask = await Task.WhenAny(StockpileManagerUISide.finishedSwapping.Task, StockpileManagerUISide.timeoutTask).ConfigureAwait(false);
-            if (completedTask == StockpileManagerUISide.timeoutTask)
+            if (completedTask == StockpileManagerUISide.timeoutTask && !completedTask.IsCanceled)
             {
                 SwapTimeout(windowSelect);
                 return false;
@@ -291,13 +296,8 @@ namespace RTCV.UI
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading stockpile entry", 100));
 
-            SyncObjectSingleton.FormExecute(() => { windowSelect.CloseSubForm(); });
             VanguardImplementation.isSwapping = false;
-
-            logger.Trace("Unlocking UI");
-            SyncObjectSingleton.FormExecute(() => { UICore.UnlockInterface(); });
-            logger.Trace("UI Unlocked");
-
+            cts.Cancel();
             return true;
         }
 
