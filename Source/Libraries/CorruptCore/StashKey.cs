@@ -76,7 +76,9 @@ namespace RTCV.CorruptCore
             SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
             GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
             SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
-            EmuVer = (string)new DirectoryInfo((string)AllSpec.VanguardSpec[VSPEC.EMUDIR]).Name ?? "";
+
+            var dirCheck = !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]);
+            EmuVer = dirCheck  ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name : "";
 
             this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
         }
