@@ -75,6 +75,8 @@ namespace RTCV.UI
             StashKey sk = (StashKey)lbStashHistory.SelectedItem;
             StockpileManagerUISide.CurrentStashkey = sk;
 
+            // Disabled with the addition of cross-emulator stockpiles
+            /*
             //If we don't support mixed stockpiles
             if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
             {
@@ -89,6 +91,7 @@ namespace RTCV.UI
                     }
                 }
             }
+            */
 
             if (askForName)
             {
