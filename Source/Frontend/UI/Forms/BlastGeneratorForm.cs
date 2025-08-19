@@ -349,7 +349,7 @@ namespace RTCV.UI
                     newSk = (StashKey)_sk.Clone();
                 }
 
-                if (newSk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+                if (!String.Equals(newSk.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
                 {
                     
                     if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))

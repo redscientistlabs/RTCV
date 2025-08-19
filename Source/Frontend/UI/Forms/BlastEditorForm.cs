@@ -1810,7 +1810,7 @@ namespace RTCV.UI
             //Let's hope the game name is correct!
             File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
-            if (currentSK.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            if (!String.Equals(currentSK.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
                 if (!(await VanguardImplementation.SwapImplementation(currentSK.EmuVer)))
                     return;
@@ -2082,7 +2082,7 @@ namespace RTCV.UI
 
             var newSk = (StashKey)currentSK.Clone();
 
-            if (newSk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            if (!String.Equals(newSk.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
 
                 if (!(await VanguardImplementation.SwapImplementation(newSk.EmuVer)))

@@ -78,7 +78,7 @@ namespace RTCV.CorruptCore
             SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
             var dirCheck = !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]);
-            EmuVer = dirCheck  ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name : "";
+            EmuVer = dirCheck ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name.ToUpper() : "";
 
             this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
         }

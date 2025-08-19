@@ -169,7 +169,7 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            if (psk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            if (!String.Equals(psk.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
                 CancellationTokenSource cts = new CancellationTokenSource();
                 timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout), cts.Token);
@@ -413,7 +413,7 @@ namespace RTCV.CorruptCore
 
         public static async Task<bool> LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
-            if (sk.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            if (!String.Equals(sk.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
                 CancellationTokenSource cts = new CancellationTokenSource();
                 timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeout), cts.Token);

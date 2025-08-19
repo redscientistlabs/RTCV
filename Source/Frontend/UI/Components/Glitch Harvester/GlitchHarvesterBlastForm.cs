@@ -129,7 +129,7 @@ namespace RTCV.UI
             bool killswitchWasEnabled = AutoKillSwitch.Enabled;
 
             // If the stockpile entry is from a different emulator, close the current one and wait until the new one has connected
-            if (StockpileManagerUISide.CurrentStashkey.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            if (!String.Equals(StockpileManagerUISide.CurrentStashkey.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
                 if (!(await VanguardImplementation.SwapImplementation(StockpileManagerUISide.CurrentStashkey.EmuVer)))
                     return;
