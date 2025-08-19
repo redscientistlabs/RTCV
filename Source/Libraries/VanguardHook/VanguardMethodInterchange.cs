@@ -220,7 +220,6 @@ namespace VanguardHook
         [DllExport("CORESTEP")]
         public static void CORE_STEP()
         {
-            StepActions.Execute();
             RtcClock.StepCorrupt(true, true);
         }
     }
