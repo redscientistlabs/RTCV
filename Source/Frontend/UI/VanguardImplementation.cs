@@ -401,14 +401,6 @@ namespace RTCV.UI
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
 
-                    //Pull any lists from the vanguard implementation
-                    if (RtcCore.EmuDir != null)
-                    {
-                        UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
-                    }
-
-                    UICore.LoadLists(RtcCore.ListsDir);
-
                     Panel sidebar = coreForm.pnSideBar;
                     foreach (Control c in sidebar.Controls)
                     {
