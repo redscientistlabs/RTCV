@@ -57,7 +57,8 @@ namespace RTCV.CorruptCore
             var key = RtcCore.GetRandomKey();
             string parentkey = null;
             BlastLayer blastlayer = new BlastLayer();
-            StashKeyConstructor(key, parentkey, blastlayer);
+            bool useEmuVer = false;
+            StashKeyConstructor(key, parentkey, blastlayer, useEmuVer);
         }
 
         public StashKey(string key, string parentkey, BlastLayer blastlayer)
@@ -65,7 +66,7 @@ namespace RTCV.CorruptCore
             StashKeyConstructor(key, parentkey, blastlayer);
         }
 
-        private void StashKeyConstructor(string key, string parentkey, BlastLayer blastlayer)
+        private void StashKeyConstructor(string key, string parentkey, BlastLayer blastlayer, bool useEmuVer = true)
         {
             Key = key;
             ParentKey = parentkey;
@@ -77,7 +78,7 @@ namespace RTCV.CorruptCore
             GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
             SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
-            var dirCheck = !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]);
+            var dirCheck = useEmuVer ? !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]) : false;
             EmuVer = dirCheck ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name.ToUpper() : "";
 
             this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
