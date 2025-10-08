@@ -923,6 +923,7 @@ namespace RTCV.UI
             bool gameNameVisible = columns["GameName"]!.Visible;
             bool systemNameVisible = columns["SystemName"]!.Visible;
             bool systemCoreVisible = columns["SystemCore"]!.Visible;
+            bool emuVerVisible = columns["EmuVer"]!.Visible;
             
             new ContextMenuBuilder()
                 .AddHeader("Stockpile Manager Settings")
@@ -957,6 +958,15 @@ namespace RTCV.UI
                 .AddItem("Show System Core", (ob, ev)
                     => columns["SystemCore"]!.Visible = !systemCoreVisible,
                     isChecked: systemCoreVisible)
+
+                .AddItem("Show Emulator Version", (ob, ev)
+                    => columns["EmuVer"]!.Visible = !emuVerVisible,
+                    isChecked: emuVerVisible)
+
+                .AddSeparator()
+
+                .AddItem("Update Emulator Version", (ob, ev)
+                    => UpdateEmuVersionButton_Click(ob, ev))
                 
                 .Build()
                 .Show(this, locate);
