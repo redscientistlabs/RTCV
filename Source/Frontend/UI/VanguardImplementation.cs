@@ -398,6 +398,9 @@ namespace RTCV.UI
                 {
                     lastVanguardClient = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
 
+                    //make sure the other side reloads the plugins
+                    LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.LoadPlugins, true);
+
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
 
