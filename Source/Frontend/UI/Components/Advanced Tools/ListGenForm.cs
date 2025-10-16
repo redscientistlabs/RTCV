@@ -187,8 +187,10 @@ namespace RTCV.UI
 
         private void RefreshListsFromFile(object sender, EventArgs e)
         {
-            UICore.LoadLists(RtcCore.ListsDir);
-            UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            List<string> dirs = new List<string>();
+            dirs.Add(RtcCore.ListsDir);
+            dirs.Add(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            UICore.LoadLists(dirs);
         }
 
         private void ShowHelpMessage(object sender, EventArgs e)

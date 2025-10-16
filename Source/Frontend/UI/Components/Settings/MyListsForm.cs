@@ -9,6 +9,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using System.Collections.Generic;
 
     public partial class MyListsForm : ComponentForm, IBlockable
     {
@@ -238,8 +239,10 @@ namespace RTCV.UI
             Filtering.ResetLoadedListsInUI();
 
             //reload lists
-            UICore.LoadLists(RtcCore.ListsDir);
-            UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            List<string> dirs = new List<string>();
+            dirs.Add(RtcCore.ListsDir);
+            dirs.Add(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            UICore.LoadLists(dirs);
 
             RefreshLists();
         }
@@ -263,8 +266,10 @@ namespace RTCV.UI
             Filtering.ResetLoadedListsInUI();
 
             //reload lists
-            UICore.LoadLists(RtcCore.ListsDir);
-            UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            List<string> dirs = new List<string>();
+            dirs.Add(RtcCore.ListsDir);
+            dirs.Add(Path.Combine(RtcCore.EmuDir, "LISTS"));
+            UICore.LoadLists(dirs);
 
             RefreshLists();
         }

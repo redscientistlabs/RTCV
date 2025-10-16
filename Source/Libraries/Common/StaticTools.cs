@@ -34,24 +34,34 @@ namespace RTCV.Common
     {
         private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
         public static readonly FormRegister formRegister = new FormRegister();
-        private static object lockObject = new object();
-        private static List<IColorize> _colorizables = new List<IColorize>();
+        private static readonly object SingletonLock = new object();
+        private static readonly object ColorizablesLock = new object();
+        private static readonly List<IColorize> Colorizables = new List<IColorize>();
 
         public static void RegisterColorizable(IColorize colorizable)
         {
-            _colorizables.Add(colorizable);
+            lock (ColorizablesLock)
+            {
+                Colorizables.Add(colorizable);
+            }
         }
 
         public static void DeregisterColorizable(IColorize colorizable)
         {
-            _colorizables.Remove(colorizable);
+            lock (ColorizablesLock)
+            {
+                Colorizables.Remove(colorizable);
+            }
         }
 
         public static void RecolorRegisteredColorizables()
         {
-            foreach (var c in _colorizables)
+            lock (ColorizablesLock)
             {
-                c.Recolor();
+                foreach (var c in Colorizables)
+                {
+                    c.Recolor();
+                }
             }
         }
 
@@ -98,7 +108,7 @@ namespace RTCV.Common
 
             if (!instances.TryGetValue(typ, out object o))
             {
-                lock (lockObject)
+                lock (SingletonLock)
                 {
                     //Check again in case we had stacked threads
                     if (!instances.TryGetValue(typ, out o))
@@ -126,7 +136,7 @@ namespace RTCV.Common
         //returns all singletons that implements a certain type
         public static T[] GETINTERFACES<T>()
         {
-            lock (lockObject)
+            lock (SingletonLock)
             {
                 return instances.Values
                     .OfType<T>()
@@ -143,7 +153,7 @@ namespace RTCV.Common
 
             if (!instances.TryGetValue(typ, out object o))
             {
-                lock (lockObject)
+                lock (SingletonLock)
                 {
                     //Check again in case we had stacked threads
                     if (!instances.TryGetValue(typ, out o))
@@ -163,7 +173,7 @@ namespace RTCV.Common
 
         public static void SET<T>(T newTyp)
         {
-            lock (lockObject)
+            lock (SingletonLock)
             {
                 Type typ = typeof(T);
                 if (newTyp == null)

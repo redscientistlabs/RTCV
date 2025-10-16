@@ -102,11 +102,14 @@ namespace RTCV.CorruptCore
                 }
             });
 
-            //We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
-            PartialSpec update = new PartialSpec("RTCSpec");
-            update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
-            update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
-            AllSpec.CorruptCoreSpec.Update(update);
+            if (!h.IsEmpty)
+            {
+                //We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
+                PartialSpec update = new PartialSpec("RTCSpec");
+                update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
+                update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
+                AllSpec.CorruptCoreSpec.Update(update);
+            }
 
             return h.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value).Keys.ToList(); //Return the hashes ordered by their name
         }

@@ -772,18 +772,23 @@ namespace RTCV.UI
             }
         }
 
-        public static void LoadLists(string dir)
+        public static void LoadLists(List<string> dirs)
         {
-            if (!Directory.Exists(dir))
+            foreach (string dir in dirs)
             {
-                return;
+                if (!Directory.Exists(dir))
+                {
+                    return;
+                }
             }
 
 
             //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
             //checks if first char is $
 
-            string[] paths = Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
+            var allFiles = dirs.SelectMany(dir => Directory.GetFiles(dir)).ToList();
+
+            string[] paths = allFiles.Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);
@@ -792,6 +797,7 @@ namespace RTCV.UI
             {
                 Filtering.RegisterListInUI(Filtering.Hash2NameDico[hash], hash);
             }
+            
 
             toggleLimiterBoxSource(true);
         }

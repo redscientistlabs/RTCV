@@ -234,6 +234,12 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
+                if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] != "" && (!(AllSpec.UISpec[UISPEC.SELECTEDDOMAINS] is string[] domains) || domains.Length == 0))
+                {
+                    MessageBox.Show("Can't corrupt with no domains selected.");
+                    return;
+                }
+
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
                 if (S.GET<CoreForm>().AutoCorrupt)

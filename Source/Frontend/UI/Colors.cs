@@ -1,3 +1,6 @@
+using RTCV.Common;
+using RTCV.NetCore;
+
 namespace RTCV.UI
 {
     using System;
@@ -5,8 +8,8 @@ namespace RTCV.UI
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
-    using RTCV.CorruptCore;
-    using RTCV.UI.Extensions;
+    using CorruptCore;
+    using Extensions;
 
     public static class Colors
     {
@@ -130,16 +133,16 @@ namespace RTCV.UI
             }
 
             GeneralColor = color;
-            RTCV.Common.S.RecolorRegisteredColorizables();
+            S.RecolorRegisteredColorizables();
 
             SaveRTCColor(color);
         }
 
         public static void LoadRTCColor()
         {
-            if (NetCore.Params.IsParamSet("COLOR"))
+            if (Params.IsParamSet("COLOR"))
             {
-                string[] bytes = NetCore.Params.ReadParam("COLOR").Split(',');
+                string[] bytes = Params.ReadParam("COLOR").Split(',');
                 GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
             }
             else
@@ -147,12 +150,12 @@ namespace RTCV.UI
                 GeneralColor = Color.FromArgb(110, 150, 193);
             }
 
-            RTCV.Common.S.RecolorRegisteredColorizables();
+            S.RecolorRegisteredColorizables();
         }
 
         public static void SaveRTCColor(Color color)
         {
-            NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
+            Params.SetParam("COLOR", $"{color.R},{color.G},{color.B}");
         }
     }
 }
