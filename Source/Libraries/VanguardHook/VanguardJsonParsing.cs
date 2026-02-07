@@ -80,36 +80,4 @@ namespace VanguardHook
             return configFile;
         }
     }
-
-    public class BlacklistedDomainsConfig
-    {
-        public string[] MEMORYDOMAINS_BLACKLISTEDDOMAINS { get; set; }
-    }
-
-
-    public class VanguardBlacklistedDomains
-    {
-        public static BlacklistedDomainsConfig domains = GetConfigFile();
-
-        // Read the config file and parse the blacklisted domains into the class
-        public static BlacklistedDomainsConfig GetConfigFile()
-        {
-            if (!File.Exists(EmuDirectory.emuDir + "VanguardBlacklistedDomains.Json"))
-            {
-                MessageBox.Show(
-                "Vanguard could not find the target Emulator's blacklisted domains file at " + EmuDirectory.emuDir + ". Try reinstalling " +
-                "and launching Vanguard.\n\nIf you keep getting this message, poke " +
-                "the RTC devs for help (Discord is in the launcher).",
-                "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
-                                     MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-
-                Environment.Exit(-1);
-                return null;
-            }
-
-            string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardBlacklistedDomains.Json");
-            BlacklistedDomainsConfig domains = JsonConvert.DeserializeObject<BlacklistedDomainsConfig>(config);
-            return domains;
-        }
-    }
 }
