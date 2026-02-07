@@ -7,6 +7,7 @@ using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Runtime;
+using System.Windows.Forms;
 
 namespace VanguardHook
 {
@@ -354,6 +355,17 @@ namespace VanguardHook
                         }
 					}
                     break;
+				case RTCV.NetCore.Commands.Remote.LoadFailed:
+					{
+                        PartialSpec gameClosed = new PartialSpec("VanguardSpec");
+                        gameClosed[VSPEC.OPENROMFILENAME] = "";
+                        gameClosed[VSPEC.GAMENAME] = "";
+                        AllSpec.VanguardSpec.Update(gameClosed);
+                        RtcCore.InvokeGameClosed(true);
+                        VanguardImplementation.RefreshDomains();
+                        VanguardCore.LoadEmuSettings();
+                    }
+					break;
 			}
 		}
     }
