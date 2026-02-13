@@ -86,6 +86,7 @@ namespace VanguardHook
             PartialSpec partial = new PartialSpec("VanguardSpec");
             // Read config and blacklisted domains files and store their values
             var config = VanguardConfigReader.configFile.VSpecConfig;
+			var blacklistedDomainsConfig = VanguardBlacklistedDomains.domains;
 			partial[VSPEC.NAME] = config.NAME;
 			partial[VSPEC.SYSTEM] = String.Empty;
 			partial[VSPEC.GAMENAME] = String.Empty;
@@ -93,6 +94,7 @@ namespace VanguardHook
 			partial[VSPEC.OPENROMFILENAME] = String.Empty;
 			partial[VSPEC.SYNCSETTINGS] = String.Empty;
 			partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = config.OVERRIDE_DEFAULTMAXINTENSITY;
+			partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = blacklistedDomainsConfig.MEMORYDOMAINS_BLACKLISTEDDOMAINS;
 			partial[VSPEC.MEMORYDOMAINS_INTERFACES] = new MemoryDomainProxy[] { };
 			partial[VSPEC.CORE_LASTLOADERROM] = -1;
 			partial[VSPEC.SUPPORTS_RENDERING] = config.SUPPORTS_RENDERING;
