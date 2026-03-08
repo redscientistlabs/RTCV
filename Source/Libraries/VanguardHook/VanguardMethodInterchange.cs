@@ -142,6 +142,13 @@ namespace VanguardHook
                 var systemCore = Marshal.PtrToStringAnsi(systemCorePtr);
                 //Make sure to free the pointer after using it
                 Marshal.FreeHGlobal(systemCorePtr);
+
+                // If we're changing cores, reset the default blacklisted domains
+                if (AllSpec.VanguardSpec[VSPEC.SYSTEMCORE]?.ToString() != systemCore)
+                {
+                    gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = VanguardBlacklistedDomains.domains.MEMORYDOMAINS_BLACKLISTEDDOMAINS;
+                }
+
                 gameDone[VSPEC.SYSTEMCORE] = systemCore;
                 ConsoleEx.WriteLine("systemCore: " + systemCore);
 
@@ -182,6 +189,7 @@ namespace VanguardHook
             {
                 ConsoleEx.WriteLine("GAMECLOSED");
                 PartialSpec gameClosed = new PartialSpec("VanguardSpec");
+                gameClosed[VSPEC.SYSTEMCORE] = "";
                 gameClosed[VSPEC.OPENROMFILENAME] = "";
                 gameClosed[VSPEC.GAMENAME] = "";
                 AllSpec.VanguardSpec.Update(gameClosed);
