@@ -53,9 +53,9 @@ namespace VanguardHook
         public static ConfigRoot GetConfigFile()
         {
             string configPath = Path.Combine(EmuDirectory.emuDir, "VanguardConfig.Json");
-            string configErrMessage = $@"Vanguard could not find the target Emulator's config file at {EmuDirectory.emuDir}. Try reinstalling
-                                      and launching Vanguard.\n\nIf you keep getting this message, poke
-                                      the RTC devs for help (Discord is in the launcher).";
+            string configErrMessage = $"Vanguard could not find the target Emulator's config file at {EmuDirectory.emuDir}. Try reinstalling " +
+                                       "and launching Vanguard.\n\nIf you keep getting this message, poke " +
+                                       "the RTC devs for help (Discord is in the launcher).";
             if (!File.Exists(configPath))
             {
                 MessageBox.Show(configErrMessage,
@@ -94,9 +94,9 @@ public class VanguardBlacklistedDomains
     public static BlacklistedDomainsConfig GetConfigFile()
     {
         string configPath = Path.Combine(EmuDirectory.emuDir, "VanguardBlacklistedDomains.Json");
-        string configErrMessage = $@"Vanguard could not find the target Emulator's blacklisted domains file at {EmuDirectory.emuDir}. Try reinstalling
-                                        and launching Vanguard.\n\nIf you keep getting this message, poke
-                                        the RTC devs for help (Discord is in the launcher).";
+        string configErrMessage = $"Vanguard could not find the target Emulator's blacklisted domains file at {EmuDirectory.emuDir}. Try reinstalling " + 
+                                   "and launching Vanguard.\n\nIf you keep getting this message, poke " +
+                                   "the RTC devs for help (Discord is in the launcher).";
 
         if (!File.Exists(configPath))
         {
