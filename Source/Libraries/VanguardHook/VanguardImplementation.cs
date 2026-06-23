@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using RTCV.CorruptCore;
+﻿using RTCV.CorruptCore;
 using RTCV.NetCore;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Runtime;
-using System.Windows.Forms;
 
 namespace VanguardHook
 {

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using RTCV.NetCore;
+using VanguardHook;
 
 namespace VanguardHook
 {
@@ -50,15 +49,14 @@ namespace VanguardHook
     public class VanguardConfigReader
     {
         public static ConfigRoot configFile = GetConfigFile();
-
         // Read the config file and parse the data into the class
         public static ConfigRoot GetConfigFile()
         {
-            string configErrMessage = "Vanguard could not find the target Emulator's config file at " + EmuDirectory.emuDir + ". Try reinstalling " +
-                                      "and launching Vanguard.\n\nIf you keep getting this message, poke " +
-                                      "the RTC devs for help (Discord is in the launcher).";
-
-            if (!File.Exists(EmuDirectory.emuDir + "VanguardConfig.Json"))
+            string configPath = Path.Combine(EmuDirectory.emuDir, "VanguardConfig.Json");
+            string configErrMessage = $@"Vanguard could not find the target Emulator's config file at {EmuDirectory.emuDir}. Try reinstalling
+                                      and launching Vanguard.\n\nIf you keep getting this message, poke
+                                      the RTC devs for help (Discord is in the launcher).";
+            if (!File.Exists(configPath))
             {
                 MessageBox.Show(configErrMessage,
                 "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
@@ -67,7 +65,7 @@ namespace VanguardHook
                 return null;
             }
 
-            string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardConfig.Json");
+            string config = File.ReadAllText(configPath);
             ConfigRoot configFile = JsonConvert.DeserializeObject<ConfigRoot>(config);
 
             // If the implementation's config file doesn't have a reload on savestate entry, just create an empty one so it
@@ -80,6 +78,7 @@ namespace VanguardHook
             return configFile;
         }
     }
+}
 
     public class BlacklistedDomainsConfig
     {
@@ -87,29 +86,30 @@ namespace VanguardHook
     }
 
 
-    public class VanguardBlacklistedDomains
+public class VanguardBlacklistedDomains
+{
+    public static BlacklistedDomainsConfig domains = GetConfigFile();
+
+    // Read the config file and parse the blacklisted domains into the class
+    public static BlacklistedDomainsConfig GetConfigFile()
     {
-        public static BlacklistedDomainsConfig domains = GetConfigFile();
+        string configPath = Path.Combine(EmuDirectory.emuDir, "VanguardBlacklistedDomains.Json");
+        string configErrMessage = $@"Vanguard could not find the target Emulator's blacklisted domains file at {EmuDirectory.emuDir}. Try reinstalling
+                                        and launching Vanguard.\n\nIf you keep getting this message, poke
+                                        the RTC devs for help (Discord is in the launcher).";
 
-        // Read the config file and parse the blacklisted domains into the class
-        public static BlacklistedDomainsConfig GetConfigFile()
+        if (!File.Exists(configPath))
         {
-            if (!File.Exists(EmuDirectory.emuDir + "VanguardBlacklistedDomains.Json"))
-            {
-                MessageBox.Show(
-                "Vanguard could not find the target Emulator's blacklisted domains file at " + EmuDirectory.emuDir + ". Try reinstalling " +
-                "and launching Vanguard.\n\nIf you keep getting this message, poke " +
-                "the RTC devs for help (Discord is in the launcher).",
-                "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
-                                     MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show(configErrMessage,
+            "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                 MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 
-                Environment.Exit(-1);
-                return null;
-            }
-
-            string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardBlacklistedDomains.Json");
-            BlacklistedDomainsConfig domains = JsonConvert.DeserializeObject<BlacklistedDomainsConfig>(config);
-            return domains;
+            Environment.Exit(-1);
+            return null;
         }
+
+        string config = File.ReadAllText(configPath);
+        BlacklistedDomainsConfig domains = JsonConvert.DeserializeObject<BlacklistedDomainsConfig>(config);
+        return domains;
     }
 }

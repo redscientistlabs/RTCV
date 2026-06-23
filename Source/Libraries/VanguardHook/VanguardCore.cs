@@ -1,16 +1,16 @@
 ﻿
+using RTCV.Common;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.NetCore.Commands;
 using RTCV.Vanguard;
 using System;
-using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using RTCV.Common;
-using System.Runtime.InteropServices;
 
 namespace VanguardHook
 {
@@ -62,6 +62,7 @@ namespace VanguardHook
 			get => (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 			set => AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, value);
 		}
+		
 		public static int LastLoadedRom
 		{
 			get => (int)AllSpec.VanguardSpec[VSPEC.CORE_LASTLOADERROM];
@@ -146,15 +147,12 @@ namespace VanguardHook
             SyncObjectSingleton.SyncObject = SyncForm;
 
             SyncObjectSingleton.EmuThreadIsMainThread = true;
-			//SyncForm.Show();
 			SyncForm.Activate();
 			ConsoleHelper.CreateConsole();
 			ConsoleHelper.HideConsole();
 
-            EmuDirectory.emuDir = EmuDirectory.emuDir + "\\";
             //Start everything
-
-			//Create the FullSpec template for the AllSpec before starting the client connection
+            //Create the FullSpec template for the AllSpec before starting the client connection
             emuSpecTemplate.Insert(VanguardCore.getDefaultPartial());
             AllSpec.VanguardSpec = new FullSpec(emuSpecTemplate, !RtcCore.Attached);
             if (VanguardCore.attached)
