@@ -4,7 +4,7 @@ using RTCV.CorruptCore.Extensions;
 using RTCV.NetCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -28,7 +28,7 @@ namespace VanguardHook
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
             Load_Dlls();
-            EmuDirectory.emuDir = emuDir;
+            EmuDirectory.emuDir = CleanUpBString(emuDir);
 
             VanguardCore.Start();
         }
@@ -77,7 +77,7 @@ namespace VanguardHook
         [DllExport("GAMETOLOAD")]
         public static void GAMETOLOAD([MarshalAs(UnmanagedType.BStr)] string rompath)
         {
-            GAME_TO_LOAD = rompath;
+            GAME_TO_LOAD = CleanUpBString(rompath);
         }
 
         // Called when a game succesfully starts loading on the emulator. Passes the rompath returned
@@ -86,6 +86,7 @@ namespace VanguardHook
         [DllExport("LOADGAMESTART")]
         public static void LOADGAMESTART([MarshalAs(UnmanagedType.BStr)] string rompath)
         {
+            rompath = CleanUpBString(rompath);
             ConsoleEx.WriteLine("LOAD_GAME_START: " + rompath);
             StepActions.ClearStepBlastUnits();
             RtcClock.ResetCount();
@@ -111,6 +112,7 @@ namespace VanguardHook
         [DllExport("LOADGAMEDONE")]
         public static void LOADGAMEDONE([MarshalAs(UnmanagedType.BStr)] string gamename)
         {
+            gamename = CleanUpBString(gamename);
             ConsoleEx.WriteLine("LOAD_GAME_DONE: " + gamename);
             if (AllSpec.UISpec == null)
             {
@@ -229,6 +231,12 @@ namespace VanguardHook
         public static void CORE_STEP()
         {
             RtcClock.StepCorrupt(true, true);
+        }
+
+        // Cleans up a string that was marshalled from a BString that the emulator sent.
+        private static string CleanUpBString(string str)
+        {
+            return new string(str.Where(c => !char.IsControl(c)).ToArray());
         }
     }
 
