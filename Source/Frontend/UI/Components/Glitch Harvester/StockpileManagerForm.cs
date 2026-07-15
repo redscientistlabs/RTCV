@@ -273,9 +273,9 @@ namespace RTCV.UI
                         this.RemoveSelected();
                     }, rowCount > 0)
                     .AddSeparator()
-                    .AddItem("Add Savestate to Manager", (ob, ev) =>
+                    .AddItem("Add Savestate to Manager", async (ob, ev) =>
                     {
-                        S.GET<SavestateManagerForm>().savestateList.NewSavestateFromStockpile();
+                        await S.GET<SavestateManagerForm>().savestateList.NewSavestateFromStockpile();
                     }, rowCount == 1)
                     .Build()
                     .Show(this, locate);
