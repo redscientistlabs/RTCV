@@ -232,6 +232,11 @@ namespace RTCV.UI
                 else
                 {
                     var sks = r.Result;
+
+                    if (!Common.CheckForEmulators(sks.StashKeys))
+                        return;
+
+
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         foreach (StashKey key in sks.StashKeys) //Populate the dgv

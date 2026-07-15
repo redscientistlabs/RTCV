@@ -395,64 +395,6 @@ namespace RTCV.UI
                 S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
         }
-
-        // Check if any emulators in the stockpile are not installed, and prompt the user
-        // to select an emu version if it's a legacy stockpile.
-        public bool CheckForEmulators(List<StashKey> sks)
-        {
-            List<string> missingEmulators = new List<string> { };
-            bool missingEmuVer = false;
-            foreach (StashKey key in sks)
-            {
-                if (key.EmuVer != "")
-                {
-                    string emulatorPath = Path.Combine(RtcCore.RtcDir, "..\\..\\", key.EmuVer);
-                    if (!Directory.Exists(emulatorPath) && !missingEmulators.Contains(key.EmuVer))
-                        missingEmulators.Add(key.EmuVer);
-                }
-                // Update stashkey emulator version if it's empty
-                else
-                {
-                    missingEmuVer = true;
-                }
-            }
-
-            if (missingEmulators.Count > 0)
-            {
-                string missingEmulatorsString = "";
-                foreach (string emulator in missingEmulators)
-                {
-                    missingEmulatorsString += emulator + "\n";
-                }
-                string missingEmulatorsMessage = "You are missing the following emulators used in this stockpile: \n\n" +
-                                                  String.Join(Environment.NewLine, missingEmulatorsString + "\n" +
-                                                  "Please install these emulators and then load the stockpile again.");
-                MessageBox.Show(missingEmulatorsMessage, "Operation cancelled", MessageBoxButtons.OK);
-                return false;
-            }
-            else if (missingEmuVer)
-            {
-                var form = new UpdateEmuVersionForm();
-
-                // start/show the control
-                form.ShowDialog();
-
-                if (form.SelectedVersion != null)
-                {
-                    foreach (StashKey key in sks)
-                    {
-                        key.EmuVer = form.SelectedVersion;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Emulator system and version selection was cancelled, the stockpile will not be loaded.", "Operation cancelled", MessageBoxButtons.OK);
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public async void LoadStockpile(string filename)
         {
             logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
@@ -499,7 +441,7 @@ namespace RTCV.UI
                     StockpileManagerUISide.SetCurrentStockpile(sks);
 
 
-                    if (!CheckForEmulators(sks.StashKeys))
+                    if (!Common.CheckForEmulators(sks.StashKeys))
                         return;
 
                     logger.Trace("Populating DGV");
@@ -554,7 +496,7 @@ namespace RTCV.UI
                     //Populate the dgv
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", 95));
 
-                    if (!CheckForEmulators(sks.StashKeys))
+                    if (!Common.CheckForEmulators(sks.StashKeys))
                         return;
 
                     foreach (StashKey key in sks.StashKeys)
