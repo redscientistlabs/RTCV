@@ -50,6 +50,7 @@ namespace RTCV.UI
             this.btnGlitchHarvester = new System.Windows.Forms.Button();
             this.btnManualBlast = new System.Windows.Forms.Button();
             this.btnAutoCorrupt = new System.Windows.Forms.Button();
+            this.btnSwapEmulator = new System.Windows.Forms.Button();
             this.pnSideBar.SuspendLayout();
             this.pnCrashProtection.SuspendLayout();
             this.pnAutoKillSwitch.SuspendLayout();
@@ -65,6 +66,7 @@ namespace RTCV.UI
             this.pnSideBar.Controls.Add(this.pnAutoKillSwitch);
             this.pnSideBar.Controls.Add(this.btnSettings);
             this.pnSideBar.Controls.Add(this.btnLogo);
+            this.pnSideBar.Controls.Add(this.btnSwapEmulator);
             this.pnSideBar.Controls.Add(this.btnEngineConfig);
             this.pnSideBar.Controls.Add(this.btnEasyMode);
             this.pnSideBar.Controls.Add(this.btnStockpilePlayer);
@@ -80,9 +82,9 @@ namespace RTCV.UI
             // 
             // pnAddon
             // 
-            this.pnAddon.Location = new System.Drawing.Point(0, 321);
+            this.pnAddon.Location = new System.Drawing.Point(0, 391);
             this.pnAddon.Name = "pnAddon";
-            this.pnAddon.Size = new System.Drawing.Size(150, 118);
+            this.pnAddon.Size = new System.Drawing.Size(150, 48);
             this.pnAddon.TabIndex = 129;
             this.pnAddon.Tag = "color:dark3";
             // 
@@ -200,7 +202,7 @@ namespace RTCV.UI
             this.btnOpenCustomLayout.ForeColor = System.Drawing.Color.White;
             this.btnOpenCustomLayout.Image = global::RTCV.UI.Properties.Resources.Layout;
             this.btnOpenCustomLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpenCustomLayout.Location = new System.Drawing.Point(0, 208);
+            this.btnOpenCustomLayout.Location = new System.Drawing.Point(0, 246);
             this.btnOpenCustomLayout.Name = "btnOpenCustomLayout";
             this.btnOpenCustomLayout.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnOpenCustomLayout.Size = new System.Drawing.Size(150, 33);
@@ -335,7 +337,7 @@ namespace RTCV.UI
             this.btnEngineConfig.ForeColor = System.Drawing.Color.White;
             this.btnEngineConfig.Image = ((System.Drawing.Image)(resources.GetObject("btnEngineConfig.Image")));
             this.btnEngineConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEngineConfig.Location = new System.Drawing.Point(0, 94);
+            this.btnEngineConfig.Location = new System.Drawing.Point(0, 132);
             this.btnEngineConfig.Name = "btnEngineConfig";
             this.btnEngineConfig.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnEngineConfig.Size = new System.Drawing.Size(150, 34);
@@ -383,7 +385,7 @@ namespace RTCV.UI
             this.btnStockpilePlayer.ForeColor = System.Drawing.Color.White;
             this.btnStockpilePlayer.Image = ((System.Drawing.Image)(resources.GetObject("btnStockpilePlayer.Image")));
             this.btnStockpilePlayer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStockpilePlayer.Location = new System.Drawing.Point(0, 170);
+            this.btnStockpilePlayer.Location = new System.Drawing.Point(0, 208);
             this.btnStockpilePlayer.Name = "btnStockpilePlayer";
             this.btnStockpilePlayer.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnStockpilePlayer.Size = new System.Drawing.Size(150, 34);
@@ -407,7 +409,7 @@ namespace RTCV.UI
             this.btnGlitchHarvester.ForeColor = System.Drawing.Color.White;
             this.btnGlitchHarvester.Image = ((System.Drawing.Image)(resources.GetObject("btnGlitchHarvester.Image")));
             this.btnGlitchHarvester.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGlitchHarvester.Location = new System.Drawing.Point(0, 132);
+            this.btnGlitchHarvester.Location = new System.Drawing.Point(0, 170);
             this.btnGlitchHarvester.Name = "btnGlitchHarvester";
             this.btnGlitchHarvester.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnGlitchHarvester.Size = new System.Drawing.Size(150, 34);
@@ -432,7 +434,7 @@ namespace RTCV.UI
             this.btnManualBlast.ForeColor = System.Drawing.Color.OrangeRed;
             this.btnManualBlast.Image = ((System.Drawing.Image)(resources.GetObject("btnManualBlast.Image")));
             this.btnManualBlast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnManualBlast.Location = new System.Drawing.Point(0, 245);
+            this.btnManualBlast.Location = new System.Drawing.Point(0, 284);
             this.btnManualBlast.Name = "btnManualBlast";
             this.btnManualBlast.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnManualBlast.Size = new System.Drawing.Size(150, 34);
@@ -457,7 +459,7 @@ namespace RTCV.UI
             this.btnAutoCorrupt.ForeColor = System.Drawing.Color.OrangeRed;
             this.btnAutoCorrupt.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoCorrupt.Image")));
             this.btnAutoCorrupt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAutoCorrupt.Location = new System.Drawing.Point(0, 283);
+            this.btnAutoCorrupt.Location = new System.Drawing.Point(0, 322);
             this.btnAutoCorrupt.Name = "btnAutoCorrupt";
             this.btnAutoCorrupt.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnAutoCorrupt.Size = new System.Drawing.Size(150, 34);
@@ -470,6 +472,30 @@ namespace RTCV.UI
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
             this.btnAutoCorrupt.Visible = false;
             this.btnAutoCorrupt.Click += new System.EventHandler(this.StartAutoCorrupt);
+            // 
+            // btnSwapEmulator
+            // 
+            this.btnSwapEmulator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnSwapEmulator.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnSwapEmulator.FlatAppearance.BorderSize = 0;
+            this.btnSwapEmulator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSwapEmulator.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnSwapEmulator.ForeColor = System.Drawing.Color.White;
+            this.btnSwapEmulator.Image = global::RTCV.UI.Properties.Resources.refresh_icon_16;
+            this.btnSwapEmulator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSwapEmulator.Location = new System.Drawing.Point(0, 94);
+            this.btnSwapEmulator.Name = "btnSwapEmulator";
+            this.btnSwapEmulator.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnSwapEmulator.Size = new System.Drawing.Size(150, 34);
+            this.btnSwapEmulator.TabIndex = 130;
+            this.btnSwapEmulator.TabStop = false;
+            this.btnSwapEmulator.Tag = "color:dark3";
+            this.btnSwapEmulator.Text = "Swap Emulator";
+            this.btnSwapEmulator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSwapEmulator.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSwapEmulator.UseVisualStyleBackColor = false;
+            this.btnSwapEmulator.Visible = false;
+            this.btnSwapEmulator.Click += new System.EventHandler(this.OpenSwapEmulator);
             // 
             // CoreForm
             // 
@@ -519,5 +545,6 @@ namespace RTCV.UI
         public System.Windows.Forms.Button btnOpenCustomLayout;
         public System.Windows.Forms.Button btnEngineConfig;
         public System.Windows.Forms.Panel pnAddon;
+        public System.Windows.Forms.Button btnSwapEmulator;
     }
 }

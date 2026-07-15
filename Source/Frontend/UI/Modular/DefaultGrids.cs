@@ -39,7 +39,24 @@ namespace RTCV.UI.Modular
             Text = "Advanced Tools and Plugins",
         };
 
+        private static CanvasGrid _swapEmulator = null;
+        public static CanvasGrid swapEmulator
+        {
+            get
+            {
+                if (_swapEmulator == null)
+                {
+                    var spGrid = new CanvasGrid(15, 12, "Swap Emulator");
+                    Form spForm = S.GET<SwapEmulatorForm>();
+                    spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
+                    _swapEmulator = spGrid;
+                }
+                return _swapEmulator;
+            }
+        }
+
         private static CanvasGrid _engineConfig = null;
+
         public static CanvasGrid engineConfig
         {
             get

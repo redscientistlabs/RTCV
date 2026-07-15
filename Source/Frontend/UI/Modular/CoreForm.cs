@@ -311,6 +311,10 @@ This message only appears once.";
                 pnLockSidebar.Visible = false;
             }
         }
+        private void OpenSwapEmulator(object sender, EventArgs e)
+        {
+            DefaultGrids.swapEmulator.LoadToMain();
+        }
 
         public void OpenEngineConfig(object sender, EventArgs e)
         {

@@ -605,7 +605,11 @@ namespace RTCV.UI
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
                 S.GET<SettingsAboutForm>().lbConnectedTo.Text =
                     $"Connected to: {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
+
             });
+
+            // Also make sure to update the swap emulator form
+            S.GET<SwapEmulatorForm>().UpdateSelectedEmulator(newEmu);
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Loading game", 100));
 
