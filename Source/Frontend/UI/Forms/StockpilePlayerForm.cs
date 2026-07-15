@@ -7,6 +7,7 @@ namespace RTCV.UI
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using WindowsAPICodePack.Dialogs;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
@@ -236,7 +237,6 @@ namespace RTCV.UI
                     if (!Common.CheckForEmulators(sks.StashKeys))
                         return;
 
-
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         foreach (StashKey key in sks.StashKeys) //Populate the dgv
@@ -247,7 +247,49 @@ namespace RTCV.UI
                 }
 
                 List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
-                foreach (var sk in keys)
+
+                // Check if there are any missing references in the stockpile. If there are, give the option of either selecting a folder or
+                // update each missing reference file.
+                bool missingReference = false;
+                foreach (StashKey sk in keys)
+                {
+                    if (!File.Exists(sk.RomFilename) && !sk.RomFilename.EndsWith("IGNORE"))
+                    {
+                        missingReference = true;
+                        break;
+                    }
+                }
+                if (missingReference)
+                {
+                    string message = $"Couldn't find one or more reference files.\n" +
+                                   "\n" +
+                                   "You can either press OK to select a folder or Cancel to assign each missing reference.\n";
+                    string title = "Error: One or more references not found";
+
+                    if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
+                    {
+                        using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
+                        {
+                            dialog.Title = "Select reference files folder";
+                            dialog.IsFolderPicker = true;
+                            dialog.InitialDirectory = "C:\\";
+                            dialog.EnsurePathExists = true;
+
+                            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                            {
+                                string foldername = dialog.FileName;
+
+                                foreach (StashKey sk in keys)
+                                {
+                                    sk.RomFilename = Path.Combine(foldername, sk.RomShortFilename);
+                                    sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (StashKey sk in keys)
                 {
                     StockpileManagerUISide.CheckAndFixMissingReference(sk, false, keys);
                 }
@@ -268,7 +310,7 @@ namespace RTCV.UI
             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
             new ContextMenuBuilder()
-                .AddItem("Load Stockpile", (ob, ev) =>
+                .AddItem("Load Stockpile", async (ob, ev) =>
                 {
                     try
                     {
@@ -286,7 +328,7 @@ namespace RTCV.UI
 
                         string filename = ofd.FileName;
 
-                        LoadStockpile(filename);
+                        await LoadStockpile(filename);
                     }
                     catch (Exception ex)
                     {
