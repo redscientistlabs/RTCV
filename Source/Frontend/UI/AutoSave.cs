@@ -1,15 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Forms;
-using RTCV.Common;
+﻿using RTCV.Common;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.UI.Components.Controls;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace RTCV.UI
@@ -135,20 +132,21 @@ namespace RTCV.UI
             
             SyncObjectSingleton.FormBeginExecute(() =>
             {
-                Toast toast = new Toast("Auto-saving save states...", "");
+                Toast toast = Toast.GetInstance();
+                int toastID = toast.AddToastEntry("Auto-saving save states...");
                 statesForm.ParentCanvas?.ShowToast(toast);
 
                 Task.Run(() =>
                 {
                     lock (SavingLock)
                     {
-                        statesForm.SaveSSK(savePath);
+                        statesForm.SaveSSK(savePath, toastID);
                     }
                     tcs.SetResult(true);
                 }).ContinueWith(_ =>
                 {
                     // Close the toast on the UI thread
-                    toast.Close();
+                    toast.RemoveToastEntry(toastID);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             });
 
@@ -172,20 +170,21 @@ namespace RTCV.UI
                     return;
                 }
 
-                Toast toast = new Toast("Auto-saving stockpile...", "");
+                Toast toast = Toast.GetInstance();
+                int toastID = toast.AddToastEntry("Auto-saving stockpile...");
                 stockpileForm.ParentCanvas?.ShowToast(toast);
                 
                 Task.Run(() =>
                 {
                     lock (SavingLock)
                     {
-                        Stockpile.Save(sks, savePath, false, Params.IsParamSet("COMPRESS_STOCKPILE"));
+                        Stockpile.Save(sks, savePath, false, Params.IsParamSet("COMPRESS_STOCKPILE"), toastID);
                     }
                     tcs.SetResult(true);
                 }).ContinueWith(_ =>
                 {
                     // Close the toast on the UI thread
-                    toast.Close();
+                    toast.RemoveToastEntry(toastID);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             });
             

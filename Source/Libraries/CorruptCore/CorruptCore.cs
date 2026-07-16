@@ -108,6 +108,7 @@ namespace RTCV.CorruptCore
         public static string LauncherDir => Path.Combine(new DirectoryInfo(RtcDir).Parent.Parent.FullName, "Launcher");
 
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
+        public static event EventHandler<ProgressBarEventArgs> ToastProgressBarHandler;
 
         //This is for the UI only but needs to be in here as well
         public static readonly BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
@@ -1186,7 +1187,10 @@ namespace RTCV.CorruptCore
 
         public static void OnProgressBarUpdate(object sender, ProgressBarEventArgs e)
         {
-            ProgressBarHandler?.Invoke(sender, e);
+            if (e.ToastID >= 0)
+                ToastProgressBarHandler?.Invoke(sender, e);
+            else
+                ProgressBarHandler?.Invoke(sender, e);
         }
 
         public static void InvokeLoadGameDone()

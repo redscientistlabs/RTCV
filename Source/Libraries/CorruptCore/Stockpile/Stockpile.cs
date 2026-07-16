@@ -68,7 +68,7 @@ namespace RTCV.CorruptCore
         {
         }
 
-        public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
+        public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true, int toastID = -1)
         {
             if (sks == null)
             {
@@ -94,25 +94,25 @@ namespace RTCV.CorruptCore
                 sks.RtcVersion = RtcCore.RtcVersion;
                 sks.VanguardImplementation = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
 
-                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress);
+                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress, toastID);
 
-                CopySavestates(ref sks, ref saveProgress);
+                CopySavestates(ref sks, ref saveProgress, toastID);
 
-                CopyConfigs(ref sks, ref saveProgress);
+                CopyConfigs(ref sks, ref saveProgress, toastID);
 
-                WriteLimiterLists(ref sks, ref saveProgress);
+                WriteLimiterLists(ref sks, ref saveProgress, toastID);
 
-                CreateStockpileJson(ref sks, ref saveProgress);
+                CreateStockpileJson(ref sks, ref saveProgress, toastID);
 
-                CreateAndReplaceStockpileZip(ref sks, compress, ref saveProgress);
+                CreateAndReplaceStockpileZip(ref sks, compress, ref saveProgress, toastID);
 
-                CleanOutStockpileFolder(ref sks, ref saveProgress);
+                CleanOutStockpileFolder(ref sks, ref saveProgress, toastID);
 
-                CopyLimiterListsToStockpile(ref sks, ref saveProgress);
+                CopyLimiterListsToStockpile(ref sks, ref saveProgress, toastID);
 
-                UpdateSavestateLocationInfo(ref sks, ref saveProgress);
+                UpdateSavestateLocationInfo(ref sks, ref saveProgress, toastID);
 
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100, toastID));
             }
             catch (StockpileSaveException)
             {
@@ -140,11 +140,11 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CleanTempFolder(ref Stockpile sks, ref decimal saveProgress)
+        private static void CleanTempFolder(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             try
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Emptying TEMP", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Emptying TEMP", saveProgress += 2, toastID));
                 EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace RTCV.CorruptCore
         public string Sha1 { get; set; }
         public string Md5 { get; set; }
     }
-        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress)
+        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress, int toastID = -1)
         {
             // Create metadata file for all roms
             foreach (StashKey key in sks.StashKeys)
@@ -180,7 +180,7 @@ namespace RTCV.CorruptCore
                     {
                         using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", $"{metadata.Name}.metadata"), FileMode.OpenOrCreate))
                         {
-                            RtcCore.OnProgressBarUpdate(metadata, new ProgressBarEventArgs($"Creating metadata file", saveProgress += 2));
+                            RtcCore.OnProgressBarUpdate(metadata, new ProgressBarEventArgs($"Creating metadata file", saveProgress += 2, toastID));
                             JsonHelper.Serialize(metadata, fs, Formatting.Indented);
                         }
                     }
@@ -194,7 +194,7 @@ namespace RTCV.CorruptCore
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Prepping referenced files", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Prepping referenced files", saveProgress += 2, toastID));
                 //populating Allroms array
                 foreach (StashKey key in sks.StashKeys)
                 {
@@ -301,7 +301,7 @@ namespace RTCV.CorruptCore
                     if (str.EndsWith("IGNORE"))
                         continue;
 
-                    RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile));
+                    RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile, toastID));
                     string rom = str;
                     string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
 
@@ -330,7 +330,7 @@ namespace RTCV.CorruptCore
                 }
 
                 //Update the paths
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing paths", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing paths", saveProgress += 2, toastID));
                 foreach (var sk in sks.StashKeys)
                 {
                     sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
@@ -366,7 +366,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress)
+        private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
@@ -376,7 +376,7 @@ namespace RTCV.CorruptCore
                 {
                     // get savestate name
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
-                    RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {stateFilename} to stockpile", saveProgress += percentPerFile));
+                    RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {stateFilename} to stockpile", saveProgress += percentPerFile, toastID));
                     File.Copy(
                         Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename),
                         Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
@@ -384,11 +384,11 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CopyConfigs(ref Stockpile sks, ref decimal saveProgress)
+        private static void CopyConfigs(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false)
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying configs to stockpile", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying configs to stockpile", saveProgress += 2, toastID));
                 string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[] { };
                 foreach (var path in configPaths)
                 {
@@ -401,20 +401,20 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CreateStockpileJson(ref Stockpile sks, ref decimal saveProgress)
+        private static void CreateStockpileJson(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             //Create stockpile.json to temp folder from stockpile object
             using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2, toastID));
                 JsonHelper.Serialize(sks, fs, Formatting.Indented);
             }
         }
 
-        private static void WriteLimiterLists(ref Stockpile sks, ref decimal saveProgress)
+        private static void WriteLimiterLists(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
                         //Get all the limiter lists
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5));
+            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5, toastID));
             var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
             {
@@ -424,12 +424,12 @@ namespace RTCV.CorruptCore
             //Write them to a file
             foreach (var l in limiterLists.Keys)
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2, toastID));
                 File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
             }
         }
 
-        private static void CreateAndReplaceStockpileZip(ref Stockpile sks, bool compress, ref decimal saveProgress)
+        private static void CreateAndReplaceStockpileZip(ref Stockpile sks, bool compress, ref decimal saveProgress, int toastID = -1)
         {
             string tempFilename = sks.Filename + ".temp";
             //If there's already a temp file from a previous failed save, delete it
@@ -452,14 +452,14 @@ namespace RTCV.CorruptCore
                 comp = CompressionLevel.NoCompression;
             }
 
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating SKS", saveProgress += 10));
+            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating SKS", saveProgress += 10, toastID));
             //Create the file into temp
             ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
 
             //Remove the old stockpile
             try
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Removing old stockpile", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Removing old stockpile", saveProgress += 2, toastID));
                 if (File.Exists(sks.Filename))
                 {
                     File.Delete(sks.Filename);
@@ -472,15 +472,15 @@ namespace RTCV.CorruptCore
             }
 
             //Move us to the destination
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Moving SKS to destination", saveProgress += 2));
+            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Moving SKS to destination", saveProgress += 2, toastID));
             File.Move(tempFilename, sks.Filename);
         }
 
-        private static void CleanOutStockpileFolder(ref Stockpile sks, ref decimal saveProgress)
+        private static void CleanOutStockpileFolder(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             try
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Emptying SKS", saveProgress += 2));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Emptying SKS", saveProgress += 2, toastID));
                 EmptyFolder(Path.Combine("WORKING", "SKS"));
             }
             catch (Exception e)
@@ -490,13 +490,13 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CopyLimiterListsToStockpile(ref Stockpile sks, ref decimal saveProgress)
+        private static void CopyLimiterListsToStockpile(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
             decimal percentPerFile = (10m) / (files.Length + 1);
             foreach (var file in files)
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile, toastID));
                 try
                 {
                     File.Move(file, Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(file)));
@@ -512,13 +512,13 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void UpdateSavestateLocationInfo(ref Stockpile sks, ref decimal saveProgress)
+        private static void UpdateSavestateLocationInfo(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
             //Update savestate location info
             decimal percentPerFile = (5m) / (sks.StashKeys.Count + 1);
             foreach (StashKey sk in sks.StashKeys)
             {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Updating StashKeySaveState Location for {sk.Alias}", saveProgress += percentPerFile));
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Updating StashKeySaveState Location for {sk.Alias}", saveProgress += percentPerFile, toastID));
                 sk.StateLocation = StashKeySavestateLocation.SKS;
             }
         }

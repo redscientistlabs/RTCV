@@ -1,7 +1,6 @@
 namespace RTCV.UI
 {
     using Newtonsoft.Json;
-    using NLog.Targets;
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.CorruptCore.Extensions;
@@ -9,7 +8,6 @@ namespace RTCV.UI
     using RTCV.NetCore.Commands;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
-    using SlimDX.DirectInput;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -18,7 +16,6 @@ namespace RTCV.UI
     using System.Security.Cryptography;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Timers;
     using System.Windows.Forms;
     using static RTCV.CorruptCore.Stockpile;
 
@@ -196,8 +193,10 @@ namespace RTCV.UI
             var stockpileForm = S.GET<StockpileManagerForm>();
             SyncObjectSingleton.FormBeginExecute(() =>
             {
-                Toast toast = new Toast("Creating metadata...", "");
+                Toast toast = Toast.GetInstance();
+                int toastID = toast.AddToastEntry("Generating hashes...");
                 stockpileForm?.ParentCanvas?.ShowToast(toast);
+
                 for (int i = 0; i < RomFilenames.Count; i++)
                 {
                     string filename = RomFilenames[i];
@@ -249,7 +248,7 @@ namespace RTCV.UI
                                         if (progressLast != progress)
                                         {
                                             totalProgress += (decimal)(progress - progressLast) / RomFilenames.Count;
-                                            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes...({filesLeft} files left)", totalProgress));
+                                            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes...({filesLeft} files left)", totalProgress, toastID));
                                         }
 
                                         if (totalBytesReadLast != totalBytesRead)
@@ -287,7 +286,7 @@ namespace RTCV.UI
                         // Close the toast on the UI thread
                         if (filesLeft == 0)
                         {
-                            toast.Close();
+                            toast.RemoveToastEntry(toastID);
                             StockpileManagerUISide.finishedGeneratingMetadata.SetResult(true);
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());

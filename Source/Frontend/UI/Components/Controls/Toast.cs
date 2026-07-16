@@ -1,31 +1,62 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using Microsoft.Win32;
-using RTCV.CorruptCore;
+﻿using RTCV.CorruptCore;
 using RTCV.NetCore;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
 {
     public partial class Toast : UserControl
     {
+        private static Toast _instance;
+
+        private Dictionary<int, ToastEntry> _entries = new Dictionary<int, ToastEntry>();
+
         private bool _collapsed;
         public Toast()
         {
             InitializeComponent();
-        }
-        public Toast(string title, string message)
-        {
-            InitializeComponent();
-            this.lbTitle.Text = title;
-            this.lbMessage.Text = message;
+
+            pnEntriesContainer.Controls.Clear();
+
             this.lbChevron.Text = "\ue015"; // the designer can't handle funky unicode characters
-            RtcCore.ProgressBarHandler += UpdateProgress;
+            RtcCore.ToastProgressBarHandler += UpdateProgress;
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
-        
+
+        public static Toast GetInstance()
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new Toast();
+            }
+
+            return _instance;
+        }
+
+        public int AddToastEntry(string text = "")
+        {
+            int id = _entries.Count;
+
+            ToastEntry entry = new ToastEntry();
+            entry.UpdateEntry(text, 0);
+            pnEntriesContainer.Controls.Add(entry);
+
+            _entries.Add(id, entry);
+
+            return id;
+        }
+
+        public void RemoveToastEntry(int id)
+        {
+            _entries[id].Dispose();
+            _entries.Remove(id);
+
+            if (_entries.Count == 0)
+            {
+                Close();
+            }
+        }
 
         private void Toast_Load(object sender, EventArgs e)
         {
@@ -36,17 +67,16 @@ namespace RTCV.UI.Components.Controls
         {
             SyncObjectSingleton.FormBeginExecute(() =>
             {
-                this.lbMessage.Text = e.CurrentTask;
-                if ((int)e.Progress > 100)
+                if (_entries.TryGetValue(e.ToastID, out ToastEntry entry))
                 {
-                    e.Progress = 100;
+                    string text = e.CurrentTask;
+                    decimal progress = e.Progress;
+                    entry.UpdateEntry(text, progress);
                 }
-
-                this.pbProgress.Value = (int)e.Progress;
             });
         }
-        
-        public void Close()
+
+        private void Close()
         {
             this.Dispose();
         }
@@ -56,12 +86,13 @@ namespace RTCV.UI.Components.Controls
             this._collapsed = !this._collapsed;
             if (this._collapsed)
             {
+                this.AutoSize = false;
                 this.Height = 22;
                 this.lbChevron.Text = "\ue013"; // 
             }
             else
             {
-                this.Height = 62;
+                this.AutoSize = true;
                 this.lbChevron.Text = "\ue015"; // 
             }
         }
@@ -76,7 +107,7 @@ namespace RTCV.UI.Components.Controls
             {
                 components.Dispose();
             }
-            RtcCore.ProgressBarHandler -= UpdateProgress;
+            RtcCore.ToastProgressBarHandler -= UpdateProgress;
             base.Dispose(disposing);
         }
     }

@@ -331,7 +331,7 @@ namespace RTCV.UI
                 .Show(button, locate);
         }
 
-        public void SaveSSK(string path)
+        public void SaveSSK(string path, int toastID = -1)
         {
             decimal currentProgress = 0;
             try
@@ -342,18 +342,18 @@ namespace RTCV.UI
                     ssk.StashKeys.Add(x.StashKey);
                     ssk.Text.Add(x.Text);
                 }
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Prepping TEMP", currentProgress += 5));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Prepping TEMP", currentProgress += 5, toastID));
                 //clean temp folder
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
 
                 //Commit any states in use
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states", currentProgress += 5));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states", currentProgress += 5, toastID));
                 commitUsedStatesToSession();
 
                 var percentPerFile = 30m / (ssk.StashKeys.Count + 1);
                 foreach (var key in ssk.StashKeys)
                 {
-                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile, toastID));
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
 
                     string statePath = Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename);
@@ -375,7 +375,7 @@ namespace RTCV.UI
                 //Use two separate loops here in case the first one aborts. We don't want to update the StateLocation unless we know we're good
                 foreach (var key in ssk.StashKeys)
                 {
-                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile));
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile, toastID));
                     if (key == null)
                     {
                         continue;
@@ -385,7 +385,7 @@ namespace RTCV.UI
                 }
 
                 //Create keys.json
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating keys.json", currentProgress += 10));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating keys.json", currentProgress += 10, toastID));
                 using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
                 {
                     JsonHelper.Serialize(ssk, fs, Formatting.Indented);
@@ -409,7 +409,7 @@ namespace RTCV.UI
 
                 string tempFolderPath = Path.Combine(RtcCore.workingDir, "TEMP");
 
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20, toastID));
                 CompressionLevel compressionLevel = Params.IsParamSet("COMPRESS_SAVESTATES")
                     ? CompressionLevel.Fastest
                     : CompressionLevel.NoCompression;
@@ -420,18 +420,18 @@ namespace RTCV.UI
                     File.Delete(path);
                 }
 
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Moving SSK to destination", currentProgress += 5));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Moving SSK to destination", currentProgress += 5, toastID));
                 File.Move(tempFilename, path);
 
                 //Move all the files from temp into SSK
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Emptying SSK", currentProgress += 5));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Emptying SSK", currentProgress += 5, toastID));
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "SSK"));
 
                 var files = Directory.GetFiles(tempFolderPath);
                 percentPerFile = 15m / files.Length;
                 foreach (string file in files)
                 {
-                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile, toastID));
                     File.Move(file, Path.Combine(RtcCore.workingDir, "SSK", Path.GetFileName(file)));
                 }
             }

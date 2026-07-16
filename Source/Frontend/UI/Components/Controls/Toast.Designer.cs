@@ -15,53 +15,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pbProgress = new System.Windows.Forms.ProgressBar();
-            this.lbMessage = new System.Windows.Forms.Label();
+            this.pnEntriesContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lbChevron = new System.Windows.Forms.Label();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.lbChevron = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.toastEntry1 = new RTCV.UI.Components.Controls.ToastEntry();
+            this.pnEntriesContainer.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pnEntriesContainer
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.pbProgress);
-            this.panel1.Controls.Add(this.lbMessage);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(1, 1);
-            this.panel1.Margin = new System.Windows.Forms.Padding(1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(218, 60);
-            this.panel1.TabIndex = 0;
-            this.panel1.Tag = "color:dark1";
-            // 
-            // pbProgress
-            // 
-            this.pbProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbProgress.Location = new System.Drawing.Point(6, 40);
-            this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(206, 14);
-            this.pbProgress.TabIndex = 118;
-            // 
-            // lbMessage
-            // 
-            this.lbMessage.AutoSize = true;
-            this.lbMessage.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.lbMessage.ForeColor = System.Drawing.Color.White;
-            this.lbMessage.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lbMessage.Location = new System.Drawing.Point(2, 22);
-            this.lbMessage.Name = "lbMessage";
-            this.lbMessage.Size = new System.Drawing.Size(134, 13);
-            this.lbMessage.TabIndex = 117;
-            this.lbMessage.Text = "Example notification text";
-            this.lbMessage.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.pnEntriesContainer.AutoSize = true;
+            this.pnEntriesContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnEntriesContainer.Controls.Add(this.toastEntry1);
+            this.pnEntriesContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnEntriesContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.pnEntriesContainer.Location = new System.Drawing.Point(0, 31);
+            this.pnEntriesContainer.Margin = new System.Windows.Forms.Padding(0);
+            this.pnEntriesContainer.Name = "pnEntriesContainer";
+            this.pnEntriesContainer.Size = new System.Drawing.Size(325, 57);
+            this.pnEntriesContainer.TabIndex = 1;
             // 
             // panel2
             // 
@@ -71,24 +47,11 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.MinimumSize = new System.Drawing.Size(286, 31);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(218, 20);
+            this.panel2.Size = new System.Drawing.Size(325, 31);
             this.panel2.TabIndex = 0;
             this.panel2.Tag = "color:dark3";
-            // 
-            // lbChevron
-            // 
-            this.lbChevron.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbChevron.Font = new System.Drawing.Font("Segoe UI Symbol", 11F);
-            this.lbChevron.ForeColor = System.Drawing.Color.White;
-            this.lbChevron.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lbChevron.Location = new System.Drawing.Point(197, -2);
-            this.lbChevron.Name = "lbChevron";
-            this.lbChevron.Size = new System.Drawing.Size(21, 20);
-            this.lbChevron.TabIndex = 119;
-            this.lbChevron.Text = "v";
-            this.lbChevron.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lbChevron.Click += new System.EventHandler(this.lbChevron_Click);
             // 
             // lbTitle
             // 
@@ -98,37 +61,81 @@
             this.lbTitle.ForeColor = System.Drawing.Color.White;
             this.lbTitle.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lbTitle.Location = new System.Drawing.Point(2, 2);
+            this.lbTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(139, 15);
+            this.lbTitle.Size = new System.Drawing.Size(102, 15);
             this.lbTitle.TabIndex = 118;
-            this.lbTitle.Text = "Example notification title";
+            this.lbTitle.Text = "Background Tasks";
             this.lbTitle.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lbChevron
+            // 
+            this.lbChevron.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbChevron.Font = new System.Drawing.Font("Segoe UI Symbol", 11F);
+            this.lbChevron.ForeColor = System.Drawing.Color.White;
+            this.lbChevron.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbChevron.Location = new System.Drawing.Point(295, -2);
+            this.lbChevron.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbChevron.Name = "lbChevron";
+            this.lbChevron.Size = new System.Drawing.Size(32, 31);
+            this.lbChevron.TabIndex = 119;
+            this.lbChevron.Text = "v";
+            this.lbChevron.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbChevron.Click += new System.EventHandler(this.lbChevron_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.pnEntriesContainer);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Location = new System.Drawing.Point(2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(325, 88);
+            this.panel1.TabIndex = 0;
+            this.panel1.Tag = "color:dark1";
+            // 
+            // toastEntry1
+            // 
+            this.toastEntry1.AutoSize = true;
+            this.toastEntry1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.toastEntry1.Location = new System.Drawing.Point(3, 3);
+            this.toastEntry1.Name = "toastEntry1";
+            this.toastEntry1.Size = new System.Drawing.Size(319, 51);
+            this.toastEntry1.TabIndex = 0;
             // 
             // Toast
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Gray;
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Toast";
-            this.Size = new System.Drawing.Size(220, 62);
+            this.Size = new System.Drawing.Size(329, 92);
             this.Tag = "color:light1";
             this.Load += new System.EventHandler(this.Toast_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnEntriesContainer.ResumeLayout(false);
+            this.pnEntriesContainer.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.FlowLayoutPanel pnEntriesContainer;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label lbMessage;
-        private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.ProgressBar pbProgress;
         private System.Windows.Forms.Label lbChevron;
+        private System.Windows.Forms.Label lbTitle;
+        private System.Windows.Forms.Panel panel1;
+        private ToastEntry toastEntry1;
     }
 }
