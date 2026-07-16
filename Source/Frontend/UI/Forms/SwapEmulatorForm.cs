@@ -34,6 +34,9 @@ namespace RTCV.UI
         {
             InitializeComponent();
         }
+
+        // Updates the selected emulator (if a new one was swapped to) and updates the available emulators list
+        // to match any changes to selected cards or the directory
         public void UpdateSelectedEmulator(string selectedEmulator = null)
         {
             SyncObjectSingleton.FormExecute(() =>
@@ -75,10 +78,13 @@ namespace RTCV.UI
                     return;
                 }
 
-                var launcherJson = File.ReadAllText(_LauncherConfLocation);
-                var result = JsonConvert.DeserializeObject<JToken>(launcherJson);
+                // Grab the launcher configuration JSON file and deserialize it
+                string launcherJson = File.ReadAllText(_LauncherConfLocation);
+                JToken result = JsonConvert.DeserializeObject<JToken>(launcherJson);
 
-                foreach (var entry in result)
+                // Loop through each entry in the config file and check if it's an 
+                // item that can be downloaded
+                foreach (JToken entry in result)
                 {
                     if (entry["FolderName"] != null && entry["ImageName"] != null)
                     {
@@ -86,12 +92,14 @@ namespace RTCV.UI
                         string imageName = entry["ImageName"].ToString();
 
                         if (folderName != "Launcher")
+                        {
                             emulatorCards[folderName] = new EmulatorData
                             {
                                 ImageName = imageName.ToString(),
                                 FolderName = folderName.ToString(),
                                 Downloaded = folderNames.Contains(folderName)
                             };
+                        }
                     }
                 }
             }
