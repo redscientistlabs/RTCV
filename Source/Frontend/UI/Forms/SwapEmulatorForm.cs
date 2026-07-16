@@ -91,7 +91,18 @@ namespace RTCV.UI
                         string folderName = entry["FolderName"].ToString();
                         string imageName = entry["ImageName"].ToString();
 
-                        if (folderName != "Launcher")
+                        // TODO: Temporary workaround until I change these implementations
+                        // so they immediately connect
+                        List<string> blacklist = new List<string> {
+                            "Launcher",
+                            "FileStub",
+                            "ProcessStub",
+                            "ClipStub"
+                        };
+
+                        bool containsKeyword = blacklist.Any(keyword =>
+                        folderName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0);
+                        if (!containsKeyword)
                         {
                             emulatorCards[folderName] = new EmulatorData
                             {
