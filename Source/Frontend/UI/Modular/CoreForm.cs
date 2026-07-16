@@ -410,10 +410,6 @@ This message only appears once.";
             Point locate = e.GetMouseLocation(sender);
 
             new ContextMenuBuilder()
-                .AddItem("Start Auto-Corrupt With Recommended Settings for Loaded Game", (ob, ev)
-                    => StartEasyMode(true),
-                    (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES])
-                .AddSeparator()
                 .AddItem("Watch a Tutorial Video", (ob, ev) => Process.Start("http://rtctutorialvideo.r5x.cc/"))
                 .AddItem("Open the Online Wiki", (ob, ev) => Process.Start("https://corrupt.wiki/"))
                 .Build()
