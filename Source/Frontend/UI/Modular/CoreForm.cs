@@ -366,7 +366,10 @@ This message only appears once.";
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
             {
-                await Task.Run(() => S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e));
+                await Task.Run(() =>
+                {
+                    SyncObjectSingleton.FormExecute(async () => await S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e));
+                });
             }
             else
             {
