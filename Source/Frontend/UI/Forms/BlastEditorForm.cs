@@ -1373,7 +1373,7 @@ namespace RTCV.UI
 
         internal void LoadStashkey(StashKey sk, bool silent = false)
         {
-            if (!LoadDomainsFromStashKey(sk.DomainToMiDico))
+            if (!LoadDomainsFromStashKey(sk.MemoryInterfaces))
             {
                 // If we fail to load the domains from the stash key (most likely because it's an older one), try to fall back to the old method
                 if (!RefreshDomains())
@@ -1387,7 +1387,7 @@ namespace RTCV.UI
                 var domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
                 foreach (var domain in domains)
                 {
-                    sk.DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
+                    sk.MemoryInterfaces.Add(domain, MemoryDomains.GetProxy(domain));
                 }
             }
             var buDomains = new List<string>();
@@ -1446,16 +1446,16 @@ namespace RTCV.UI
             }
         }
 
-        private bool LoadDomainsFromStashKey(Dictionary<string, MemoryInterface> skDomainToMiDico)
+        private bool LoadDomainsFromStashKey(Dictionary<string, MemoryDomainProxy> memoryInterfaces)
         {
             try
             {
                 DomainToMiDico?.Clear();
 
-                _domains = skDomainToMiDico.Keys.ToArray();
+                _domains = memoryInterfaces.Keys.ToArray();
                 foreach (var domain in _domains)
                 {
-                    DomainToMiDico.Add(domain, skDomainToMiDico[domain]);
+                    DomainToMiDico.Add(domain, memoryInterfaces[domain]);
                 }
                 if (DomainToMiDico.Keys.Count > 0)
                 {
@@ -1899,7 +1899,6 @@ namespace RTCV.UI
                     return;
                 LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             }
-
             //Attempt to load and if it fails, don't let them update it.
             if (!(await StockpileManagerUISide.LoadState(currentSK)))
             {

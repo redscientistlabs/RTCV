@@ -52,12 +52,12 @@ namespace RTCV.CorruptCore
             set => _alias = value;
         }
 
-        private Dictionary<string, MemoryInterface> _domainToMiDico;
+        private Dictionary<string, MemoryDomainProxy> _memoryInterfaces = new Dictionary<string, MemoryDomainProxy>();
 
-        public Dictionary<string, MemoryInterface> DomainToMiDico
+        public Dictionary<string, MemoryDomainProxy> MemoryInterfaces
         {
-            get => _domainToMiDico ??= new Dictionary<string, MemoryInterface>();
-            set => _domainToMiDico = value;
+            get => this._memoryInterfaces;
+            set => this._memoryInterfaces = value;
         }
 
         public StashKey()
@@ -81,6 +81,7 @@ namespace RTCV.CorruptCore
             BlastLayer = blastlayer;
 
             RomFilename = (string)AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
+            RomShortFilename = Path.GetFileName(RomFilename);
             SystemName = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
             SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
             GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
@@ -94,7 +95,7 @@ namespace RTCV.CorruptCore
             var domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
             foreach (var domain in domains)
             {
-                DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
+                MemoryInterfaces.Add(domain, MemoryDomains.GetProxy(domain));
             }
         }
 
@@ -127,7 +128,6 @@ namespace RTCV.CorruptCore
         /// </summary>
         public async Task<bool> Run()
         {
-            StockpileManagerUISide.CurrentStashkey = this;
             return await StockpileManagerUISide.ApplyStashkey(this);
         }
 
@@ -136,7 +136,6 @@ namespace RTCV.CorruptCore
         /// </summary>
         public async Task RunOriginal()
         {
-            StockpileManagerUISide.CurrentStashkey = this;
             await StockpileManagerUISide.OriginalFromStashkey(this);
         }
 

@@ -116,7 +116,7 @@ namespace RTCV.CorruptCore
             MemoryInterfaces?.Clear();
         }
 
-        public static MemoryDomainProxy GetProxy(string domain, long address)
+        public static MemoryDomainProxy GetProxy(string domain, long address = 0)
         {
             if (domain == null)
             {
