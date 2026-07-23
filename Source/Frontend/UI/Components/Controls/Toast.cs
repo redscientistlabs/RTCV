@@ -36,7 +36,11 @@ namespace RTCV.UI.Components.Controls
 
         public int AddToastEntry(string text = "")
         {
-            int id = _entries.Count;
+            int id = 0;
+            while (_entries.ContainsKey(id))
+            {
+                id++;
+            }
 
             ToastEntry entry = new ToastEntry();
             entry.UpdateEntry(text, 0);
