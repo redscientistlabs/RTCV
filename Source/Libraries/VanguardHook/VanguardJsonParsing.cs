@@ -29,9 +29,8 @@ namespace VanguardHook
         public bool SUPPORTS_REALTIME { get; set; }
         public bool SUPPORTS_SAVESTATES { get; set; }
         public bool SUPPORTS_REFERENCES { get; set; }
-        public bool SUPPORTS_MIXED_STOCKPILE { get; set; }
         public bool CORE_DISKBASED { get; set; }
-        public Dictionary<string, object> RELOAD_ON_SAVESTATE { get; set; }
+        public bool RELOAD_ON_SYNCSETTINGS { get; set; }
     }
 
     // Memory domains used by emulator from config file
@@ -39,6 +38,7 @@ namespace VanguardHook
     {
         public string Name { get; set; }
         public string[] Profiles { get; set; }
+        public bool RequiresReload { get; set; } = false;
         public bool BigEndian { get; set; }
         public string Size { get; set; }
         public int WordSize { get; set; }
@@ -67,13 +67,6 @@ namespace VanguardHook
 
             string config = File.ReadAllText(configPath);
             ConfigRoot configFile = JsonConvert.DeserializeObject<ConfigRoot>(config);
-
-            // If the implementation's config file doesn't have a reload on savestate entry, just create an empty one so it
-            // doesn't through a null exception when accessed
-            if (configFile.VSpecConfig.RELOAD_ON_SAVESTATE == null)
-            {
-                configFile.VSpecConfig.RELOAD_ON_SAVESTATE = new Dictionary<string, object>();
-            }
 
             return configFile;
         }

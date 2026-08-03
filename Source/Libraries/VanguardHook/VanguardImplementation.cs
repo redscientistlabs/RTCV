@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace VanguardHook
 {
@@ -67,6 +68,7 @@ namespace VanguardHook
 	{
 		public static bool enableRTC = true;
 		public static bool waitForEmulatorClose = false;
+		public static bool reloadingRom = false;
 
         public static void ReloadState()
         {
@@ -123,11 +125,10 @@ namespace VanguardHook
 			if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] != "")
 				currentOpenRom = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
-            // Only send the command if we need to load a new rom (since some systems take longer to load every time)
-            if ((bool)AllSpec.VanguardSpec[VSPEC.RELOAD_ON_SAVESTATE] || currentOpenRom != filename)
-			{
-                MethodImports.Vanguard_loadROM(filename);
-			}
+			if (filename == currentOpenRom)
+				reloadingRom = true;
+
+             MethodImports.Vanguard_loadROM(filename);
         }
 		public static string GetROM()
         {
@@ -169,12 +170,13 @@ namespace VanguardHook
         {
 			if (connector.netcoreStatus != RTCV.NetCore.Enums.NetworkStatus.CONNECTED)
 				return;
-			PartialSpec gameDone = new PartialSpec("VanguardSpec");
-			//gameDone[VSPEC.MEMORYDOMAINS_INTERFACES] = GetInterfaces();
 
-            AllSpec.VanguardSpec.Update(VSPEC.MEMORYDOMAINS_INTERFACES, GetInterfaces());
-
-            LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, true, true);
+			var memoryInterfaces = GetInterfaces();
+			bool domainsChanged = !memoryInterfaces.Select(p => p.Name)
+				.SequenceEqual(((MemoryDomainProxy[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES]).Select(p => p.Name));
+            
+			AllSpec.VanguardSpec.Update(VSPEC.MEMORYDOMAINS_INTERFACES, memoryInterfaces);
+            LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, domainsChanged, true);
         }
 		// finds all domains to be used by the system
 		public static MemoryDomainProxy[] GetInterfaces()
@@ -186,19 +188,28 @@ namespace VanguardHook
 
             List<MemoryDomainProxy> interfaces = new List<MemoryDomainProxy>();
             List<MemoryDomainConfig> memDomainList = VanguardConfigReader.configFile.MemoryDomainConfig;
-            for (var i = 0; i < memDomainList.Count; i++)
-            {
-                for (var j = 0; j < memDomainList[i].Profiles.Count(); j++)
-				{
-                    if (memDomainList[i].Profiles[j] == (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE])
-					{
-                        MemoryDomain memDomain = new MemoryDomain(memDomainList[i]);
-                        interfaces.Add(new MemoryDomainProxy(memDomain));
+            List<string> domainsThatRequireReload = new List<string>();
 
-						break;
-                    }
+            for (var i = 0; i < memDomainList.Count; i++)
+			{
+				for (var j = 0; j < memDomainList[i].Profiles.Count(); j++)
+				{
+					if (memDomainList[i].Profiles[j] == (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE])
+					{
+						MemoryDomain memDomain = new MemoryDomain(memDomainList[i]);
+						interfaces.Add(new MemoryDomainProxy(memDomain));
+
+                        if (memDomainList[i].RequiresReload)
+                            domainsThatRequireReload.Add(memDomainList[i].Name);
+
+                        break;
+					}
 				}
-            }
+			}
+
+            string[] arr = domainsThatRequireReload.Count > 0 ? domainsThatRequireReload.ToArray() : new string[0];
+			AllSpec.VanguardSpec.Update(VSPEC.RELOAD_IF_DOMAIN_SELECTED, arr);
+
             return interfaces.ToArray();
 			
         }
@@ -216,49 +227,16 @@ namespace VanguardHook
 						VanguardCore.connected = true;
                         SyncObjectSingleton.FormExecute(() => {; });
                         RefreshDomains();
-
-						//Check if we already have default settings and load them if there is to remove any temporary settings
-						VanguardCore.LoadEmuSettings();
                     }
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
 					{
 						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(SaveSavestate(advancedMessage.objectValue as string)); }, true);
-
-                        //Get the settings from the emulator and save them to a file
-                        IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
-
-                        var data = Marshal.PtrToStringAnsi(settingsPtr);
-						//Make sure to free the pointer after using it
-                        Marshal.FreeHGlobal(settingsPtr);
-
-                        AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, data);
-                        ConsoleEx.WriteLine("settings stored: \n" + AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS]);
                     }
 					break;
 
                 case RTCV.NetCore.Commands.Basic.LoadSavestate:
 					{
-                        //We need this to ensure compatability with old 52X savestates. Obviously if there were settings changed they won't carry over, but this
-                        //will at least let it start using the system
-                        if (!AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString().StartsWith("{\n"))
-                        {
-                            //Get the settings from the emulator and save them to a file
-                            IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
-
-                            var data = Marshal.PtrToStringAnsi(settingsPtr);
-                            //Make sure to free the pointer after using it
-                            Marshal.FreeHGlobal(settingsPtr);
-
-                            AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, data);
-
-                            ConsoleEx.WriteLine("savestate did not have settings stored, storing now");
-                        }
-
-                        MethodImports.Vanguard_loadEmuSettings(AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
-
-                        ConsoleEx.WriteLine("Loaded settings: \n" + AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
-
                         var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
@@ -310,9 +288,13 @@ namespace VanguardHook
 
                 case RTCV.NetCore.Commands.Remote.KeySetSyncSettings:
 					{
+						ConsoleEx.WriteLine("Setting Sync Settings");
 						String settings = advancedMessage.objectValue as string;
 
+                        MethodImports.Vanguard_loadEmuSettings(settings);
                         AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, settings);
+
+                        ConsoleEx.WriteLine("Loaded settings: \n" + settings);
                     }
 					break;
 
@@ -338,9 +320,6 @@ namespace VanguardHook
                         if (AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString() != "")
 						{
 							waitForEmulatorClose = true;
-
-                            // Load the default settings if a game was open
-                            VanguardCore.LoadEmuSettings();
                         }
 
                         // Close the emulator
@@ -361,7 +340,6 @@ namespace VanguardHook
                         AllSpec.VanguardSpec.Update(gameClosed);
                         RtcCore.InvokeGameClosed(true);
                         VanguardImplementation.RefreshDomains();
-                        VanguardCore.LoadEmuSettings();
                     }
 					break;
 			}

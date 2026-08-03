@@ -97,12 +97,6 @@ namespace VanguardHook
                 GAME_TO_LOAD = "";
             }
 
-            if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] == "")
-            {
-                //Save the emulator settings to a file and update SyncSettings
-                VanguardCore.SaveEmuSettings();
-            }
-
             rompath = rompath.Replace("/", "\\");
             AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
         }
@@ -137,7 +131,6 @@ namespace VanguardHook
             gameDone[VSPEC.GAMENAME] = gamenameFixed;
 
 
-            bool reloadDomains = true;
             if (gamenameFixed != (string)AllSpec.VanguardSpec[VSPEC.GAMENAME])
             {
                 IntPtr systemCorePtr = MethodImports.Vanguard_getSystemCore();
@@ -154,23 +147,21 @@ namespace VanguardHook
                 gameDone[VSPEC.SYSTEMCORE] = systemCore;
                 ConsoleEx.WriteLine("systemCore: " + systemCore);
 
-                if (VanguardConfigReader.configFile.VSpecConfig.RELOAD_ON_SAVESTATE.ContainsKey(systemCore))
-                {
-                    gameDone[VSPEC.RELOAD_ON_SAVESTATE] = (bool)VanguardConfigReader.configFile.VSpecConfig.RELOAD_ON_SAVESTATE[systemCore];
-                }
-                else
-                    ConsoleEx.WriteLine("Failed to find system core");
-            }
-            else
-            {
-                reloadDomains = !(bool)AllSpec.VanguardSpec[VSPEC.RELOAD_ON_SAVESTATE];
             }
 
             AllSpec.VanguardSpec.Update(gameDone);
-            if (reloadDomains)
-            {
-                VanguardImplementation.RefreshDomains();
-            }
+            VanguardImplementation.RefreshDomains();
+
+            //Get the settings from the emulator and save them to a file
+            IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
+
+            var data = Marshal.PtrToStringAnsi(settingsPtr);
+            //Make sure to free the pointer after using it
+            Marshal.FreeHGlobal(settingsPtr);
+
+            AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, data);
+            ConsoleEx.WriteLine("settings stored: \n" + AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS]);
+
             RtcCore.InvokeLoadGameDone();
             MethodImports.Vanguard_finishLoading();
         }
@@ -187,8 +178,8 @@ namespace VanguardHook
                 ConsoleEx.WriteLine("closing Vanguard");
                 VanguardCore.StopVanguard();
             }
-            else
-            {
+            else if (!VanguardImplementation.reloadingRom)
+            { // If we're just reloading the same ROM, don't refresh the domains so that they stay the same
                 ConsoleEx.WriteLine("GAMECLOSED");
                 PartialSpec gameClosed = new PartialSpec("VanguardSpec");
                 gameClosed[VSPEC.SYSTEMCORE] = "";
@@ -197,6 +188,10 @@ namespace VanguardHook
                 AllSpec.VanguardSpec.Update(gameClosed);
                 RtcCore.InvokeGameClosed(true);
                 VanguardImplementation.RefreshDomains();
+            }
+            else
+            {
+                VanguardImplementation.reloadingRom = false;
             }
         }
 

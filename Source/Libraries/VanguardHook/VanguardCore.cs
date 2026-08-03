@@ -5,6 +5,7 @@ using RTCV.NetCore;
 using RTCV.NetCore.Commands;
 using RTCV.Vanguard;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -105,9 +106,8 @@ namespace VanguardHook
 			partial[VSPEC.SUPPORTS_REALTIME] = config.SUPPORTS_REALTIME;
 			partial[VSPEC.SUPPORTS_SAVESTATES] = config.SUPPORTS_SAVESTATES;
 			partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
-			partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
 			partial[VSPEC.CORE_DISKBASED] = config.CORE_DISKBASED;
-			partial[VSPEC.RELOAD_ON_SAVESTATE] = false;
+			partial[VSPEC.RELOAD_ON_SYNCSETTINGS] = config.RELOAD_ON_SYNCSETTINGS;
 			partial[VSPEC.CONFIG_PATHS] = new[] { "" };
 			partial[VSPEC.EMUDIR] = EmuDirectory.emuDir;
 			EmuDirectory.emuEXE = config.EmuEXE;
@@ -153,9 +153,9 @@ namespace VanguardHook
 
             //Start everything
             //Create the FullSpec template for the AllSpec before starting the client connection
-            emuSpecTemplate.Insert(VanguardCore.getDefaultPartial());
+            emuSpecTemplate.Insert(getDefaultPartial());
             AllSpec.VanguardSpec = new FullSpec(emuSpecTemplate, !RtcCore.Attached);
-            if (VanguardCore.attached)
+            if (attached)
                 VanguardConnector.PushVanguardSpecRef(AllSpec.VanguardSpec);
             RtcCore.EmuDir = EmuDirectory.emuDir;
 
