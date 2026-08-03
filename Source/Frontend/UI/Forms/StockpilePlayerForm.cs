@@ -408,8 +408,8 @@ namespace RTCV.UI
                     S.GET<CoreForm>().AutoCorrupt = false;
 
                     S.GET<GlitchHarvesterBlastForm>().ghMode = GlitchHarvesterMode.CORRUPT;
-                    StockpileManagerUISide.CurrentStashkey = GetSelectedStashKey();
-                    StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey);
+                    StashKey sk = GetSelectedStashKey();
+                    Task.Run(async () => await StockpileManagerUISide.ApplyStashkey(sk));
 
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
                     S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();

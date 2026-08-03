@@ -233,7 +233,7 @@ namespace RTCV.CorruptCore
             }
 
             //We make it without the blastlayer so we can send it across and use the cached version without needing a prototype
-            CurrentStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
+            StashKey newStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
             {
                 RomFilename = psk.RomFilename,
                 SystemName = psk.SystemName,
@@ -244,12 +244,16 @@ namespace RTCV.CorruptCore
                 EmuVer = psk.EmuVer
             };
 
+            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            if (useSavestates && loadBeforeOperation)
+            {
+                await StockpileManagerUISide.LoadState(newStashkey, false, false);
+            }
 
             BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.GenerateBlastLayer,
                     new object[]
                     {
                     CurrentStashkey,
-                    loadBeforeOperation,
                     true,
                     true
                     }, true);
@@ -448,8 +452,10 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static async Task<bool> LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
+        public static async Task<bool> LoadState(StashKey sk, bool reloadRom = false, bool applyBlastLayer = true)
         {
+            CurrentStashkey = sk;
+
             if (!String.Equals(sk.EmuVer, new DirectoryInfo(RtcCore.EmuDir).Name, StringComparison.OrdinalIgnoreCase))
             {
                 CancellationTokenSource cts = new CancellationTokenSource();
@@ -468,6 +474,36 @@ namespace RTCV.CorruptCore
                 }
             }
 
+            if (AllSpec.VanguardSpec[VSPEC.RELOAD_IF_DOMAIN_SELECTED] != null)
+            {
+                List<string> corruptedDomains = new List<string>();
+                List<string> reloadIfDomainSelected = ((string[])AllSpec.VanguardSpec[VSPEC.RELOAD_IF_DOMAIN_SELECTED]).ToList();
+                if (LastStashkey?.BlastLayer != null)
+                {
+                    if (LastStashkey.BlastLayer?.Layer != null)
+                    {
+                        // Get the list of domains that were corrupted in the last stash key
+                        corruptedDomains = LastStashkey.BlastLayer?.Layer
+                            .Where(x => x != null)
+                            .Select(x => x.Domain)
+                            .Where(d => d != null)
+                            .Distinct()
+                            .ToList();
+                    }
+                }
+
+                foreach (string domain in corruptedDomains)
+                {
+                    if (reloadIfDomainSelected.Contains(domain, StringComparer.OrdinalIgnoreCase))
+                    {
+                        reloadRom = true;
+                    }
+                }
+            }
+            else // If it's one of the older implementations that doesn't have this spec, default back to always reloading
+            {
+                reloadRom = true;
+            }
             bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);
             LocalNetCoreRouter.Route(Endpoints.UI, NetCore.Commands.Remote.UnlockInterface, true);
             return success;

@@ -89,7 +89,7 @@ namespace RTCV.CorruptCore
 
             var dirCheck = useEmuVer ? !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]) : false;
             EmuVer = dirCheck ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name.ToUpper() : "";
-
+            
             this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
 
             var domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();

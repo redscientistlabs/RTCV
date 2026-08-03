@@ -891,7 +891,7 @@ namespace RTCV.UI
                 {
                     if (StockpileManagerUISide.BackupedState != null)
                     {
-                        StockpileManagerUISide.BackupedState.Run();
+                        Task.Run(async () => await StockpileManagerUISide.BackupedState.Run());
                     }
 
                     if (StockpileManagerUISide.BackupedState != null)

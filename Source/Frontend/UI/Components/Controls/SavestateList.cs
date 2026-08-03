@@ -302,7 +302,6 @@ namespace RTCV.UI.Components.Controls
                             {
                                 return;
                             }
-
                             await StockpileManagerUISide.LoadState(psk);
                         }
                         else
@@ -437,7 +436,6 @@ namespace RTCV.UI.Components.Controls
                 {
                     return;
                 }
-
                 await StockpileManagerUISide.LoadState(psk);
             }
             else
@@ -458,7 +456,6 @@ namespace RTCV.UI.Components.Controls
             if (btnSaveLoad.Text == "LOAD")
             {
                 LoadCurrentState();
-                StockpileManagerUISide.CurrentStashkey = null;
                 S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                 LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
             }
@@ -574,7 +571,6 @@ namespace RTCV.UI.Components.Controls
             }
 
             await StockpileManagerUISide.LoadState(prevHolder.sk);
-            StockpileManagerUISide.CurrentStashkey = null;
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
         }
@@ -620,7 +616,6 @@ namespace RTCV.UI.Components.Controls
                 if (File.Exists(skspath) && !File.Exists(workingpath))
                     File.Copy(skspath, workingpath);
 
-                StockpileManagerUISide.CurrentStashkey = sk;
                 await StockpileManagerUISide.OriginalFromStashkey(sk);
 
                 //var t = StockpileManagerUISide.LoadState(newSk, true, false); //will cause problems with heavy emus
@@ -684,7 +679,6 @@ namespace RTCV.UI.Components.Controls
             if (File.Exists(skspath) && !File.Exists(workingpath))
                 File.Copy(skspath, workingpath);
 
-            StockpileManagerUISide.CurrentStashkey = sk;
             await StockpileManagerUISide.OriginalFromStashkey(sk);
 
             RegisterStashKeyToSelected(newSk);
