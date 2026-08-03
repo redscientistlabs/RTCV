@@ -97,6 +97,20 @@ namespace RTCV.UI
             S.GET<CoreForm>().Show();
             Initialized.Set();
             Colors.LoadRTCColor();
+
+            CleanHashesFolder();
+        }
+
+        private static void CleanHashesFolder()
+        {
+            foreach (var file in Directory.GetFiles(Path.Combine(RtcCore.RtcDir, "ROMHASHES")))
+            {
+                var fileInfo = new FileInfo(file);
+                if (fileInfo.Length == 0)
+                {
+                    File.Delete(file);
+                }
+            }
         }
 
         private static void FormRegister_FormRegistered(object sender, FormRegisteredEventArgs e)

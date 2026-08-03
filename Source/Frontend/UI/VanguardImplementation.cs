@@ -14,8 +14,10 @@ namespace RTCV.UI
     using System.IO;
     using System.Linq;
     using System.Security.Cryptography;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Threading.Tasks.Dataflow;
     using System.Windows.Forms;
     using static RTCV.CorruptCore.Stockpile;
 
@@ -58,6 +60,8 @@ namespace RTCV.UI
             string[] cueLines = File.ReadAllLines(cueFile);
             List<string> binFiles = new List<string>();
 
+            binFiles.Add(Path.GetFileName(cueFile));
+
             for (int i = 0; i < cueLines.Length; i++)
             {
                 if (cueLines[i].Contains("FILE") && cueLines[i].Contains("BINARY"))
@@ -89,6 +93,8 @@ namespace RTCV.UI
             string[] gdiLines = File.ReadAllLines(gdiFile);
             List<string> binFiles = new List<string>();
 
+            binFiles.Add(Path.GetFileName(gdiFile));
+
             for (int i = 0; i < gdiLines.Length; i++)
             {
                 if (gdiLines[i].Contains(".bin"))
@@ -107,19 +113,21 @@ namespace RTCV.UI
 
         private static List<string> GetCcdTracks(string ccdFile)
         {
-                List<string> binFiles = new List<string>();
+            List<string> binFiles = new List<string>();
 
-                if (File.Exists(Path.GetFileNameWithoutExtension(ccdFile) + ".sub"))
-                {
-                    binFiles.Add(Path.GetFileNameWithoutExtension(ccdFile) + ".sub");
-                }
+            binFiles.Add(Path.GetFileName(ccdFile));
 
-                if (File.Exists(Path.GetFileNameWithoutExtension(ccdFile) + ".img"))
-                {
-                    binFiles.Add(Path.GetFileNameWithoutExtension(ccdFile) + ".img");
-                }
+            if (File.Exists(Path.GetFileNameWithoutExtension(ccdFile) + ".sub"))
+            {
+                binFiles.Add(Path.GetFileNameWithoutExtension(ccdFile) + ".sub");
+            }
 
-                return binFiles;
+            if (File.Exists(Path.GetFileNameWithoutExtension(ccdFile) + ".img"))
+            {
+                binFiles.Add(Path.GetFileNameWithoutExtension(ccdFile) + ".img");
+            }
+
+            return binFiles;
         }
 
         // Custom Crc32 hash generator since we don't have access to System.IO.Hashing
@@ -151,168 +159,273 @@ namespace RTCV.UI
             }
         }
 
+        private static string lastLoadedGameName = "";
         // Checks to see if we need to generate metadata for a game that's been opened for the first time
-        public static async void GenerateHashes(object sender, EventArgs e)
+        public static void GenerateHashes(object sender, EventArgs e)
         {
-            string RomFilename = AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME]?.ToString();
-            List<string> RomFilenames = new List<string>();
+            string romFilePath = AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME]?.ToString();
+            string gameName = AllSpec.VanguardSpec[VSPEC.GAMENAME]?.ToString();
+            string ext = Path.GetExtension(romFilePath);
 
-            if (String.IsNullOrEmpty(RomFilename))
+            bool sameGameName = string.Equals(gameName, lastLoadedGameName);
+            lastLoadedGameName = gameName;
+            if (sameGameName)
                 return;
 
-            if (Stockpile.runtimeMetadata.Any(f => f.Name.Contains(Path.GetFileNameWithoutExtension(RomFilename))))
+            if (String.IsNullOrEmpty(romFilePath) || String.IsNullOrEmpty(gameName))
                 return;
 
-            if (!File.Exists(RomFilename))
+            if (!File.Exists(romFilePath))
                 return;
 
-            if (RomFilename.IndexOf(".CUE", StringComparison.OrdinalIgnoreCase) >= 0)
+            List<string> romFilePaths = new List<string>();
+            if (romFilePath.IndexOf(".CUE", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                RomFilenames.AddRange(GetCueTracks(RomFilename));
+                romFilePaths.AddRange(GetCueTracks(romFilePath));
             }
-            else if (RomFilename.IndexOf(".GDI", StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (romFilePath.IndexOf(".GDI", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                RomFilenames.AddRange(GetGdiTracks(RomFilename));
+                romFilePaths.AddRange(GetGdiTracks(romFilePath));
             }
-            else if (RomFilename.IndexOf(".CCD", StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (romFilePath.IndexOf(".CCD", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                RomFilenames.AddRange(GetCcdTracks(RomFilename));
+                romFilePaths.AddRange(GetCcdTracks(romFilePath));
             }
             else
             {
-                RomFilenames.Add(RomFilename);
+                romFilePaths.Add(romFilePath);
             }
 
-            StockpileManagerUISide.finishedGeneratingMetadata = new TaskCompletionSource<bool>();
-            CancellationTokenSource cts = new CancellationTokenSource();
+            string multiFileFolder = Path.GetFileNameWithoutExtension(romFilePath);
+            string finalDir = "";
+            if (romFilePaths.Count > 1)
+            {
+                finalDir = Path.Combine(RtcCore.RtcDir, "ROMHASHES", multiFileFolder);
+                Directory.CreateDirectory(finalDir);
+            }
+            else
+            {
+                finalDir = Path.Combine(RtcCore.RtcDir, "ROMHASHES");
+            }
+
+            Dictionary<string, string> requireHashFiles = new Dictionary<string, string>();
+            Dictionary<string, RomMetadata> requireComparison = new Dictionary<string, RomMetadata>();
+            foreach (string filePath in romFilePaths)
+            {
+                string metadataFilepath = Path.Combine(finalDir, $"{gameName}{ext}.metadata");
+                if (File.Exists(metadataFilepath))
+                {
+                    var metadata = JsonHelper.Deserialize<RomMetadata>(File.ReadAllText(metadataFilepath));
+                    if (metadata != null)
+                    {
+                        if (!Stockpile.runtimeMetadata.Exists(m => m.Name == gameName))
+                            Stockpile.runtimeMetadata.Add(metadata);
+                        requireComparison[filePath] = metadata;
+                    }
+                }
+                else
+                {
+                    requireHashFiles[filePath] = gameName;
+                    // Create the metadata file right away so that additional spec updates don't begin new threads
+                    File.Create(metadataFilepath).Dispose();
+                }
+            }
+
+            foreach (RomMetadata metadata in requireComparison.Values)
+            {
+                CompareHashes(metadata);
+            }
+
+            if (requireHashFiles.Count == 0)
+                return;
+
+            int toastID = lastToastID;
+            if (StockpileManagerUISide.totalHashFilesInQueue == 0)
+            {
+                var stockpileForm = S.GET<StockpileManagerForm>();
+                Toast toast = Toast.GetInstance();
+                toastID = toast.AddToastEntry("Generating hashes...");
+                lastToastID = toastID;
+
+                var openForms = Application.OpenForms.Cast<Form>();
+                var activeForm = openForms.Where(form => form is CanvasForm && form.Visible).First() as CanvasForm;
+                activeForm?.ShowToast(toast);
+            }
+
+            Interlocked.Add(ref StockpileManagerUISide.totalHashFilesInQueue, requireHashFiles.Count);
+            hashGenerationQueue.Post((requireHashFiles, finalDir, toastID));
+        }
+
+
+        private static int lastToastID = -1;
+        public static ActionBlock<(Dictionary<string, string>, string, int)> hashGenerationQueue = new ActionBlock<(Dictionary<string, string>, string, int)>(async data =>
+        {
+            await ProcessFileHashes(data.Item1, data.Item2, data.Item3);
+
+            if (hashGenerationQueue.InputCount == 0)
+            {
+                StockpileManagerUISide.waitingForHashes = false;
+            }
+        });
+
+        private static async Task ProcessFileHashes(Dictionary<string, string> files, string dir, int toastID)
+        {
+            var currentToastID = toastID;
+            var toast = Toast.GetInstance();
+            var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
 
-            int filesLeft = RomFilenames.Count;
-            decimal totalProgress = 0;
-
-            var stockpileForm = S.GET<StockpileManagerForm>();
-            SyncObjectSingleton.FormBeginExecute(() =>
+            await Task.Run(async () =>
             {
-                Toast toast = Toast.GetInstance();
-                int toastID = toast.AddToastEntry("Generating hashes...");
-                stockpileForm?.ParentCanvas?.ShowToast(toast);
-
-                for (int i = 0; i < RomFilenames.Count; i++)
+                var stockpileForm = S.GET<StockpileManagerForm>();
+                foreach (string filePath in files.Keys)
                 {
-                    string filename = RomFilenames[i];
+                    string gameName = files[filePath];
+                    string ext = Path.GetExtension(filePath);
 
                     RomMetadata metadata = new RomMetadata();
-                    metadata.Name = Path.GetFileNameWithoutExtension(filename);
-                    metadata.Size = new FileInfo(filename).Length;
+                    metadata.Name = gameName;
+                    metadata.Size = new FileInfo(filePath).Length;
+
+                    using (SHA256 sHA256 = SHA256.Create())
+                    {
+                        byte[] input = Encoding.UTF8.GetBytes(metadata.Name + metadata.Size);
+                        byte[] hash = sHA256.ComputeHash(input);
+
+                        StringBuilder builder = new StringBuilder();
+                        for (int k = 0; k < hash.Length; k++)
+                        {
+                            builder.Append(hash[k].ToString("x2"));
+                        }
+
+                        metadata.Checksum = builder.ToString();
+                    }
 
                     logger.Trace(metadata.Name);
 
-                    // Store the initial metadata right away so that additional spec updates don't begin new threads
-                    Stockpile.runtimeMetadata.Add(metadata);
 
-
-                    Task.Run(async () =>
+                    // Open the file
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 2 * 1024 * 1024, useAsync: true))
                     {
-                        // Open the file
-                        using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 2 * 1024 * 1024, useAsync: true))
+                        long totalBytes = fs.Length;
+                        byte[] buffer = new byte[2 * 1024 * 1024];
+                        int bytesRead;
+                        long totalBytesRead = 0;
+                        long totalBytesReadLast = 0;
+                        int progressLast = 0;
+
+                        uint crc = 0;
+                        using (SHA1 sha1 = SHA1.Create())
+                        using (MD5 md5 = MD5.Create())
                         {
-                            long totalBytes = fs.Length;
-                            byte[] buffer = new byte[2 * 1024 * 1024];
-                            int bytesRead;
-                            long totalBytesRead = 0;
-                            long totalBytesReadLast = 0;
-                            int progressLast = 0;
-
-                            uint crc = 0;
-                            using (SHA1 sha1 = SHA1.Create())
-                            using (MD5 md5 = MD5.Create())
+                            try
                             {
-                                try
+                                // Instead of using ComputeHash(), we can read the bytes with ReadAsync() and then use TransformBlock(). This lets us generate
+                                // all hashes at the same time, instead of having to restart the filestream after each
+                                while ((bytesRead = await fs.ReadAsync(buffer, 0, buffer.Length, cts.Token)) > 0)
                                 {
-                                    // Instead of using ComputeHash(), we can read the bytes with ReadAsync() and then use TransformBlock(). This lets us generate
-                                    // all hashes at the same time, instead of having to restart the filestream after each
-                                    while ((bytesRead = await fs.ReadAsync(buffer, 0, buffer.Length, cts.Token)) > 0)
+                                    crc = Crc32.Calculate(crc, buffer, 0, bytesRead);
+                                    sha1.TransformBlock(buffer, 0, bytesRead, null, 0);
+                                    md5.TransformBlock(buffer, 0, bytesRead, null, 0);
+
+                                    totalBytesRead += bytesRead;
+
+                                    int progress = (int)((decimal)totalBytesRead / totalBytes * 100);
+
+                                    if (progressLast != progress)
                                     {
-                                        crc = Crc32.Calculate(crc, buffer, 0, bytesRead);
-                                        sha1.TransformBlock(buffer, 0, bytesRead, null, 0);
-                                        md5.TransformBlock(buffer, 0, bytesRead, null, 0);
+                                        if (StockpileManagerUISide.waitingForHashes)
+                                            currentToastID = -1;
 
-                                        totalBytesRead += bytesRead;
-
-                                        int progress = (int)((decimal)totalBytesRead / totalBytes * 100);
-
-                                        if (stockpileForm.ParentCanvas != null && !toast.Visible)
-                                            SyncObjectSingleton.FormBeginExecute(() => stockpileForm?.ParentCanvas?.ShowToast(toast));
-
-
-                                        if (progressLast != progress)
-                                        {
-                                            totalProgress += (decimal)(progress - progressLast) / RomFilenames.Count;
-                                            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes...({filesLeft} files left)", totalProgress, toastID));
-                                        }
-
-                                        if (totalBytesReadLast != totalBytesRead)
-                                        {
-                                            cts.CancelAfter(5000);
-                                        }
-
-                                        totalBytesReadLast = totalBytesRead;
-                                        progressLast = progress;
+                                        RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes...({StockpileManagerUISide.totalHashFilesInQueue} files left)", progress, currentToastID));
                                     }
 
-                                    sha1.TransformFinalBlock(buffer, 0, 0);
-                                    md5.TransformFinalBlock(buffer, 0, 0);
+                                    if (totalBytesReadLast != totalBytesRead)
+                                    {
+                                        cts.CancelAfter(5000);
+                                    }
+                                    else
+                                    {
+                                        cts.Token.ThrowIfCancellationRequested();
+                                    }
 
-                                    string crc32HashString = crc.ToString("x8");
-                                    string sha1HashString = sha1.Hash.BytesToHexString().ToLowerInvariant();
-                                    string md5HashString = md5.Hash.BytesToHexString().ToLowerInvariant();
-
-                                    metadata.Crc32 = crc32HashString;
-                                    metadata.Sha1 = sha1HashString;
-                                    metadata.Md5 = md5HashString;
+                                    totalBytesReadLast = totalBytesRead;
+                                    progressLast = progress;
                                 }
-                                catch (OperationCanceledException)
+
+                                sha1.TransformFinalBlock(buffer, 0, 0);
+                                md5.TransformFinalBlock(buffer, 0, 0);
+
+                                string crc32HashString = crc.ToString("x8");
+                                string sha1HashString = sha1.Hash.BytesToHexString().ToLowerInvariant();
+                                string md5HashString = md5.Hash.BytesToHexString().ToLowerInvariant();
+
+                                metadata.Crc32 = crc32HashString;
+                                metadata.Sha1 = sha1HashString;
+                                metadata.Md5 = md5HashString;
+
+                                using (FileStream fs2 = File.Open(
+                                    Path.Combine(dir, $"{gameName}{ext}.metadata"),
+                                                FileMode.OpenOrCreate))
                                 {
-                                    MessageBox.Show("Failed to generate metadata! This should never happen." +
-                                        " \n\nPoke the RTC devs for help (Discord is in the launcher).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error,
-                                        MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                                    JsonHelper.Serialize(metadata, fs2, Formatting.Indented);
                                 }
                             }
-                        }
-                    }).ContinueWith(_ =>
-                    {
-                        filesLeft -= 1;
+                            catch (OperationCanceledException)
+                            {
+                                MessageBox.Show("Failed to generate metadata! This should never happen." +
+                                    " \n\nPoke the RTC devs for help (Discord is in the launcher).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                    MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 
-                        // Close the toast on the UI thread
-                        if (filesLeft == 0)
-                        {
-                            toast.RemoveToastEntry(toastID);
-                            StockpileManagerUISide.finishedGeneratingMetadata.SetResult(true);
+                                File.Delete(Path.Combine(dir, $"{metadata.Name}.metadata"));
+                            }
+                            finally
+                            {
+                                Interlocked.Decrement(ref StockpileManagerUISide.totalHashFilesInQueue);
+                                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                                Stockpile.runtimeMetadata.Add(metadata);
+                                CompareHashes(metadata);
+                            }
                         }
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                    }
                 }
             });
-            await StockpileManagerUISide.finishedGeneratingMetadata.Task;
-            logger.Trace($"Finished generating hashes for {RomFilename}");
 
-            // Compare metadata against any stockpile entries that are the same game and warn the user if they do not match
-            foreach (RomMetadata metadata in runtimeMetadata.Where(f => f.Name.Contains(Path.GetFileNameWithoutExtension(RomFilename))).ToList())
+            // Close the toast on the UI thread
+            if (StockpileManagerUISide.totalHashFilesInQueue == 0)
             {
-                RomMetadata stockpileMetadataFileMatch = stockpileMetadata.FirstOrDefault(f => f.Name == metadata.Name);
+                toast.RemoveToastEntry(toastID);
+            }
+            logger.Trace($"Finished generating hashes");
+        }
 
-                if (stockpileMetadataFileMatch != null)
+        private static void CompareHashes(RomMetadata metadata)
+        {
+            if (Stockpile.disableMetadataCheck)
+                return;
+
+            foreach (RomMetadata stockpileMetadata in Stockpile.stockpileMetadata)
+            {
+                if (stockpileMetadata.Name != metadata.Name)
+                    continue;
+
+                if (stockpileMetadata.Crc32 != metadata.Crc32 ||
+                    stockpileMetadata.Sha1  != metadata.Sha1  ||
+                    stockpileMetadata.Md5   != metadata.Md5)
                 {
-                    if (metadata.Size != stockpileMetadataFileMatch.Size ||
-                        metadata.Crc32 != stockpileMetadataFileMatch.Crc32 ||
-                        metadata.Md5 != stockpileMetadataFileMatch.Md5 ||
-                        metadata.Sha1 != stockpileMetadataFileMatch.Sha1)
+                    DialogResult disableMismatchMessage = MessageBox.Show($"the metadata for this game does not match the stockpile's version. " +
+                        $"This is most likely caused by a bad dump or a different file extension. " +
+                        $"Entries may not work as intended.\n" +
+                        $"If you believe you have a good dump and have verified the entries work correctly, " +
+                        $"you can save the stockpile to overwrite it with your metadata.\n\n" +
+                        $"This message will not show again until this game is reopened. If you would like to " +
+                        $"temporarily disable all similar messages for this stockpile, click yes.", "Metadata Mismatch",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning, 
+                        MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+
+                    if (disableMismatchMessage == DialogResult.Yes)
                     {
-                        MessageBox.Show("The selected file's metadata does not match the file used in one or more of the loaded stockpile entries. This can potentially" + 
-                            " cause corruptions to not work as intended. \nVerify that your game dump is accurate, then restart RTC and try again." +
-                            "\n\nIf you're confident that your dump is correct, you can save the stockpile to overwrite the old metadata." +
-                            "\n\nThis message will appear only once for this game.", "WARNING");
-                        
-                        break;
+                        Stockpile.disableMetadataCheck = true;
                     }
                 }
             }

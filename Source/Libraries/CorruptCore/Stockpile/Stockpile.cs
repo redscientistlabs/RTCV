@@ -36,6 +36,9 @@ namespace RTCV.CorruptCore
         [Exclude]
         public static List<RomMetadata> stockpileMetadata { get => _stockpileMetadata; set => _stockpileMetadata = value; }
 
+        [Exclude]
+        public static bool disableMetadataCheck = false;
+
         private List<StashKey> _stashKeys = new List<StashKey>();
         public List<StashKey> StashKeys { get => this._stashKeys; set => this._stashKeys = value; }
 
@@ -106,6 +109,8 @@ namespace RTCV.CorruptCore
 
                 CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress, toastID);
 
+                CopyMetadataFiles(ref sks, ref saveProgress);
+
                 CopySavestates(ref sks, ref saveProgress, toastID);
 
                 CopyConfigs(ref sks, ref saveProgress, toastID);
@@ -170,37 +175,57 @@ namespace RTCV.CorruptCore
     {
         public string Name { get; set; }
         public long Size { get; set; }
+        public string Checksum { get; set; }
         public string Crc32 { get; set; }
         public string Sha1 { get; set; }
         public string Md5 { get; set; }
     }
-        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress, int toastID = -1)
+
+        private static void CopyMetadataFiles(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {
-            // Create metadata file for all roms
-            foreach (StashKey key in sks.StashKeys)
+            // Pretty awful, but we can't really make any of this async since it happens during a save lock
+            if (StockpileManagerUISide.totalHashFilesInQueue > 0)
             {
-                if (File.Exists(key.RomFilename))
+                StockpileManagerUISide.waitingForHashes = true;
+
+                while (StockpileManagerUISide.waitingForHashes)
+                    Thread.Sleep(250);
+            }
+
+            // Create metadata file for all roms
+            foreach (string romFile in sks.RomsInStockpile)
+            {
+                var metadataFilepath = Path.Combine(RtcCore.RtcDir, "ROMHASHES", $"{romFile}.metadata");
+                if (File.Exists(metadataFilepath))
                 {
-                    while (!StockpileManagerUISide.finishedGeneratingMetadata.Task.IsCompleted)
-                        Thread.Sleep(250);
+                    string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(metadataFilepath));
 
-                    // Serialize the metadata of each game
-                    List<RomMetadata> metadatas = runtimeMetadata.FindAll(x  => x.Name.Contains(Path.GetFileNameWithoutExtension(key.RomFilename)));
-                    foreach (RomMetadata metadata in metadatas)
+                    RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(romTempfilename)} to stockpile", saveProgress += 2, toastID));
+
+                    //If the file already exists, overwrite it.
+                    if (File.Exists(romTempfilename))
                     {
-                        using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", $"{metadata.Name}.metadata"), FileMode.OpenOrCreate))
-                        {
-                            RtcCore.OnProgressBarUpdate(metadata, new ProgressBarEventArgs($"Creating metadata file", saveProgress += 2, toastID));
-                            JsonHelper.Serialize(metadata, fs, Formatting.Indented);
-                        }
+                        //Whack the attributes in case a rom is readonly
+                        File.SetAttributes(romTempfilename, FileAttributes.Normal);
+                        File.Delete(romTempfilename);
+                        File.Copy(metadataFilepath, romTempfilename);
                     }
-
-                    // Overwrite the old metadata in RTC
-                    stockpileMetadata.Clear();
-                    stockpileMetadata.AddRange(metadatas);
+                    else
+                    {
+                        File.Copy(metadataFilepath, romTempfilename);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Couldn't find {metadataFilepath}");
                 }
             }
 
+            UpdateCurrentStockpileMetadata(sks);
+        }
+
+        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress, int toastID = -1)
+        {
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
@@ -684,6 +709,10 @@ namespace RTCV.CorruptCore
                 }
             }
 
+            // Load any metadata files in the stockpile for comparing later
+            disableMetadataCheck = false;
+            UpdateCurrentStockpileMetadata(sks, true);
+            
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
 
             results.Result = sks;
@@ -691,6 +720,29 @@ namespace RTCV.CorruptCore
             UISideHooks.OnStockpileLoaded(sks);
 
             return results;
+        }
+
+        public static void UpdateCurrentStockpileMetadata(Stockpile sks, bool useStockpileMetadata = false) 
+        {
+            stockpileMetadata.Clear();
+            foreach (var romFile in sks.RomsInStockpile)
+            {
+                string metadataDir = useStockpileMetadata ? "SKS" : "TEMP";
+
+                string metadataFile = Path.Combine(RtcCore.workingDir, metadataDir, romFile + ".metadata");
+                if (File.Exists(metadataFile))
+                {
+                    using (FileStream fs = File.Open(metadataFile, FileMode.OpenOrCreate))
+                    {
+                        RomMetadata metadata = JsonHelper.Deserialize<RomMetadata>(fs);
+                        if (!stockpileMetadata.Exists(m => m.Name == metadata.Name))
+                        {
+                            stockpileMetadata.Add(metadata);
+                            logger.Info($"Added {metadataFile} to stockpile cache");
+                        }
+                    }
+                }
+            }
         }
 
         public static OperationResults<Stockpile> Import(string filename)

@@ -70,7 +70,8 @@ namespace RTCV.CorruptCore
         public static TaskCompletionSource<bool> finishedSwapping;
         public static int timeout = 20;
 
-        public static TaskCompletionSource<bool> finishedGeneratingMetadata = new TaskCompletionSource<bool>();
+        public static int totalHashFilesInQueue = 0;
+        public static bool waitingForHashes = false;
 
         public static StashKey CurrentSavestateStashKey { get; set; }
 

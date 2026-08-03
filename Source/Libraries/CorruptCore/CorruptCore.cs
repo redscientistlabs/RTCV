@@ -335,6 +335,7 @@ namespace RTCV.CorruptCore
                     Path.Combine(AssetsDir, "PLATESHD"),
                     Path.Combine(RtcDir, "PARAMS"),
                     Path.Combine(RtcDir, "RENDEROUTPUT"),
+                    Path.Combine(RtcDir, "ROMHASHES"),
                     Path.Combine(RtcDir, "ENGINETEMPLATES"),
                     Path.Combine(RtcDir, "LAYOUTS"),
                     ListsDir,
