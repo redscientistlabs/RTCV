@@ -51,6 +51,9 @@ namespace RTCV.CorruptCore
         [JsonProperty]
         internal bool MissingLimiter;
 
+        [JsonProperty]
+        private List<string> RomsInStockpile = new List<string>();
+
         public Stockpile(DataGridView dgvStockpile)
         {
             if (dgvStockpile == null)
@@ -93,6 +96,13 @@ namespace RTCV.CorruptCore
                 //Watermarking RTC Version
                 sks.RtcVersion = RtcCore.RtcVersion;
                 sks.VanguardImplementation = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+
+                foreach (StashKey sk in sks.StashKeys)
+                {
+                    string romFile = sk.GameName + Path.GetExtension(sk.RomFilename);
+                    if (!sks.RomsInStockpile.Contains(romFile))
+                        sks.RomsInStockpile.Add(romFile);
+                }
 
                 CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress, toastID);
 
@@ -664,15 +674,13 @@ namespace RTCV.CorruptCore
                     "If the limiter list is found next time you save, it'll automatically be packed in.");
             }
 
-            // Load any metadata files in the stockpile for comparing later
-            stockpileMetadata.Clear();
-            var metadataFiles = Directory.EnumerateFiles(Path.Combine(RtcCore.workingDir, "SKS")).Where(f => f.EndsWith(".metadata")).ToList();
-            foreach (var metadataFile in metadataFiles)
+            if (sks.RomsInStockpile.Count == 0)
             {
-                using (FileStream fs = File.Open(metadataFile, FileMode.OpenOrCreate))
+                foreach (StashKey sk in sks.StashKeys)
                 {
-                    RomMetadata metadata = JsonHelper.Deserialize<RomMetadata>(fs);
-                    stockpileMetadata.Add(metadata);
+                    var romFile = sk.GameName + Path.GetExtension(sk.RomFilename);
+                    if (!sks.RomsInStockpile.Contains(romFile))
+                        sks.RomsInStockpile.Add(romFile);
                 }
             }
 
