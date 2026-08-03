@@ -31,7 +31,7 @@ namespace RTCV.UI.Components.Controls
                 _instance = new Toast();
             }
 
-            return _instance;
+                return _instance;
         }
 
         public int AddToastEntry(string text = "")

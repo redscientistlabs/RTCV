@@ -75,24 +75,6 @@ namespace RTCV.UI
             StashKey sk = (StashKey)lbStashHistory.SelectedItem;
             StockpileManagerUISide.CurrentStashkey = sk;
 
-            // Disabled with the addition of cross-emulator stockpiles
-            /*
-            //If we don't support mixed stockpiles
-            if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
-            {
-                if (S.GET<StockpileManagerForm>().dgvStockpile.Rows.Count > 0)
-                {
-                    string firstGameName = ((StashKey)S.GET<StockpileManagerForm>().dgvStockpile[0, 0].Value).GameName;
-                    if (sk.GameName != firstGameName)
-                    {
-                        string name = (AllSpec.VanguardSpec[VSPEC.NAME] as string) ?? "Vanguard implementation";
-                        MessageBox.Show($"{name} does not support mixed stockpiles.");
-                        return false;
-                    }
-                }
-            }
-            */
-
             if (askForName)
             {
                 if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming Stashkey", "Enter the new Stash name:", ref value) == DialogResult.OK)
