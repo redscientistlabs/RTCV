@@ -263,7 +263,7 @@ namespace RTCV.UI
 
         private static async Task ProcessDataAsync(Guid id)
         {
-            await S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+            SyncObjectSingleton.FormBeginExecute(async () => await S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null));
         }
 
         public async Task Corrupt(object sender, EventArgs e)

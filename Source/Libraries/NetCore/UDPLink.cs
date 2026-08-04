@@ -26,6 +26,7 @@ namespace RTCV.NetCore
         internal UDPLink(NetCoreSpec _spec)
         {
             spec = _spec;
+            spec.InitializePortIfNeeded();
 
             int port = (spec.Side == NetworkSide.SERVER ? PortServer : PortClient);
             Sender = new UdpClient(IP, port);

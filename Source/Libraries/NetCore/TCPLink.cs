@@ -58,6 +58,7 @@ namespace RTCV.NetCore
         internal TCPLink(NetCoreSpec _spec)
         {
             spec = _spec;
+            spec.InitializePortIfNeeded();
 
             DefaultBoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
             BoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;

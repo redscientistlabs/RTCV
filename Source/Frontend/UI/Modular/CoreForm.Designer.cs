@@ -490,7 +490,7 @@ namespace RTCV.UI
             this.btnSwapEmulator.TabIndex = 130;
             this.btnSwapEmulator.TabStop = false;
             this.btnSwapEmulator.Tag = "color:dark3";
-            this.btnSwapEmulator.Text = "Swap Emulator";
+            this.btnSwapEmulator.Text = " Swap Emulator";
             this.btnSwapEmulator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSwapEmulator.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSwapEmulator.UseVisualStyleBackColor = false;

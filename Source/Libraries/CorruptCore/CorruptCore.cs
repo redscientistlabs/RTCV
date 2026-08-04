@@ -107,6 +107,7 @@ namespace RTCV.CorruptCore
 
         public static string LauncherDir => Path.Combine(new DirectoryInfo(RtcDir).Parent.Parent.FullName, "Launcher");
 
+        private static CancellationTokenSource SaveFormCts = new CancellationTokenSource();
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
         public static event EventHandler<ProgressBarEventArgs> ToastProgressBarHandler;
 
@@ -1206,6 +1207,22 @@ namespace RTCV.CorruptCore
 
         public static void InvokeKillHexEditor()
         {
+        }
+
+        public static CancellationToken GetSaveCancellationToken()
+        {
+            return SaveFormCts.Token;
+        }
+
+        public static void CancelSave()
+        {
+            SaveFormCts.Cancel();
+        }
+
+        public static void ResetSaveCancellationToken()
+        {
+            SaveFormCts.Dispose();
+            SaveFormCts = new CancellationTokenSource();
         }
     }
 

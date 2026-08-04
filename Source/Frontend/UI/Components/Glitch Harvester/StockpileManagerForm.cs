@@ -530,7 +530,7 @@ namespace RTCV.UI
                 S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
                 this.ParentCanvas?.OpenSubForm(S.GET<SaveProgressForm>());
 
-                var r = await Task.Run(() =>
+                var success = await Task.Run(() =>
                 {
                     lock (AutoSave.SavingLock)
                     {
@@ -538,7 +538,7 @@ namespace RTCV.UI
                     }
                 });
 
-                if (r)
+                if (success)
                 {
                     StockpileManagerUISide.SetCurrentStockpile(sks);
                     sendCurrentStockpileToSKS();
@@ -551,6 +551,7 @@ namespace RTCV.UI
                 this.ParentCanvas?.CloseSubForm();
                 UICore.UnlockInterface();
                 UICore.SetHotkeyTimer(true);
+                RtcCore.ResetSaveCancellationToken();
             }
         }
 
