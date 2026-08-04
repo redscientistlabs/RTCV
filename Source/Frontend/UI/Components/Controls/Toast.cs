@@ -43,6 +43,7 @@ namespace RTCV.UI.Components.Controls
             }
 
             ToastEntry entry = new ToastEntry();
+            Colors.SetRTCColor(Colors.GeneralColor, entry);
             entry.UpdateEntry(text, 0);
             pnEntriesContainer.Controls.Add(entry);
 
