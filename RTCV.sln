@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceras", "Source\Libraries\ZombieCeras\src\Ceras\Ceras.csproj", "{33C3D8BD-4267-4F22-9E42-20A1B604A11A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanguardHook", "Source\Libraries\VanguardHook\VanguardHook.csproj", "{78A00935-3E62-4549-8D73-9FC7A570918C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{33C3D8BD-4267-4F22-9E42-20A1B604A11A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33C3D8BD-4267-4F22-9E42-20A1B604A11A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33C3D8BD-4267-4F22-9E42-20A1B604A11A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A00935-3E62-4549-8D73-9FC7A570918C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A00935-3E62-4549-8D73-9FC7A570918C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A00935-3E62-4549-8D73-9FC7A570918C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A00935-3E62-4549-8D73-9FC7A570918C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{3F02EDA3-6949-4B30-9CDA-B56FFBA0E976} = {D2E71B6D-F28F-4331-988F-F9750192D1B0}
 		{C000A468-A1D6-4278-95C3-3C70573C42EA} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
 		{33C3D8BD-4267-4F22-9E42-20A1B604A11A} = {D2E71B6D-F28F-4331-988F-F9750192D1B0}
+		{78A00935-3E62-4549-8D73-9FC7A570918C} = {D2E71B6D-F28F-4331-988F-F9750192D1B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFD75441-C3FA-4DDC-B001-A7EDDC11E8DE}
