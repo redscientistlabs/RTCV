@@ -12,9 +12,9 @@ namespace RTCV.UI.Modular
             {
                 if (_connectionStatus == null)
                 {
-                    var csGrid = new CanvasGrid(15, 12, "Connection Status");
+                    var csGrid = new CanvasGrid(15, 13, "Connection Status");
                     Form csForm = S.GET<ConnectionStatusForm>();
-                    csGrid.SetTileForm(csForm, 0, 0, 15, 12, false);
+                    csGrid.SetTileForm(csForm, 0, 0, 15, 13, false);
                     _connectionStatus = csGrid;
                 }
                 return _connectionStatus;
@@ -46,9 +46,9 @@ namespace RTCV.UI.Modular
             {
                 if (_swapEmulator == null)
                 {
-                    var spGrid = new CanvasGrid(15, 12, "Swap Emulator");
+                    var spGrid = new CanvasGrid(15, 13, "Swap Emulator");
                     Form spForm = S.GET<SwapEmulatorForm>();
-                    spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
+                    spGrid.SetTileForm(spForm, 0, 0, 15, 13, false);
                     _swapEmulator = spGrid;
                 }
                 return _swapEmulator;
@@ -89,9 +89,9 @@ namespace RTCV.UI.Modular
             {
                 if (_stockpilePlayer == null)
                 {
-                    var spGrid = new CanvasGrid(15, 12, "Stockpile Player");
+                    var spGrid = new CanvasGrid(15, 13, "Stockpile Player");
                     Form spForm = S.GET<StockpilePlayerForm>();
-                    spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
+                    spGrid.SetTileForm(spForm, 0, 0, 15, 13, false);
                     _stockpilePlayer = spGrid;
                 }
                 return _stockpilePlayer;
@@ -105,10 +105,10 @@ namespace RTCV.UI.Modular
             {
                 if (_settings == null)
                 {
-                    var stGrid = new CanvasGrid(15, 12, "Settings and Tools");
+                    var stGrid = new CanvasGrid(15, 13, "Settings and Tools");
 
                     Form stForm = S.GET<SettingsForm>();
-                    stGrid.SetTileForm(stForm, 0, 0, 15, 12, false);
+                    stGrid.SetTileForm(stForm, 0, 0, 15, 13, false);
                     _settings = stGrid;
                 }
                 return _settings;
@@ -122,7 +122,7 @@ namespace RTCV.UI.Modular
             {
                 if (_glitchHarvester == null)
                 {
-                    var ghGrid = new CanvasGrid(20, 12, 20, 10, "Glitch Harvester")
+                    var ghGrid = new CanvasGrid(20, 13, 20, 10, "Glitch Harvester")
                     {
                         isResizable = true
                     };
@@ -134,10 +134,10 @@ namespace RTCV.UI.Modular
                     Form spmForm = S.GET<StockpileManagerForm>();
 
                     ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4, true);
-                    ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8, true, AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left);
+                    ghGrid.SetTileForm(ssmForm, 0, 4, 4, 9, true, AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left);
                     ghGrid.SetTileForm(ghiForm, 4, 0, 5, 3, true);
-                    ghGrid.SetTileForm(shForm, 4, 3, 5, 9, true, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom);
-                    ghGrid.SetTileForm(spmForm, 9, 0, 11, 12, true, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
+                    ghGrid.SetTileForm(shForm, 4, 3, 5, 10, true, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom);
+                    ghGrid.SetTileForm(spmForm, 9, 0, 11, 13, true, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
 
                     _glitchHarvester = ghGrid;
                 }
