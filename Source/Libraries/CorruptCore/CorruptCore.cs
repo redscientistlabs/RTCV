@@ -338,6 +338,7 @@ namespace RTCV.CorruptCore
                     Path.Combine(RtcDir, "ROMHASHES"),
                     Path.Combine(RtcDir, "ENGINETEMPLATES"),
                     Path.Combine(RtcDir, "LAYOUTS"),
+                    Path.Combine(RtcDir, "DOMAINSCONFIG"),
                     ListsDir,
                     AutoSaveDir
                 });

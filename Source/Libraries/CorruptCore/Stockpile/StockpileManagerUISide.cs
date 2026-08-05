@@ -11,40 +11,6 @@ using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-    public class DomainConfigRoot
-    {
-        [JsonProperty("System")]
-        public Dictionary<string, DomainConfigSystem> DomainConfigSystem { get; set; }
-
-        public DomainConfigRoot()
-        {
-            DomainConfigSystem = new Dictionary<string, DomainConfigSystem>();
-        }
-    }
-
-    public class DomainConfigSystem
-    {
-        [JsonProperty("Domain")]
-        public Dictionary<string, DomainConfig> DomainConfig { get; set; }
-
-        public DomainConfigSystem()
-        {
-            DomainConfig = new Dictionary<string, DomainConfig>();
-        }
-    }
-
-    public class DomainConfig
-    {
-        public bool VISIBLE { get; set; }
-        public bool AUTOSELECT { get; set; }
-
-        public DomainConfig(bool visible, bool autoSelect)
-        {
-            VISIBLE = visible;
-            AUTOSELECT = autoSelect;
-        }
-    }
-
     public static class StockpileManagerUISide
     {
         //Object references

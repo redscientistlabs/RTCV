@@ -997,23 +997,24 @@ namespace RTCV.UI
                 // If we have a game running, update the domain config
                 if (!string.IsNullOrEmpty(systemCore) && !systemCore.Contains("ProcessStub") && !systemCore.Contains("FileStub"))
                 {
-                    string configFileName = new DirectoryInfo(CorruptCore.RtcCore.EmuDir).Name + "_DOMAINS_CONFIG";
+                    string configFileName = new DirectoryInfo(CorruptCore.RtcCore.EmuDir).Name;
+                    DomainsConfig.currentConfigSystemName = configFileName;
 
                     // If we have a config file already, we only want to keep the settings if the domains have changed (i.e. we're loading them)
                     // or if it's another core that isn't currently being used (so we save it back to the json file)
-                    DomainConfigRoot config = GetDomainConfigParam(configFileName, systemCore, domainsChanged);
-                    DomainConfigRoot defaultConfig = GetDomainConfigParam("DEFAULT_" + configFileName, systemCore, true);
-                    DomainConfigRoot vmdConfig = GetDomainConfigParam("VMD_DOMAINS_CONFIG", systemCore, true);
+                    DomainConfigRoot config = DomainsConfig.GetConfig("", domainsChanged, false);
+                    DomainConfigRoot defaultConfig = DomainsConfig.GetConfig("", true, true);
+                    DomainConfigRoot vmdConfig = DomainsConfig.GetConfig("VMD", true, false);
 
                     // If the vmd config is for a different core, throw it away
                     if (!vmdConfig.DomainConfigSystem.ContainsKey(systemCore))
-                        Params.RemoveParam("VMD_DOMAINS_CONFIG");
+                        DomainsConfig.RemoveConfig("VMD_DOMAINS_CONFIG", false);
 
                     // Grab the default blacklisted domains
                     string[] defaultBlacklistedDomains = (string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS];
 
                     // Store the defaults if they haven't been yet
-                    if (!Params.IsParamSet("DEFAULT_" + configFileName) || (!defaultConfig.DomainConfigSystem.ContainsKey(systemCore)))
+                    if (!DomainsConfig.DoesConfigExist(configFileName, true) || (!defaultConfig.DomainConfigSystem.ContainsKey(systemCore)))
                     {
                         DomainConfigSystem defaultConfigSystem = new DomainConfigSystem();
                         foreach (string domain in MemoryDomains.MemoryInterfaces.Keys)
@@ -1024,7 +1025,7 @@ namespace RTCV.UI
 
                         defaultConfig.DomainConfigSystem[systemCore] = defaultConfigSystem;
                         string defaultJsonString = JsonConvert.SerializeObject(defaultConfig, Formatting.Indented);
-                        Params.SetParam("DEFAULT_" + configFileName, defaultJsonString);
+                        DomainsConfig.SetConfig(configFileName, defaultJsonString, true);
                     }
 
                     DomainConfigSystem configSystem = new DomainConfigSystem();
@@ -1034,25 +1035,26 @@ namespace RTCV.UI
                     }
 
                     // If we don't have a config file yet or we're updating the domains from the settings form, save to the json config file
-                    if (!Params.IsParamSet(configFileName) || (domainsChanged && !config.DomainConfigSystem.ContainsKey(systemCore)) || !domainsChanged)
+                    if (!DomainsConfig.DoesConfigExist("", false) || (domainsChanged && !config.DomainConfigSystem.ContainsKey(systemCore)) || !domainsChanged)
                     {
                         config.DomainConfigSystem[systemCore] = config.DomainConfigSystem.ContainsKey(systemCore) ? configSystem : defaultConfig.DomainConfigSystem[systemCore];
                         string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented);
 
-                        Params.SetParam(configFileName, jsonString);
+                        DomainsConfig.SetConfig("", jsonString, false);
                     }
 
                     DomainConfigSystem vmdConfigSystem = new DomainConfigSystem();
                     foreach (KeyValuePair<string, VirtualMemoryDomain> vmd in MemoryDomains.VmdPool)
                     {
-                        vmdConfigSystem.DomainConfig[vmd.Key] = new DomainConfig(vmd.Value.Visible, vmd.Value.AutoDomainSelect);
+                        if (vmd.Value.SystemCore == systemCore)
+                            vmdConfigSystem.DomainConfig[vmd.Key] = new DomainConfig(vmd.Value.Visible, vmd.Value.AutoDomainSelect);
                     }
-                    if ((!Params.IsParamSet("VMD_DOMAINS_CONFIG") && vmdConfigSystem.DomainConfig.Count > 0))
+                    if (vmdConfigSystem.DomainConfig.Count > 0)
                     {
                         vmdConfig.DomainConfigSystem[systemCore] = vmdConfigSystem;
                         string jsonString = JsonConvert.SerializeObject(vmdConfig, Formatting.Indented);
 
-                        Params.SetParam("VMD_DOMAINS_CONFIG", jsonString);
+                        DomainsConfig.SetConfig("VMD", jsonString, false);
                     }
 
                     // If the domains changed, update them with the latest settings from the config file then refresh the domains
@@ -1076,23 +1078,6 @@ namespace RTCV.UI
                 }
                 S.GET<MemoryDomainsForm>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
-        }
-
-        private static DomainConfigRoot GetDomainConfigParam(string configFileName, string systemCore, bool domainsChanged)
-        {
-            var config = new DomainConfigRoot();
-            if (Params.IsParamSet(configFileName))
-            {
-                var configFile = File.ReadAllText(Path.Combine(Params.ParamsDir, configFileName));
-                var jsonString = JsonConvert.DeserializeObject<DomainConfigRoot>(configFile);
-
-                foreach (string system in jsonString.DomainConfigSystem.Keys)
-                {
-                    config.DomainConfigSystem[system] = new DomainConfigSystem();
-                    config.DomainConfigSystem[system].DomainConfig = jsonString.DomainConfigSystem[system].DomainConfig;
-                }
-            }
-            return config;
         }
 
         private static void GetBlastGeneratorLayer(ref NetCoreEventArgs e)
