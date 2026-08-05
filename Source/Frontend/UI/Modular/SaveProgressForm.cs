@@ -76,5 +76,10 @@ namespace RTCV.UI
                 logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            RtcCore.CancelSave();
+        }
     }
 }

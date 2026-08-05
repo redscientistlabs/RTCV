@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ceras;
 using Newtonsoft.Json;
@@ -76,6 +77,7 @@ namespace RTCV.CorruptCore
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true, int toastID = -1)
         {
+            CancellationToken ct = RtcCore.GetSaveCancellationToken();
             if (sks == null)
             {
                 throw new ArgumentNullException(nameof(sks));
@@ -94,7 +96,7 @@ namespace RTCV.CorruptCore
                 sks.Filename = filename;
 
                 decimal saveProgress = 0;
-                CleanTempFolder(ref sks, ref saveProgress);
+                CleanTempFolder(ref sks, ref saveProgress, ct, toastID);
 
                 //Watermarking RTC Version
                 sks.RtcVersion = RtcCore.RtcVersion;
@@ -107,11 +109,11 @@ namespace RTCV.CorruptCore
                         sks.RomsInStockpile.Add(romFile);
                 }
 
-                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress, toastID);
+                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress, ct, toastID);
 
                 CopyMetadataFiles(ref sks, ref saveProgress);
 
-                CopySavestates(ref sks, ref saveProgress, toastID);
+                CopySavestates(ref sks, ref saveProgress, ct, toastID);
 
                 CopyConfigs(ref sks, ref saveProgress, toastID);
 
@@ -119,7 +121,7 @@ namespace RTCV.CorruptCore
 
                 CreateStockpileJson(ref sks, ref saveProgress, toastID);
 
-                CreateAndReplaceStockpileZip(ref sks, compress, ref saveProgress, toastID);
+                CreateAndReplaceStockpileZip(ref sks, compress, ref saveProgress, ct, toastID);
 
                 CleanOutStockpileFolder(ref sks, ref saveProgress, toastID);
 
@@ -130,6 +132,10 @@ namespace RTCV.CorruptCore
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100, toastID));
             }
             catch (StockpileSaveException)
+            {
+                return false;
+            }
+            catch (OperationCanceledException)
             {
                 return false;
             }
@@ -155,7 +161,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CleanTempFolder(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
+        private static void CleanTempFolder(ref Stockpile sks, ref decimal saveProgress, CancellationToken ct, int toastID = -1)
         {
             try
             {
@@ -224,7 +230,7 @@ namespace RTCV.CorruptCore
             UpdateCurrentStockpileMetadata(sks);
         }
 
-        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress, int toastID = -1)
+        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress, CancellationToken ct, int toastID = -1)
         {
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
@@ -233,6 +239,7 @@ namespace RTCV.CorruptCore
                 //populating Allroms array
                 foreach (StashKey key in sks.StashKeys)
                 {
+                    ct.ThrowIfCancellationRequested();
                     if (!allRoms.Contains(key.RomFilename))
                     {
                         allRoms.Add(key.RomFilename);
@@ -333,6 +340,7 @@ namespace RTCV.CorruptCore
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
+                    ct.ThrowIfCancellationRequested();
                     if (str.EndsWith("IGNORE"))
                         continue;
 
@@ -355,11 +363,11 @@ namespace RTCV.CorruptCore
                             //Whack the attributes in case a rom is readonly
                             File.SetAttributes(romTempfilename, FileAttributes.Normal);
                             File.Delete(romTempfilename);
-                            File.Copy(rom, romTempfilename);
+                            CancellableCopy(rom, romTempfilename, false, ct);
                         }
                         else
                         {
-                            File.Copy(rom, romTempfilename);
+                            CancellableCopy(rom, romTempfilename, false, ct);
                         }
                     }
                 }
@@ -401,7 +409,33 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
+        private static void CancellableCopy(string sourceFileName, string destinationFileName, bool overwrite, CancellationToken ct)
+        {
+            const int bufferSize = 1<<20; // 1 MB buffer size
+            if (!overwrite && File.Exists(destinationFileName))
+            {
+                throw new IOException($"The file '{destinationFileName}' already exists.");
+            }
+            else if (overwrite && File.Exists(destinationFileName))
+            {
+                File.SetAttributes(destinationFileName, FileAttributes.Normal);
+                File.Delete(destinationFileName);
+            }
+
+            using (FileStream sourceStream = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read))
+            using (FileStream destinationStream = new FileStream(destinationFileName, FileMode.CreateNew, FileAccess.Write))
+            {
+                byte[] buffer = new byte[bufferSize];
+                int bytesRead;
+                while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    destinationStream.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
+
+        private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress, CancellationToken ct, int toastID = -1)
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
@@ -409,12 +443,13 @@ namespace RTCV.CorruptCore
                 //Copy all the savestates
                 foreach (StashKey key in sks.StashKeys)
                 {
+                    ct.ThrowIfCancellationRequested();
                     // get savestate name
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {stateFilename} to stockpile", saveProgress += percentPerFile, toastID));
-                    File.Copy(
+                    CancellableCopy(
                         Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename),
-                        Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
+                        Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true, ct); // copy savestates to temp folder
                 }
             }
         }
@@ -464,7 +499,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CreateAndReplaceStockpileZip(ref Stockpile sks, bool compress, ref decimal saveProgress, int toastID = -1)
+        private static void CreateAndReplaceStockpileZip(ref Stockpile sks, bool compress, ref decimal saveProgress, CancellationToken ct, int toastID = -1)
         {
             string tempFilename = sks.Filename + ".temp";
             //If there's already a temp file from a previous failed save, delete it
@@ -489,7 +524,7 @@ namespace RTCV.CorruptCore
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating SKS", saveProgress += 10, toastID));
             //Create the file into temp
-            ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
+            CancellableZipFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false, ct);
 
             //Remove the old stockpile
             try
@@ -510,6 +545,79 @@ namespace RTCV.CorruptCore
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Moving SKS to destination", saveProgress += 2, toastID));
             File.Move(tempFilename, sks.Filename);
         }
+
+        private static void CancellableZipFromDirectory(string sourceDirectoryName, string destinationArchiveFileName, CompressionLevel compressionLevel, bool includeBaseDirectory, CancellationToken ct)
+        {
+            using (FileStream zipToOpen = new FileStream(destinationArchiveFileName, FileMode.Create))
+            {
+                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create))
+                {
+                    foreach (string file in Directory.GetFiles(sourceDirectoryName, "*", SearchOption.AllDirectories))
+                    {
+                        ct.ThrowIfCancellationRequested();
+                        string entryName = includeBaseDirectory ? GetRelativePath(Path.GetDirectoryName(sourceDirectoryName), file) : GetRelativePath(sourceDirectoryName, file);
+                        archive.CreateEntryFromFile(file, entryName, compressionLevel);
+                    }
+                }
+            }
+        }
+
+        // Source - https://stackoverflow.com/a/32113484
+        // Posted by Muhammad Rehan Saeed, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-08-03, License - CC BY-SA 4.0
+
+        /// <summary>
+        /// Creates a relative path from one file or folder to another.
+        /// </summary>
+        /// <param name="fromPath">Contains the directory that defines the start of the relative path.</param>
+        /// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
+        /// <returns>The relative path from the start directory to the end path.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="fromPath"/> or <paramref name="toPath"/> is <c>null</c>.</exception>
+        /// <exception cref="UriFormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static string GetRelativePath(string fromPath, string toPath)
+        {
+            if (string.IsNullOrEmpty(fromPath))
+            {
+                throw new ArgumentNullException("fromPath");
+            }
+
+            if (string.IsNullOrEmpty(toPath))
+            {
+                throw new ArgumentNullException("toPath");
+            }
+
+            Uri fromUri = new Uri(AppendDirectorySeparatorChar(fromPath));
+            Uri toUri = new Uri(AppendDirectorySeparatorChar(toPath));
+
+            if (fromUri.Scheme != toUri.Scheme)
+            {
+                return toPath;
+            }
+
+            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+            if (string.Equals(toUri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase))
+            {
+                relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            }
+
+            return relativePath;
+        }
+
+        private static string AppendDirectorySeparatorChar(string path)
+        {
+            // Append a slash only if the path is a directory and does not have a slash.
+            if (!Path.HasExtension(path) &&
+                !path.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                return path + Path.DirectorySeparatorChar;
+            }
+
+            return path;
+        }
+
 
         private static void CleanOutStockpileFolder(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
         {

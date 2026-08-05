@@ -336,8 +336,9 @@ namespace RTCV.UI
                                     {
                                         if (StockpileManagerUISide.waitingForHashes)
                                             currentToastID = -1;
-
-                                        RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes...({StockpileManagerUISide.totalHashFilesInQueue} files left)", progress, currentToastID));
+                                        
+                                        int filesLeft = StockpileManagerUISide.totalHashFilesInQueue;
+                                        RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes... ({filesLeft} file{(filesLeft == 1 ? "" : "s")} left)", progress, currentToastID));
                                     }
 
                                     if (totalBytesReadLast != totalBytesRead)
