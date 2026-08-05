@@ -1,13 +1,14 @@
 namespace RTCV.UI
 {
+    using RTCV.Common;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.UI.Components.Controls;
+    using RTCV.UI.Modular;
     using System;
     using System.Data;
     using System.Linq;
     using System.Windows.Forms;
-    using RTCV.CorruptCore;
-    using RTCV.Common;
-    using RTCV.UI.Components.Controls;
-    using RTCV.UI.Modular;
 
     public partial class VmdSimpleGenForm : ComponentForm, IBlockable
     {
@@ -131,6 +132,7 @@ namespace RTCV.UI
                 proto.VmdName = tbVmdName.Text;
             }
 
+            proto.SystemCore = AllSpec.VanguardSpec[VSPEC.SYSTEMCORE].ToString();
             proto.BigEndian = mi.BigEndian;
             proto.WordSize = mi.WordSize;
             proto.Padding = 0;

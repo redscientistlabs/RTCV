@@ -16,6 +16,7 @@ namespace RTCV.CorruptCore
     public class VmdPrototype
     {
         public string VmdName { get; set; }
+        public string SystemCore { get; set; }
         public string GenDomain { get; set; }
         public bool BigEndian { get; set; }
         public int WordSize { get; set; }
@@ -43,6 +44,7 @@ namespace RTCV.CorruptCore
             {
                 Proto = this,
                 Name = VmdName,
+                SystemCore = SystemCore,
                 BigEndian = BigEndian,
                 WordSize = WordSize,
                 UsingRPC = UsingRPC,

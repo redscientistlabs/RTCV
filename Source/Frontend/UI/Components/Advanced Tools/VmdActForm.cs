@@ -528,6 +528,7 @@ namespace RTCV.UI
 
                 proto.GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString();
                 proto.VmdName = mi.Name + " " + RtcCore.GetRandomKey();
+                proto.SystemCore = AllSpec.VanguardSpec[VSPEC.SYSTEMCORE].ToString();
                 proto.BigEndian = mi.BigEndian;
                 proto.WordSize = mi.WordSize;
                 proto.PointerSpacer = 1;

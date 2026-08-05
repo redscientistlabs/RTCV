@@ -118,6 +118,7 @@ namespace RTCV.UI
                 proto.VmdName = tbVmdName.Text;
             }
 
+            proto.SystemCore = AllSpec.VanguardSpec[VSPEC.SYSTEMCORE].ToString();
             proto.BigEndian = mi.BigEndian;
             proto.WordSize = mi.WordSize;
             proto.Padding = 0;

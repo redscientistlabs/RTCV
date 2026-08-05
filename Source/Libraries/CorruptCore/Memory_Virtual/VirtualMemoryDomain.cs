@@ -13,6 +13,7 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public class VirtualMemoryDomain : MemoryInterface
     {
+        public string SystemCore { get; set; } = "";
         public List<string> PointerDomains { get; set; } = new List<string>();
         public List<long> PointerAddresses { get; set; } = new List<long>();
 
