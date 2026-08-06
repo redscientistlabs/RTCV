@@ -10,7 +10,7 @@ namespace Tests.CorruptCore.Serialization
     [TestClass]
     public class StockpileTests
     {
-        private const string TestResourceFolder = "../Tests/CorruptCore/Serialization/Resources";
+        private const string TestResourceFolder = "../../CorruptCore/Serialization/Resources";
         private static readonly string defaultStockpilePath = Path.Combine(TestResourceFolder, "DefaultStockpile.json");
         private static readonly string defaultStockpile505Path = Path.Combine(TestResourceFolder, "DefaultStockpile505.json");
         private static readonly string simpleStockpile505Path = Path.Combine(TestResourceFolder, "SimpleStockpile505.json");

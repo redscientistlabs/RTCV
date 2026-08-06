@@ -14,7 +14,7 @@ namespace Tests.CorruptCore.Serialization
     [TestClass]
     public class BlastUnitTests
     {
-        private const string TestResourceFolder = "../Tests/CorruptCore/Serialization/Resources";
+        private const string TestResourceFolder = "../../CorruptCore/Serialization/Resources";
         private static readonly string defaultBlastUnitPath = Path.Combine(TestResourceFolder, "DefaultBlastUnit.json");
 
         [TestMethod]

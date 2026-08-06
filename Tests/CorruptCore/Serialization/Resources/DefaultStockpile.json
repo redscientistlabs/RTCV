@@ -2,6 +2,7 @@
   "RtcVersion": null,
   "VanguardImplementation": null,
   "MissingLimiter": false,
+  "RomsInStockpile": [],
   "StashKeys": [],
   "Filename": null
 }
