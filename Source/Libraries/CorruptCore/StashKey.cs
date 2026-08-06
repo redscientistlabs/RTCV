@@ -81,7 +81,7 @@ namespace RTCV.CorruptCore
             BlastLayer = blastlayer;
 
             RomFilename = (string)AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
-            RomShortFilename = Path.GetFileName(RomFilename);
+            RomShortFilename = !RomFilename.Equals("ERROR") ? Path.GetFileName(RomFilename) : null;
             SystemName = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
             SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
             GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
@@ -90,9 +90,9 @@ namespace RTCV.CorruptCore
             var dirCheck = useEmuVer ? !string.IsNullOrEmpty((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]) : false;
             EmuVer = dirCheck ? new DirectoryInfo((string)AllSpec.VanguardSpec?[VSPEC.EMUDIR]).Name.ToUpper() : "";
             
-            this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
+            this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS])?.ToList();
 
-            var domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+            var domains = MemoryDomains.MemoryInterfaces?.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray() ?? Array.Empty<string>();
             foreach (var domain in domains)
             {
                 MemoryInterfaces.Add(domain, MemoryDomains.GetProxy(domain));
