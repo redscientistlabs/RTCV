@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
@@ -53,6 +53,14 @@
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\ZombieCeras\src\Ceras\Ceras.csproj" />
   </ItemGroup>
+  <ItemGroup>
+	  <Content Include="..\..\..\deps\7z.dll" Link="7z.dll">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\..\..\deps\7z32.dll" Link="7z32.dll">
+	      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+    </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
   </ItemGroup>
