@@ -1,115 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{78A00935-3E62-4549-8D73-9FC7A570918C}</ProjectGuid>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VanguardHook</RootNamespace>
     <AssemblyName>VanguardHook</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <ProjectGuid>{78A00935-3E62-4549-8D73-9FC7A570918C}</ProjectGuid>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
     <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>..\..\..\Build\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DebugSymbols>true</DebugSymbols>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnchorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AnchorForm.Designer.cs">
-      <DependentUpon>AnchorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VanguardJsonParsing.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VanguardMethodInterchange.cs" />
-    <Compile Include="VanguardCore.cs" />
-    <Compile Include="VanguardImplementation.cs" />
-    <Compile Include="VanguardRealTimeEvents.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AnchorForm.resx">
-      <DependentUpon>AnchorForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Frontend\UI\UI.csproj">
-      <Project>{bd376bb2-17ec-4fb0-a9fe-6b1bbf4af3e3}</Project>
-      <Name>UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a31c17e1-2eab-434f-a022-20193f2ceab7}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CorruptCore\CorruptCore.csproj">
-      <Project>{b5633a86-dc66-4723-88eb-7dfc95458072}</Project>
-      <Name>CorruptCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NetCore\NetCore.csproj">
-      <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
-      <Name>NetCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Vanguard\Vanguard.csproj">
-      <Project>{364c705e-b7ab-4a94-a59b-88899ce65958}</Project>
-      <Name>Vanguard</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup>
     <DllExportIdent>2E75296F-2DF2-4D88-9ECD-4D7B8A19B2F4</DllExportIdent>
     <DllExportMetaLibName>DllExport.dll</DllExportMetaLibName>
     <DllExportNamespace>VanguardHook</DllExportNamespace>
     <DllExportDDNSCecil>true</DllExportDDNSCecil>
-    <DllExportSkipOnAnyCpu>false</DllExportSkipOnAnyCpu>
-    <DllExportPlatform>Auto</DllExportPlatform>
+    <PlatformTarget>x64</PlatformTarget>
     <DllExportOrdinalsBase>1</DllExportOrdinalsBase>
     <DllExportGenExpLib>true</DllExportGenExpLib>
     <DllExportOurILAsm>true</DllExportOurILAsm>
@@ -121,18 +48,38 @@
     <DllExportPreProcType>0</DllExportPreProcType>
     <DllExportPostProcType>0</DllExportPostProcType>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Frontend\UI\UI.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\CorruptCore\CorruptCore.csproj" />
+    <ProjectReference Include="..\NetCore\NetCore.csproj" />
+    <ProjectReference Include="..\Vanguard\Vanguard.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DllExport" Version="1.7.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+  <Target Name="CustomPostBuildCleanup" AfterTargets="Build">
+    <RemoveDir Directories="$(OutputPath)cs;$(OutputPath)pl;$(OutputPath)pt-BR;$(OutputPath)tr;$(OutputPath)de;$(OutputPath)en;$(OutputPath)es;$(OutputPath)fr;$(OutputPath)it;$(OutputPath)ja;$(OutputPath)ko;$(OutputPath)ru;$(OutputPath)zh-Hans;$(OutputPath)zh-Hant" />
+  </Target>
+  <Import Project="$(BaseIntermediateOutputPath)NuGet.ProjectModel.Task.targets" Condition="Exists('$(BaseIntermediateOutputPath)NuGet.ProjectModel.Task.targets')" />
   <ImportGroup Label=".NET DllExport">
-    <Import Project="$(SolutionDir)packages\DllExport.1.7.4\packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets" Condition="Exists($([MSBuild]::Escape('$(SolutionDir)packages\DllExport.1.7.4\packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets')))" Label="8337224c9ad9e356" />
+    <Import Project="$(SolutionDir)packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets" Condition="Exists($([MSBuild]::Escape('$(SolutionDir)packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets')))" Label="8337224c9ad9e356" />
   </ImportGroup>
   <Target Name="DllExportRestorePkg" BeforeTargets="PrepareForBuild">
-    <Error Condition="!Exists('$(SolutionDir)packages\DllExport.1.7.4\DllExport.bat')" Text="DllExport.bat is not found. Path: '$(SolutionDir)packages\DllExport.1.7.4' - https://github.com/3F/DllExport" />
-    <Exec Condition="('$(DllExportModImported)' != 'true' Or !Exists('$(SolutionDir)packages\DllExport.1.7.4\packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets')) And Exists('$(SolutionDir)packages\DllExport.1.7.4\DllExport.bat')" Command=".\DllExport.bat  -action Restore" WorkingDirectory="$(SolutionDir)" />
-    <MSBuild Condition="'$(DllExportModImported)' != 'true'" Projects="$(SolutionDir)packages\DllExport.1.7.4\packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets" Targets="DllExportMetaXBaseTarget" Properties="TargetFramework=$(TargetFramework)">
+    <Error Condition="!Exists('$(SolutionDir)DllExport.bat')" Text="DllExport.bat is not found. Path: '$(SolutionDir)' - https://github.com/3F/DllExport" />
+    <Exec Condition="('$(DllExportModImported)' != 'true' Or !Exists('$(SolutionDir)packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets')) And Exists('$(SolutionDir)DllExport.bat')" Command=".\DllExport.bat  -action Restore" WorkingDirectory="$(SolutionDir)" />
+    <MSBuild Condition="'$(DllExportModImported)' != 'true'" Projects="$(SolutionDir)packages\DllExport.1.7.4\tools\net.r_eg.DllExport.targets" Targets="DllExportMetaXBaseTarget" Properties="TargetFramework=$(TargetFramework)">
       <Output TaskParameter="TargetOutputs" PropertyName="DllExportMetaXBase" />
     </MSBuild>
     <ItemGroup>
       <Reference Include="DllExport, PublicKeyToken=8337224c9ad9e356">
-        <HintPath>$(SolutionDir)packages\DllExport.1.7.4\packages\DllExport.1.7.4\gcache\$(DllExportMetaXBase)\$(DllExportNamespace)\$(DllExportMetaLibName)</HintPath>
+        <HintPath>$(SolutionDir)packages\DllExport.1.7.4\gcache\$(DllExportMetaXBase)\$(DllExportNamespace)\$(DllExportMetaLibName)</HintPath>
         <Private>False</Private>
         <SpecificVersion>False</SpecificVersion>
       </Reference>
@@ -141,7 +88,4 @@
   <Target Name="DllExportRPkgDynamicImport" BeforeTargets="PostBuildEvent" DependsOnTargets="GetFrameworkPaths" Condition="'$(DllExportModImported)' != 'true' And '$(DllExportRPkgDyn)' != 'false'">
     <MSBuild BuildInParallel="true" UseResultsCache="true" Projects="$(MSBuildProjectFullPath)" Properties="DllExportRPkgDyn=true" Targets="Build" />
   </Target>
-    <PropertyGroup>
-    <PostBuildEvent>rd /s /q "cs", "pl", "pt-BR", "tr", "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

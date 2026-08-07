@@ -5,15 +5,25 @@ jobs:
   buildAndTest:
     runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.1.3
+    - uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
     - name: Restore packages
-      run: msbuild RTCV.sln /t:restore
+      run: msbuild RTCV.sln -t:restore
+
+    - name: Restore DllExport Targets
+      shell: cmd
+      run: |
+        DllExport.bat -action Restore
+
     - name: Build with MSBuild
-      run: msbuild RTCV.sln
+      run: msbuild RTCV.sln -p:Configuration=Release
+
     - name: Run tests
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
     - name: Report coverage to codecov
       uses: codecov/codecov-action@v1.0.13
       with:
