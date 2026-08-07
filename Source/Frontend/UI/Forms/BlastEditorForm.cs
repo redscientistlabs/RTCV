@@ -908,7 +908,7 @@ namespace RTCV.UI
                 headerStrip.Show(MousePosition);
             }
 
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
         }
 
         private static void updateMaximum(BlastEditorForm BEF, List<DataGridViewRow> rows)
@@ -1023,7 +1023,7 @@ namespace RTCV.UI
             {
                 dgvBlastEditor.DataSource = _mainSource;
                 _filteredSource = null;
-                RefreshAllNoteIcons();
+                RefreshAllNotes();
                 return;
             }
 
@@ -1049,7 +1049,7 @@ namespace RTCV.UI
             }
             dgvBlastEditor.DataSource = _filteredSource;
             RegisterDataSourceEvents(false);
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
         }
 
         private void InitializeBottom()
@@ -1233,7 +1233,9 @@ namespace RTCV.UI
             sourceAddress.Increment = 1;
             dgvBlastEditor.Columns.Add(sourceAddress);
 
-            dgvBlastEditor.Columns.Add(CreateColumn("", BuProperty.Note.ToString(), "Note", new DataGridViewButtonColumn()));
+            var note = (DataGridViewTextBoxColumn)(CreateColumn("", BuProperty.Note.ToString(), "Note", new DataGridViewTextBoxColumn()));
+            note.ReadOnly = true;
+            dgvBlastEditor.Columns.Add(note);
 
             if (Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
             {
@@ -1369,7 +1371,7 @@ namespace RTCV.UI
 
         private BindingSource _mainSource;
         private BindingSource _filteredSource;
-        private Dictionary<BlastUnit, DataGridViewButtonCell> _noteButtonsCache = new Dictionary<BlastUnit, DataGridViewButtonCell>();
+        private Dictionary<BlastUnit, DataGridViewTextBoxCell> _noteCache = new Dictionary<BlastUnit, DataGridViewTextBoxCell>();
 
         internal void LoadStashkey(StashKey sk, bool silent = false)
         {
@@ -1442,7 +1444,7 @@ namespace RTCV.UI
             {
                 this.Show();
                 this.BringToFront();
-                RefreshAllNoteIcons();
+                RefreshAllNotes();
             }
         }
 
@@ -1562,7 +1564,7 @@ namespace RTCV.UI
             }
             batchOperation = false;
             dgvBlastEditor.DataSource = oldBS;
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
             dgvBlastEditor.ResumeLayout();
         }
 
@@ -1621,7 +1623,7 @@ namespace RTCV.UI
                     _mainSource.Add(bu);
                 }
             }
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
         }
 
         public void SendToStash(object sender, EventArgs e)
@@ -2049,7 +2051,7 @@ namespace RTCV.UI
                 dgvBlastEditor.DataSource = _mainSource;
             }
             dgvBlastEditor.ResetBindings();
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
             dgvBlastEditor.Refresh();
         }
 
@@ -2201,22 +2203,20 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
         
-        private void RefreshNoteIcons()
+        private void RefreshNotes()
         {
-            foreach (var pair in _noteButtonsCache)
+            foreach (var pair in _noteCache)
             {
                 BlastUnit bu = pair.Key;
-                DataGridViewButtonCell cell = pair.Value;
-        
-                bool hasNote = !string.IsNullOrWhiteSpace(bu.Note);
-                cell.Value = hasNote ? "📝" : string.Empty;
+                DataGridViewTextBoxCell cell = pair.Value;
+                cell.Value = bu.Note;
             }
         }
 
-        public void RefreshAllNoteIcons()
+        public void RefreshAllNotes()
         {
-            ClearNoteButtonCache();
-            RefreshNoteIcons();
+            ClearNoteCache();
+            RefreshNotes();
         }
 
         private void RegisterDataSourceEvents(bool main)
@@ -2243,13 +2243,13 @@ namespace RTCV.UI
                 e.ListChangedType == ListChangedType.ItemDeleted ||
                 e.ListChangedType == ListChangedType.Reset)
             {
-                SyncObjectSingleton.FormBeginExecute(ClearNoteButtonCache);
+                SyncObjectSingleton.FormBeginExecute(ClearNoteCache);
             }
         }
         
-        private void ClearNoteButtonCache()
+        private void ClearNoteCache()
         {
-            _noteButtonsCache.Clear();
+            _noteCache.Clear();
         }
 
         private void OnCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -2257,15 +2257,13 @@ namespace RTCV.UI
             if (dgvBlastEditor.Columns[e.ColumnIndex].Name != BuProperty.Note.ToString())
                 return;
     
-            DataGridViewButtonCell cell = dgvBlastEditor.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+            DataGridViewTextBoxCell cell = dgvBlastEditor.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewTextBoxCell;
             BlastUnit unit = dgvBlastEditor.Rows[e.RowIndex].DataBoundItem as BlastUnit;
     
             if (cell != null && unit != null)
             {
-                _noteButtonsCache[unit] = cell;
-        
-                bool hasNote = !string.IsNullOrWhiteSpace(unit.Note);
-                cell.Value = hasNote ? "📝" : string.Empty;
+                _noteCache[unit] = cell;
+                cell.Value = unit.Note;
             }
         }
 
@@ -2472,7 +2470,7 @@ namespace RTCV.UI
         {
             _mainSource.Clear();
             dgvBlastEditor.ResetBindings();
-            RefreshAllNoteIcons();
+            RefreshAllNotes();
             dgvBlastEditor.Refresh();
         }
 

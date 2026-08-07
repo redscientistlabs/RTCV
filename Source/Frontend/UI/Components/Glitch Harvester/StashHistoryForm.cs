@@ -122,7 +122,7 @@ namespace RTCV.UI
             dataRow.Cells["SystemCore"].Value = sk.SystemCore;
             dataRow.Cells["EmuVer"].Value = sk.EmuVer;
             
-            S.GET<StockpileManagerForm>().RefreshNoteIcons();
+            S.GET<StockpileManagerForm>().RefreshNotes();
 
             StockpileManagerUISide.StashHistory.Remove(sk);
 
@@ -164,7 +164,7 @@ namespace RTCV.UI
             StashKey stockpileStashKey = (StashKey)S.GET<StockpileManagerForm>().dgvStockpile.Rows[index].Cells["Item"].Value;
             stockpileStashKey.BlastLayer = sk.BlastLayer;
 
-            S.GET<StockpileManagerForm>().RefreshNoteIcons();
+            S.GET<StockpileManagerForm>().RefreshNotes();
 
             StockpileManagerUISide.StashHistory.Remove(sk);
 

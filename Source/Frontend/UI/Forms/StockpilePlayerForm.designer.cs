@@ -31,7 +31,6 @@ namespace RTCV.UI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StockpilePlayerForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnNextItem = new System.Windows.Forms.Button();
             this.btnReloadItem = new System.Windows.Forms.Button();
@@ -39,17 +38,17 @@ namespace RTCV.UI
             this.btnLoadStockpile = new System.Windows.Forms.Button();
             this.btnBlastToggle = new System.Windows.Forms.Button();
             this.dgvStockpile = new System.Windows.Forms.DataGridView();
-            this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Note = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tbNoteBox = new System.Windows.Forms.RichTextBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
+            this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,14 +154,14 @@ namespace RTCV.UI
             this.SystemName,
             this.SystemCore,
             this.Note});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Symbol", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvStockpile.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Symbol", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvStockpile.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvStockpile.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvStockpile.GridColor = System.Drawing.Color.Black;
             this.dgvStockpile.Location = new System.Drawing.Point(14, 64);
@@ -178,45 +177,6 @@ namespace RTCV.UI
             this.dgvStockpile.Tag = "color:normal";
             this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnStockpileCellClick);
             this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnStockpileMouseDown);
-            // 
-            // Item
-            // 
-            this.Item.HeaderText = "Item Name";
-            this.Item.Name = "Item";
-            this.Item.ReadOnly = true;
-            // 
-            // GameName
-            // 
-            this.GameName.FillWeight = 45F;
-            this.GameName.HeaderText = "Game";
-            this.GameName.Name = "GameName";
-            this.GameName.ReadOnly = true;
-            // 
-            // SystemName
-            // 
-            this.SystemName.FillWeight = 45F;
-            this.SystemName.HeaderText = "System";
-            this.SystemName.Name = "SystemName";
-            this.SystemName.ReadOnly = true;
-            // 
-            // SystemCore
-            // 
-            this.SystemCore.FillWeight = 40F;
-            this.SystemCore.HeaderText = "Core";
-            this.SystemCore.Name = "SystemCore";
-            // 
-            // Note
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            this.Note.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Note.FillWeight = 15F;
-            this.Note.HeaderText = "Note";
-            this.Note.MinimumWidth = 35;
-            this.Note.Name = "Note";
-            this.Note.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tbNoteBox
             // 
@@ -276,6 +236,41 @@ namespace RTCV.UI
             this.label2.TabIndex = 83;
             this.label2.Text = "Stockpile Player";
             // 
+            // Item
+            // 
+            this.Item.HeaderText = "Item Name";
+            this.Item.Name = "Item";
+            this.Item.ReadOnly = true;
+            // 
+            // GameName
+            // 
+            this.GameName.FillWeight = 45F;
+            this.GameName.HeaderText = "Game";
+            this.GameName.Name = "GameName";
+            this.GameName.ReadOnly = true;
+            // 
+            // SystemName
+            // 
+            this.SystemName.FillWeight = 45F;
+            this.SystemName.HeaderText = "System";
+            this.SystemName.Name = "SystemName";
+            this.SystemName.ReadOnly = true;
+            // 
+            // SystemCore
+            // 
+            this.SystemCore.FillWeight = 40F;
+            this.SystemCore.HeaderText = "Core";
+            this.SystemCore.Name = "SystemCore";
+            // 
+            // Note
+            // 
+            this.Note.FillWeight = 40F;
+            this.Note.HeaderText = "Note";
+            this.Note.MinimumWidth = 35;
+            this.Note.Name = "Note";
+            this.Note.ReadOnly = true;
+            this.Note.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
             // StockpilePlayerForm
             // 
             this.AllowDrop = true;
@@ -313,15 +308,15 @@ namespace RTCV.UI
 		public System.Windows.Forms.Button btnBlastToggle;
 		public DataGridView dgvStockpile;
 		private System.Windows.Forms.RichTextBox tbNoteBox;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Item;
-		private System.Windows.Forms.DataGridViewTextBoxColumn GameName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn SystemCore;
-		private System.Windows.Forms.DataGridViewButtonColumn Note;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.Label label2;
+        private DataGridViewTextBoxColumn Item;
+        private DataGridViewTextBoxColumn GameName;
+        private DataGridViewTextBoxColumn SystemName;
+        private DataGridViewTextBoxColumn SystemCore;
+        private DataGridViewTextBoxColumn Note;
     }
 }

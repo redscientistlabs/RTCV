@@ -97,7 +97,7 @@ namespace RTCV.UI
                 {
                     foreach (DataGridViewCell cell in _cells)
                     {
-                        cell.Value = "📝";
+                        cell.Value = cleanText;
                     }
                 }
             }

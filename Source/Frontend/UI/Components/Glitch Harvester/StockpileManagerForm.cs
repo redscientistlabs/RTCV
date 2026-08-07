@@ -45,7 +45,7 @@ namespace RTCV.UI
 
             dgvStockpile.RowsAdded += (o, e) =>
             {
-                RefreshNoteIcons();
+                RefreshNotes();
             };
             btnSaveStockpile.BackColorChanged += (o, e) => UpdateSaveButtonColor(UnsavedEdits);
             btnSaveStockpileAs.BackColorChanged += (o, e) => UpdateSaveButtonColor(UnsavedEdits);
@@ -68,7 +68,7 @@ namespace RTCV.UI
                 // Stockpile Note handling
                 var senderGrid = (DataGridView)sender;
 
-                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                if (e.ColumnIndex == senderGrid.Columns["Note"]?.Index &&
                     e.RowIndex >= 0)
                 {
                     StashKey sk = (StashKey)senderGrid.Rows[e.RowIndex].Cells["Item"].Value;
@@ -282,7 +282,7 @@ namespace RTCV.UI
             }
         }
 
-        public void RefreshNoteIcons()
+        public void RefreshNotes()
         {
             foreach (DataGridViewRow dataRow in dgvStockpile.Rows)
             {
@@ -292,14 +292,7 @@ namespace RTCV.UI
                     continue;
                 }
 
-                if (string.IsNullOrWhiteSpace(sk.Note))
-                {
-                    dataRow.Cells["Note"].Value = "";
-                }
-                else
-                {
-                    dataRow.Cells["Note"].Value = "📝";
-                }
+                dataRow.Cells["Note"].Value = sk.Note;
             }
         }
 
@@ -451,7 +444,7 @@ namespace RTCV.UI
                     }
 
                     btnSaveStockpile.Enabled = true;
-                    RefreshNoteIcons();
+                    RefreshNotes();
 
                     if (r.HasWarnings())
                     {
@@ -514,7 +507,7 @@ namespace RTCV.UI
                 this.ParentCanvas?.CloseSubForm();
                 UICore.UnlockInterface();
                 UICore.SetHotkeyTimer(true);
-                RefreshNoteIcons();
+                RefreshNotes();
             }
         }
 

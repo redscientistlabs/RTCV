@@ -16,18 +16,17 @@ namespace RTCV.UI
     // 0  dgvBlastProtoReference
     // 1  dgvRowDirty
     // 2  dgvEnabled
-    // 3  dgvNoteText
-    // 4  dgvDomain
-    // 5  dgvPrecision
-    // 6  dgvType
-    // 7  dgvMode
-    // 8  dgvInterval
-    // 9  dgvStartAddress
-    // 10 dgvEndAddress
-    // 11 dgvParam1
-    // 12 dgvParam2
-    // 13 dgvSeed
-    // 14 dgvNoteButton
+    // 3  dgvDomain
+    // 4  dgvPrecision
+    // 5  dgvType
+    // 6  dgvMode
+    // 7  dgvInterval
+    // 8  dgvStartAddress
+    // 9 dgvEndAddress
+    // 10 dgvParam1
+    // 11 dgvParam2
+    // 12 dgvSeed
+    // 13 dgvNote
 
     //TYPE = BLASTUNITTYPE
     //MODE = GENERATIONMODE
@@ -40,7 +39,6 @@ namespace RTCV.UI
             dgvBlastProtoReference,
             DgvRowDirty,
             DgvEnabled,
-            DgvNoteText,
             DgvDomain,
             DgvPrecision,
             DgvType,
@@ -54,7 +52,7 @@ namespace RTCV.UI
             DgvExecuteFrame,
             DgvLoop,
             DgvSeed,
-            DgvNoteButton
+            DgvNote
         }
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -634,7 +632,7 @@ namespace RTCV.UI
                 string note;
                 if (cbUnitsShareNote.Checked)
                 {
-                    var value = row.Cells["dgvNoteText"].Value;
+                    var value = row.Cells["dgvNote"].Value;
                     if (value != null)
                     {
                         note = value.ToString();
@@ -1008,19 +1006,16 @@ namespace RTCV.UI
                             dgvBlastGenerator.EndEdit();
                     }
 
-                    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                    e.RowIndex >= 0)
+                    if (e.ColumnIndex == senderGrid.Columns["dgvNote"]?.Index &&
+                        e.RowIndex >= 0)
                     {
-                        {
-                            DataGridViewCell textCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteText"];
-                            DataGridViewCell buttonCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteButton"];
+                            DataGridViewCell noteCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNote"];
 
-                            NoteItem note = new NoteItem(textCell.Value == null ? "" : textCell.Value.ToString());
-                            textCell.Value = note;
-                            S.SET(new NoteEditorForm(note, buttonCell));
+                            NoteItem note = new NoteItem(noteCell.Value == null ? "" : noteCell.Value.ToString());
+                            noteCell.Value = note;
+                            S.SET(new NoteEditorForm(note, noteCell));
                             S.GET<NoteEditorForm>().Show();
                             return;
-                        }
                     }
 
                     // Check boxes should react in one click
@@ -1074,17 +1069,6 @@ namespace RTCV.UI
             if (e.Button == MouseButtons.Left)
             {
                 dgvBlastGenerator.BeginEdit(false);
-            }
-        }
-
-        public void RefreshNoteIcons()
-        {
-            foreach (DataGridViewRow row in dgvBlastGenerator.Rows)
-            {
-                DataGridViewCell textCell = row.Cells["dgvNoteText"];
-                DataGridViewCell buttonCell = row.Cells["dgvNoteButton"];
-
-                buttonCell.Value = string.IsNullOrWhiteSpace(textCell.Value?.ToString()) ? string.Empty : "📝";
             }
         }
 

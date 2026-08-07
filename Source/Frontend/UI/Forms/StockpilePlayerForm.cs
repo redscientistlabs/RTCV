@@ -24,11 +24,11 @@ namespace RTCV.UI
             dgvStockpile.DragEnter += OnStockpileDragEnter;
             dgvStockpile.RowsAdded += (o, e) =>
             {
-                RefreshNoteIcons();
+                RefreshNotes();
             };
             dgvStockpile.ColumnHeaderMouseClick += (o, e) =>
             {
-                RefreshNoteIcons();
+                RefreshNotes();
             };
         }
 
@@ -295,7 +295,7 @@ namespace RTCV.UI
                 }
 
                 dgvStockpile.ClearSelection();
-                RefreshNoteIcons();
+                RefreshNotes();
             }
             finally
             {
@@ -393,7 +393,7 @@ namespace RTCV.UI
                         tbNoteBox.Text = "";
                     }
 
-                    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                    if (e.ColumnIndex == senderGrid.Columns["Note"]?.Index &&
                         e.RowIndex >= 0)
                     {
                         S.SET(new NoteEditorForm(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
@@ -426,7 +426,7 @@ namespace RTCV.UI
 
         private StashKey GetSelectedStashKey() => (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
-        public void RefreshNoteIcons()
+        public void RefreshNotes()
         {
             foreach (DataGridViewRow dataRow in dgvStockpile.Rows)
             {
@@ -435,15 +435,8 @@ namespace RTCV.UI
                 {
                     continue;
                 }
-
-                if (string.IsNullOrWhiteSpace(sk.Note))
-                {
-                    dataRow.Cells["Note"].Value = string.Empty;
-                }
-                else
-                {
-                    dataRow.Cells["Note"].Value = "📝";
-                }
+                
+                dataRow.Cells["Note"].Value = sk.Note;
             }
         }
     }
