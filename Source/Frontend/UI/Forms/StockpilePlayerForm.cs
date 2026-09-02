@@ -7,11 +7,12 @@ namespace RTCV.UI
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using WindowsAPICodePack.Dialogs;
+    using Ookii.Dialogs;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using Ookii.Dialogs.WinForms;
 
     public partial class StockpilePlayerForm : ComponentForm, IBlockable
     {
@@ -268,16 +269,14 @@ namespace RTCV.UI
 
                     if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
                     {
-                        using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
+                        using (var dialog = new VistaFolderBrowserDialog())
                         {
-                            dialog.Title = "Select reference files folder";
-                            dialog.IsFolderPicker = true;
-                            dialog.InitialDirectory = "C:\\";
-                            dialog.EnsurePathExists = true;
+                            dialog.Description = "Select reference files folder";
+                            dialog.UseDescriptionForTitle = true;
 
-                            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                            if (dialog.ShowDialog() == DialogResult.OK)
                             {
-                                string foldername = dialog.FileName;
+                                string foldername = dialog.SelectedPath;
 
                                 foreach (StashKey sk in keys)
                                 {
