@@ -67,7 +67,7 @@
             this.btnRtcFactoryClean.Text = "  RTC Factory Clean";
             this.btnRtcFactoryClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRtcFactoryClean.UseVisualStyleBackColor = false;
-            this.btnRtcFactoryClean.Click += new System.EventHandler(this.FactoryClean);
+            this.btnRtcFactoryClean.Click += new System.EventHandler(this.OnFactoryCleanSelect);
             // 
             // pnListBoxForm
             // 

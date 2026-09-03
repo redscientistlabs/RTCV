@@ -10,6 +10,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Globalization;
     using System.IO;
@@ -53,6 +54,53 @@ namespace RTCV.UI
         {
             logger.Info("Shutting down Netcore");
             connector?.Kill();
+        }
+
+        public static void FactoryReset()
+        {
+            logger.Trace("Performing factory clean...");
+
+            string[] factoryCleanDirectories =
+            {
+                Path.Combine(RtcCore.RtcDir, "MEMORYDUMPS").ToString(),
+                Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT").ToString(),
+                Path.Combine(RtcCore.RtcDir, "WORKING").ToString(),
+                Path.Combine(RtcCore.RtcDir, "PARAMS").ToString(),
+                Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES").ToString(),
+                Path.Combine(RtcCore.RtcDir, "ROMHASHES").ToString(),
+                Path.Combine(RtcCore.RtcDir, "DOMAINSCONFIG").ToString(),
+                Path.Combine(RtcCore.RtcDir, "..\\debug").ToString()
+            };
+
+            foreach (string dir in factoryCleanDirectories)
+            {
+                if (!Directory.Exists(dir))
+                {
+                    logger.Trace($"{dir} does not exist, continuing");
+                    continue;
+                }
+
+                logger.Trace($"Cleaning {dir}");
+                DirectoryInfo di = new DirectoryInfo(dir);
+
+                Array.ForEach(di.GetFiles(), file => file.Delete());
+                Array.ForEach(di.GetDirectories(), dir => dir.Delete(true));
+            }
+
+            if (File.Exists(Path.Combine(RtcCore.EmuDir, "FactoryClean.bat")))
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = "FactoryClean.bat";
+                p.StartInfo.WorkingDirectory = RtcCore.EmuDir;
+                p.Start();
+            }
+            else
+            {
+                MessageBox.Show($"FactoryClean.bat not found! {(string)AllSpec.VanguardSpec[VSPEC.NAME]} will not be reset to default.");
+            }
+
+            logger.Trace("Factory clean complete.");
+            Application.Restart();
         }
 
         private static List<string> GetCueTracks(string cueFile)

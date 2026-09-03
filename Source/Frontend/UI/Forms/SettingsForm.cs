@@ -45,12 +45,11 @@ namespace RTCV.UI
         public void SwitchToComponentForm(ComponentForm form) => lbForm.SetFocusedForm(form);
 
 
-        private void FactoryClean(object sender, EventArgs e)
+        private void OnFactoryCleanSelect(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = "FactoryClean.bat";
-            p.StartInfo.WorkingDirectory = RtcCore.EmuDir;
-            p.Start();
+            var result = MessageBox.Show("This will close and reset RTC and the currently open emulator to factory default settings. Are you sure you want to continue?", "Factory Reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+                VanguardImplementation.FactoryReset();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
