@@ -365,7 +365,7 @@ namespace RTCV.UI
                 .Show(this, locate);
         }
 
-        private void OnStockpileCellClick(object sender, DataGridViewCellEventArgs e)
+        private async void OnStockpileCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (currentlyLoading || !S.GET<GlitchHarvesterBlastForm>().LoadOnSelect || e?.RowIndex == -1)
             {
@@ -408,7 +408,8 @@ namespace RTCV.UI
 
                     S.GET<GlitchHarvesterBlastForm>().ghMode = GlitchHarvesterMode.CORRUPT;
                     StashKey sk = GetSelectedStashKey();
-                    Task.Run(async () => await StockpileManagerUISide.ApplyStashkey(sk));
+
+                    await StockpileManagerUISide.ApplyStashkey(sk);
 
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
                     S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
