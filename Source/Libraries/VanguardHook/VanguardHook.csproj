@@ -63,6 +63,7 @@
   <ItemGroup>
     <PackageReference Include="DllExport" Version="1.7.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="System.Buffers" Version="4.6.0" />
   </ItemGroup>
   <Target Name="CustomPostBuildCleanup" AfterTargets="Build">
     <RemoveDir Directories="$(OutputPath)cs;$(OutputPath)pl;$(OutputPath)pt-BR;$(OutputPath)tr;$(OutputPath)de;$(OutputPath)en;$(OutputPath)es;$(OutputPath)fr;$(OutputPath)it;$(OutputPath)ja;$(OutputPath)ko;$(OutputPath)ru;$(OutputPath)zh-Hans;$(OutputPath)zh-Hant" />
