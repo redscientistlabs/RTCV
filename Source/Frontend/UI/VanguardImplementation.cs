@@ -11,6 +11,7 @@ namespace RTCV.UI
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Security.Cryptography;
@@ -218,9 +219,18 @@ namespace RTCV.UI
                     var metadata = JsonHelper.Deserialize<RomMetadata>(File.ReadAllText(metadataFilepath));
                     if (metadata != null)
                     {
-                        if (!Stockpile.runtimeMetadata.Exists(m => m.Name == gameName))
-                            Stockpile.runtimeMetadata.Add(metadata);
-                        requireComparison[filePath] = metadata;
+                        if (metadata.Timestamp.Equals(new FileInfo(filePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")))
+                        {
+                            if (!Stockpile.runtimeMetadata.Exists(m => m.Name == gameName))
+                                Stockpile.runtimeMetadata.Add(metadata);
+                            requireComparison[filePath] = metadata;
+                        }
+                        else
+                        {
+                            requireHashFiles[filePath] = gameName;
+                            // Create the metadata file right away so that additional spec updates don't begin new threads
+                            File.Create(metadataFilepath).Dispose();
+                        }
                     }
                 }
                 else
@@ -283,9 +293,12 @@ namespace RTCV.UI
                     string gameName = files[filePath];
                     string ext = Path.GetExtension(filePath);
 
-                    RomMetadata metadata = new RomMetadata();
-                    metadata.Name = gameName;
-                    metadata.Size = new FileInfo(filePath).Length;
+                    RomMetadata metadata = new RomMetadata
+                    {
+                        Name = gameName,
+                        Size = new FileInfo(filePath).Length,
+                        Timestamp = new FileInfo(filePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    };
 
                     using (SHA256 sHA256 = SHA256.Create())
                     {
@@ -336,7 +349,6 @@ namespace RTCV.UI
                                     {
                                         if (StockpileManagerUISide.waitingForHashes)
                                             currentToastID = -1;
-                                        
                                         int filesLeft = StockpileManagerUISide.totalHashFilesInQueue;
                                         RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs($"Generating hashes... ({filesLeft} file{(filesLeft == 1 ? "" : "s")} left)", progress, currentToastID));
                                     }

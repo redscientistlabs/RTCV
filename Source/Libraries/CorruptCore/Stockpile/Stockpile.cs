@@ -185,6 +185,7 @@ namespace RTCV.CorruptCore
         public string Crc32 { get; set; }
         public string Sha1 { get; set; }
         public string Md5 { get; set; }
+        public string Timestamp { get; set; } = "";
     }
 
         private static void CopyMetadataFiles(ref Stockpile sks, ref decimal saveProgress, int toastID = -1)
