@@ -56,9 +56,9 @@ namespace RTCV.UI
             connector?.Kill();
         }
 
-        public static void FactoryReset()
+        public static void RtcFactoryReset()
         {
-            logger.Trace("Performing factory clean...");
+            logger.Trace("Performing Rtc factory clean...");
 
             string[] factoryCleanDirectories =
             {
@@ -87,6 +87,12 @@ namespace RTCV.UI
                 Array.ForEach(di.GetDirectories(), dir => dir.Delete(true));
             }
 
+            logger.Trace("Factory clean complete.");
+            Application.Restart();
+        }
+
+        public static void EmuFactoryReset()
+        {
             if (File.Exists(Path.Combine(RtcCore.EmuDir, "FactoryClean.bat")))
             {
                 Process p = new Process();
@@ -98,9 +104,6 @@ namespace RTCV.UI
             {
                 MessageBox.Show($"FactoryClean.bat not found! {(string)AllSpec.VanguardSpec[VSPEC.NAME]} will not be reset to default.");
             }
-
-            logger.Trace("Factory clean complete.");
-            Application.Restart();
         }
 
         private static List<string> GetCueTracks(string cueFile)

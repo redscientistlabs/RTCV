@@ -47,9 +47,16 @@ namespace RTCV.UI
 
         private void OnFactoryCleanSelect(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("This will close and reset RTC and the currently open emulator to factory default settings. Are you sure you want to continue?", "Factory Reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var result = MessageBox.Show("This will close and reset RTC to factory default settings. Are you sure you want to continue?", "Factory Reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
-                VanguardImplementation.FactoryReset();
+                VanguardImplementation.RtcFactoryReset();
+        }
+
+        private void OnEmuFactoryCleanSelect(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("This will close and reset the currently open emulator to factory default settings. Are you sure you want to continue?", "Factory Reset", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+                VanguardImplementation.EmuFactoryReset();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
