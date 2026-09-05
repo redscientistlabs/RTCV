@@ -319,7 +319,7 @@ namespace RTCV.CorruptCore
 
             bool isCorruptionApplied = false;
 
-            if (!(await LoadState(sk, true, false)))
+            if (!(await LoadState(sk, false, false)))
             {
                 return isCorruptionApplied;
             }
