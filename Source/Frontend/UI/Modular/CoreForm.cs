@@ -158,6 +158,7 @@ This message only appears once.";
                 Params.SetParam("COMPRESS_SAVESTATES"); //Default param
                 Params.SetParam("LOAD_STASH_ON_ARROW_CLICK"); //Default param
                 Params.SetParam("RASTERIZE_VMD_UPON_STOCKPILING"); //Default param
+                Params.SetParam("AUTOSAVE"); //Default param
                 Params.SetParam("AUTOSAVE_INTERVAL", "300"); //Default param (5 minutes in seconds)
                 Params.SetParam("AUTOSAVE_MAX_SIZE", "2.5"); //Default param (2.5 GiB)
                 Params.SetParam("CORNER_ROUNDNESS", "5"); //Default param (5 pixels)
