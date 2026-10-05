@@ -1056,6 +1056,12 @@ namespace RTCV.UI
             {
                 S.GET<MemoryDomainsForm>().RefreshDomains();
 
+                // If we're in the middle of swapping, don't update domain configs
+                if (isSwapping)
+                {
+                    return;
+                }
+
                 string systemCore = AllSpec.VanguardSpec[VSPEC.SYSTEMCORE]?.ToString() ?? null;
 
                 // If we have a game running, update the domain config
