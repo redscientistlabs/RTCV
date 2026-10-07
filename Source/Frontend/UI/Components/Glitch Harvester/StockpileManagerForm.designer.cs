@@ -32,7 +32,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StockpileManagerForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvStockpile = new RTCV.UI.Components.DataGridViewDraggable();
             this.btnRenameSelected = new System.Windows.Forms.Button();
             this.btnImportStockpile = new System.Windows.Forms.Button();
@@ -51,7 +50,7 @@
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EmuVer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Note = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).BeginInit();
             this.SuspendLayout();
             // 
@@ -370,7 +369,7 @@
             // 
             // GameName
             // 
-            this.GameName.FillWeight = 76.73162F;
+            this.GameName.FillWeight = 60F;
             this.GameName.HeaderText = "Game";
             this.GameName.Name = "GameName";
             this.GameName.ReadOnly = true;
@@ -398,17 +397,12 @@
             // 
             // Note
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.Note.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Note.FillWeight = 23.01949F;
+            this.Note.FillWeight = 80F;
             this.Note.HeaderText = "Note";
             this.Note.MinimumWidth = 35;
             this.Note.Name = "Note";
+            this.Note.ReadOnly = true;
             this.Note.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Note.Text = "";
             // 
             // StockpileManagerForm
             // 
@@ -464,6 +458,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
         private System.Windows.Forms.DataGridViewTextBoxColumn SystemCore;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmuVer;
-        private System.Windows.Forms.DataGridViewButtonColumn Note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
     }
 }
